@@ -1,5 +1,7 @@
 # spring-react-boilerplate
 
+## Woohoo! Lets go Fantasy Stocks
+
 An example application that uses a Spring Java backend with a React
 frontend and can perform server-side rendering (SSR).
 
