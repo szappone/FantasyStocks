@@ -1,6 +1,6 @@
-#Changelog
+# Changelog
 All notable changes will be logged here
 
-##[Unreleased]
+## [Unreleased]
 - Created Changelog
 
