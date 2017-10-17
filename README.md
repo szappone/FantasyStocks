@@ -36,4 +36,3 @@ cd frontend
 make test
 ```
 This will run react tests
-
