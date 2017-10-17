@@ -1,6 +1,6 @@
 .PHONY: all
 all: 
-	npm start
+	npm install && npm start
 
 .PHONY: test
 test: 
