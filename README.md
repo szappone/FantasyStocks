@@ -1,4 +1,4 @@
-# FantasyStocks 
+# FantasyStocks
 ## Build
 * The project root is split up into two subdirectories: backend/ and frontend/
 * Building the backend starts up a server that listens on localhost:8080
@@ -36,3 +36,10 @@ cd frontend
 make test
 ```
 This will run react tests
+
+## Development Environment
+### Backend
+Import /backend as a maven project into your favorite IDE (IntelliJ, Eclipse)
+
+### Frontend
+Anything works, really. AK is using VSCode. Take advantage of **hot reloading**.
