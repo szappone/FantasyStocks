@@ -26,13 +26,13 @@ class App extends Component {
         <p className="App-intro">
           New Here?
         </p>
-        <button className="App-create-account">
+        <button className="App-button">
             Create Account
         </button>
         <p className="App-intro">
           Already have an account.
         </p>
-        <button className="App-login-to-existing">
+        <button className="App-button">
            Login
        </button >
         <p className="helloParagraph">
