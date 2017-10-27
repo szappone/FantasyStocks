@@ -26,6 +26,27 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- A Java implementation of the Quandl API, retrieves stock info.  -->
+        <dependency>
+            <groupId>com.jimmoores</groupId>
+            <artifactId>quandl-core</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.12.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <properties>
