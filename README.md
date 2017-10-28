@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/jhu-oose/2017-group-8.svg?token=GFzTpsDvNNku4D8fo5y8&branch=setup)](https://travis-ci.com/jhu-oose/2017-group-8)
+
 # FantasyStocks
 ## Build
 * The project root is split up into two subdirectories: backend/ and frontend/
