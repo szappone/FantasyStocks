@@ -40,12 +40,12 @@ class Login extends Component {
           Already have an account.
           </p>
 
-          <div class="App-main-login">
-                <input class="App-text-field" onChange={this.onInput}
+          <div className="App-main-login">
+                <input className="App-text-field" onChange={this.onInput}
                     type="handle" placeholder="@handle" name="handle" height="20px">
                 </input>
-          <button className="App-button" onClick={this.launchDash}>
-              <Link to='/dashboard'>Login</Link>
+          <button className="App-button">
+              <Link to='/dashboard' onClick={this.launchDash}>Login</Link>
          </button >
           <p className="helloParagraph">
             {this.state.helloText}
@@ -57,12 +57,12 @@ class Login extends Component {
   }
 
   launchDash = () => {
-
+    this.props.globalSession.handle = this.state.handle;
   }
 
   onInput = (handleInput) => {
-    //console.log(this.state.handle);
     this.setState({handle:handleInput.target.value});
+    this.props.globalSession.handle = handleInput.target.value;
   }
 
   getHelloWorld = () => {
