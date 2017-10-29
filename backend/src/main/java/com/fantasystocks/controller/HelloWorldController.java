@@ -1,6 +1,8 @@
+package com.fantasystocks.controller;
+
+import com.google.common.annotations.VisibleForTesting;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
-import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -14,6 +16,7 @@ public class HelloWorldController {
         return getHelloWorld();
     }
 
+    @VisibleForTesting
     static String getHelloWorld() {
         return "Hello World";
     }
