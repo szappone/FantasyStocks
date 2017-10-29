@@ -1,9 +1,6 @@
 package com.fantasystocks.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -12,6 +9,8 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name = "Players")
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Player {
     private static final int MAX_USER_CHARACTERS = 30;
     private static final int MIN_USER_CHARACTERS = 5;
@@ -20,7 +19,7 @@ public class Player {
     private static final int MAX_NAME_CHARACTERS = 30;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PID")
     private long id;
 

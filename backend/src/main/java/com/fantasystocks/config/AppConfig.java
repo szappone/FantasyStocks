@@ -1,7 +1,6 @@
 package com.fantasystocks.config;
 
 import com.fantasystocks.entity.Player;
-import com.fantasystocks.service.impl.PlayerServiceImpl;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -17,7 +16,9 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 @ComponentScans(value = {
-        @ComponentScan("com.fantasystocks.spring.*"),
+        @ComponentScan("com.fantasystocks.controller"),
+        @ComponentScan("com.fantasystocks.dao"),
+        @ComponentScan("com.fantasystocks.service")
 })
 public class AppConfig {
     @Autowired
@@ -32,7 +33,6 @@ public class AppConfig {
         dataSource.setPassword(env.getProperty("db.password"));
         return dataSource;
     }
-
 
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {

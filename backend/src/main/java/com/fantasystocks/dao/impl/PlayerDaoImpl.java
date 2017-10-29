@@ -2,6 +2,7 @@ package com.fantasystocks.dao.impl;
 
 import com.fantasystocks.dao.model.PlayerDao;
 import com.fantasystocks.entity.Player;
+import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,7 +29,7 @@ public class PlayerDaoImpl implements PlayerDao {
     @Override
     public List<Player> listPlayers() {
         @SuppressWarnings("unchecked")
-        TypedQuery<Player> query = sessionFactory.getCurrentSession().createQuery("from Players");
+        TypedQuery<Player> query = sessionFactory.getCurrentSession().createQuery("from Player");
         return query.getResultList();
     }
 

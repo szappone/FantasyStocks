@@ -2,7 +2,7 @@ package com.fantasystocks;
 
 import com.fantasystocks.config.AppConfig;
 import com.fantasystocks.entity.Player;
-import com.fantasystocks.service.impl.PlayerServiceImpl;
+import com.fantasystocks.service.model.PlayerService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class app {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-        PlayerServiceImpl playerService = context.getBean(PlayerServiceImpl.class);
+        PlayerService playerService = context.getBean(PlayerService.class);
 
         // Add Players
         playerService.add(new Player("David", "Miller", "davmill", "david.miller@example.com"));
