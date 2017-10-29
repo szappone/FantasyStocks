@@ -57,12 +57,12 @@ class Login extends Component {
   }
 
   launchDash = () => {
-    this.props.globalSession.handle = this.state.handle;
+    this.props.globalService.handle = this.state.handle;
   }
 
   onInput = (handleInput) => {
     this.setState({handle:handleInput.target.value});
-    this.props.globalSession.handle = handleInput.target.value;
+    this.props.globalService.handle = handleInput.target.value;
   }
 
   getHelloWorld = () => {

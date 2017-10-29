@@ -11,12 +11,13 @@ class Dashboard extends Component {
 
   constructor() {
     super();
-    this.state = {handle: "handle"};
+    this.state = {sessions: []};
 
   }
 
-  componentDidMount() {
-    setTimeout(this.getHelloWorld, 3000);
+  componentWillReceiveProps() {
+    console.log(this.props.globalService);
+    this.setState({sessions: this.props.globalService.getSessions()});
   }
 
   render() {
@@ -30,6 +31,16 @@ class Dashboard extends Component {
             <h1 className="App-title">Welcome to the dashboard!</h1>
         </header>
 
+        <h2> Your Sessions </h2>
+
+
+
+        {this.state.sessions.map((session) => (
+            <p>Session # {session.sessionId}</p>
+        ))}
+
+{
+/*
 
         <button className="Dash-button">
             <Link to='/Session'>Session</Link>
@@ -42,23 +53,12 @@ class Dashboard extends Component {
         <button className="Dash-button">
           Enter Session 3
         </button>
-
-          <p className="helloParagraph">
-            {this.state.helloText}
-          </p>
+*/
+}
 
   </div>
 
     );
-  }
-
-  getHelloWorld = () => {
-    var that = this;
-    fetch(API_HELLO).then(function(response) {
-      return response.text()
-    }).then(function(jsonData) {
-      that.setState({helloText: jsonData});
-    });
   }
 }
 

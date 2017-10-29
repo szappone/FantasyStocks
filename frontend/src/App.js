@@ -12,7 +12,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {helloText: "about to send a request to " + API_HELLO + "...",
-      globalSession: this.getGlobalSession()
+      globalService: this.getGlobalService()
     };
   }
 
@@ -23,9 +23,9 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Login className="App-Login" handle="dummyHandle" globalSession={this.state.globalSession}></Login>
+      <Login className="App-Login" handle="dummyHandle" globalService={this.state.globalService}></Login>
         <Switch>
-            <PropsRoute exact path='/dashboard' component={Dashboard} globalSession={this.state.globalSession}/>
+            <PropsRoute exact path='/dashboard' component={Dashboard} globalService={this.state.globalService}/>
         </Switch>
       </div>
     );
@@ -40,13 +40,36 @@ class App extends Component {
     });
   }
 
-  getGlobalSession() {
+  getGlobalService() {
     // ensure global session is a singleton
-    if (this.state && this.state.globalSession) {
-      return this.state.globalSession;
+    if (this.state && this.state.globalService) {
+      return this.state.globalService;
     }
     return {
-        handle: "not set"
+        handle: "not set",
+
+        getSessions: function() {
+          return [
+                {
+                	sessionId: 1,
+                	players: [],
+                  matchups: [],
+                  portfolios: {}
+                },
+                {
+                  sessionId: 2,
+                  players: [],
+                  matchups: [],
+                  portfolios: {}
+                },
+                {
+                  sessionId: 3,
+                  players: [],
+                  matchups: [],
+                  portfolios: {}
+                }
+          ];
+        }
     };
   }
 }
