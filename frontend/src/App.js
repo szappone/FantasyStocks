@@ -20,10 +20,11 @@ class App extends Component {
   }
 
   render() {
+    //<Login className="App-Login" handle="dummyHandle" globalService={this.state.globalService}></Login>
     return (
       <div>
-      <Login className="App-Login" handle="dummyHandle" globalService={this.state.globalService}></Login>
         <Switch>
+            <PropsRoute exact path='/' component={Login} globalService={this.state.globalService}/>
             <PropsRoute exact path='/dashboard' component={Dashboard} globalService={this.state.globalService}/>
         </Switch>
       </div>
@@ -46,6 +47,13 @@ class App extends Component {
     }
     return {
         handle: "not set",
+        setHandle: function(input) {
+          this.handle = input;
+        },
+
+        getHandle: function() {
+          return this.handle;
+        },
 
         getSessions: function() {
           return [
