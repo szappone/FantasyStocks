@@ -45,11 +45,7 @@ class Dashboard extends Component {
 
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-<<<<<<< HEAD
-            <h1 className="App-title">  Welcome to the dashboard!</h1>
-=======
             <h1 className="App-title">Welcome to the dashboard {currHandle}!</h1>
->>>>>>> get dashboard data from service
         </header>
 
 
