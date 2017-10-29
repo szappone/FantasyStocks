@@ -5,7 +5,6 @@ import '../Sessions.css';
 import {Route, Links} from 'react-router-dom'
 
 const API_PREFIX = "http://localhost:8080";
-const API_HELLO = API_PREFIX + "/hello";
 
 class Session extends Component {
 

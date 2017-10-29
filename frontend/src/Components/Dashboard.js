@@ -5,7 +5,6 @@ import './Dashboard.css';
 import {Route, Link} from 'react-router-dom'
 
 const API_PREFIX = "http://localhost:8080";
-const API_HELLO = API_PREFIX + "/hello";
 
 class Dashboard extends Component {
 
@@ -28,8 +27,9 @@ class Dashboard extends Component {
 
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to the dashboard!</h1>
+            <h1 className="App-title">  Welcome to the dashboard!</h1>
         </header>
+
 
         <h2> Your Sessions </h2>
 
