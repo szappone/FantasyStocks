@@ -7,10 +7,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Data
+@Builder
 @Entity
 @Table(name = "Players")
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Player {
     private static final int MAX_USER_CHARACTERS = 30;
     private static final int MIN_USER_CHARACTERS = 5;

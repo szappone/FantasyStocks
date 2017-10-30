@@ -1,17 +1,17 @@
 package com.fantasystocks.service.impl;
 
-import com.fantasystocks.dao.impl.PlayerDaoImpl;
 import com.fantasystocks.dao.model.PlayerDao;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Log4j2
 public class PlayerServiceImpl implements PlayerService {
     @Autowired
     private PlayerDao playerDao;
