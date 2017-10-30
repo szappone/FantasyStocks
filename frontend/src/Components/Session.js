@@ -37,17 +37,20 @@ class Session extends Component {
 
   setSessionState() {
     if (this.props && this.props.globalService) {
-      console.log("all sessions: " + this.props.globalService.getSessions());
-
-      let currSession = this.props.globalService.getSessions().find(s => s.sessionId == this.state.currentSessionId);
-      if (currSession) {
-         this.setState({currentSession: currSession});
-      } else {
-          console.log("couldnt get currentSession");
-      }
       this.setState({handle: this.props.globalService.handle});
-      console.log(this.props.globalService.handle);
-      console.log("successfully set our state from global service");
+
+      this.props.globalService.getSessions().then(
+          (returnedSessions) => {
+            let currSession = returnedSessions.find(s => s.sessionId === this.state.currentSessionId);
+            if (currSession) {
+               this.setState({currentSession: currSession});
+            } else {
+                console.log("couldnt get currentSession");
+            }
+          }
+      );
+
+
     } else {
       console.log("cant access global service yet!");
     }
