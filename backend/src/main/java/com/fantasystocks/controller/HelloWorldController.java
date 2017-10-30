@@ -20,9 +20,4 @@ public class HelloWorldController {
     static String getHelloWorld() {
         return "Hello World";
     }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(HelloWorldController.class, args);
-    }
-
 }
