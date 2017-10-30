@@ -3,6 +3,9 @@ import Login from './Components/Login.js';
 import './App.css';
 import {Switch, Route} from 'react-router-dom'
 import Dashboard from './Components/Dashboard'
+import Session from './Components/Session'
+import getMockService from './services/mockService'
+import getRealService from './services/realService'
 const API_PREFIX = "http://localhost:8080";
 const API_HELLO = API_PREFIX + "/hello";
 
@@ -26,6 +29,7 @@ class App extends Component {
         <Switch>
             <PropsRoute exact path='/' component={Login} globalService={this.state.globalService}/>
             <PropsRoute exact path='/dashboard' component={Dashboard} globalService={this.state.globalService}/>
+            <PropsRoute exact path='/session/:sessionId' component={Session} globalService={this.state.globalService}/>
         </Switch>
       </div>
     );
@@ -45,39 +49,7 @@ class App extends Component {
     if (this.state && this.state.globalService) {
       return this.state.globalService;
     }
-    return {
-        handle: "not set",
-        setHandle: function(input) {
-          this.handle = input;
-        },
-
-        getHandle: function() {
-          return this.handle;
-        },
-
-        getSessions: function() {
-          return [
-                {
-                	sessionId: 1,
-                	players: [],
-                  matchups: [],
-                  portfolios: {}
-                },
-                {
-                  sessionId: 2,
-                  players: [],
-                  matchups: [],
-                  portfolios: {}
-                },
-                {
-                  sessionId: 3,
-                  players: [],
-                  matchups: [],
-                  portfolios: {}
-                }
-          ];
-        }
-    };
+    return getMockService();
   }
 }
 
