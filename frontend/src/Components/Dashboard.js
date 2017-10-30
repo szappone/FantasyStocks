@@ -26,7 +26,11 @@ class Dashboard extends Component {
 
   setSessionDataInState() {
     if (this.props && this.props.globalService) {
-      this.setState({sessions: this.props.globalService.getSessions()});
+      this.props.globalService.getSessions().then(
+        (data) => {
+          this.setState({sessions: data})
+        }
+      );
       this.setState({handle: this.props.globalService.handle});
       console.log(this.props.globalService.handle);
       console.log("successfully set our state from global service");

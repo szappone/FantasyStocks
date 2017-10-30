@@ -4,6 +4,8 @@ import './App.css';
 import {Switch, Route} from 'react-router-dom'
 import Dashboard from './Components/Dashboard'
 import Session from './Components/Session'
+import getMockService from './services/mockService'
+import getRealService from './services/realService'
 const API_PREFIX = "http://localhost:8080";
 const API_HELLO = API_PREFIX + "/hello";
 
@@ -47,39 +49,7 @@ class App extends Component {
     if (this.state && this.state.globalService) {
       return this.state.globalService;
     }
-    return {
-        handle: "not set",
-        setHandle: function(input) {
-          this.handle = input;
-        },
-
-        getHandle: function() {
-          return this.handle;
-        },
-
-        getSessions: function() {
-          return [
-                {
-                	sessionId: 1,
-                	players: ["handle1", "handle2", "handle3", "handle4", "handle4", "handle1", "handle2", "handle3", "handle4", "handle4"],
-                  matchups: [],
-                  portfolios: {}
-                },
-                {
-                  sessionId: 2,
-                  players: [],
-                  matchups: [],
-                  portfolios: {}
-                },
-                {
-                  sessionId: 3,
-                  players: [],
-                  matchups: [],
-                  portfolios: {}
-                }
-          ];
-        }
-    };
+    return getMockService();
   }
 }
 
