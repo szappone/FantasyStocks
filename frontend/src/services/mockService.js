@@ -34,6 +34,12 @@ function getMockService() {
           ]);
         }
       );
+    },
+
+    playerHandleExists: function(input) {
+      return new Promise((resolve, reject) => {
+        resolve(true);
+      });
     }
 
 

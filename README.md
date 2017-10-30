@@ -1,6 +1,10 @@
 [![Build Status](https://travis-ci.com/jhu-oose/2017-group-8.svg?token=GFzTpsDvNNku4D8fo5y8&branch=setup)](https://travis-ci.com/jhu-oose/2017-group-8)
 
 # FantasyStocks
+## Dependencies
+maven
+npm
+
 ## Build
 * The project root is split up into two subdirectories: backend/ and frontend/
 * Building the backend starts up a server that listens on localhost:8080
