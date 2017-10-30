@@ -3,6 +3,7 @@ import Login from './Components/Login.js';
 import './App.css';
 import {Switch, Route} from 'react-router-dom'
 import Dashboard from './Components/Dashboard'
+import Session from './Components/Session'
 const API_PREFIX = "http://localhost:8080";
 const API_HELLO = API_PREFIX + "/hello";
 
@@ -26,6 +27,7 @@ class App extends Component {
         <Switch>
             <PropsRoute exact path='/' component={Login} globalService={this.state.globalService}/>
             <PropsRoute exact path='/dashboard' component={Dashboard} globalService={this.state.globalService}/>
+            <PropsRoute exact path='/session/:sessionId' component={Session} globalService={this.state.globalService}/>
         </Switch>
       </div>
     );
@@ -59,7 +61,7 @@ class App extends Component {
           return [
                 {
                 	sessionId: 1,
-                	players: [],
+                	players: ["handle1", "handle2", "handle3", "handle4", "handle4", "handle1", "handle2", "handle3", "handle4", "handle4"],
                   matchups: [],
                   portfolios: {}
                 },

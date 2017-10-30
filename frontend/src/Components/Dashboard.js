@@ -42,6 +42,7 @@ class Dashboard extends Component {
     return (
 
       <div className="App">
+     <Route path='/session' component={Dashboard}/>
 
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -55,7 +56,10 @@ class Dashboard extends Component {
         {console.log("our sessions: " + this.state.sessions)}
         {console.log("our handle: " + currHandle)}
           {this.state.sessions.map((session) => (
-              <p>Session # {session.sessionId} . </p>
+              <button className="Dash-button">
+                <Link to={'/session/' + session.sessionId}>Session #{session.sessionId}</Link>
+            </button >
+
           ))}
 
       </div>
