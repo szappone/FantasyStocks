@@ -40,30 +40,47 @@ class Login extends Component {
           Already have an account.
           </p>
 
+          <div>
+            <input className="App-text-field" onChange={this.onInputChange}
+                type="handle" placeholder="@handle" name="handle" height="20px">
+            </input>
+          </div>
+
           <div className="App-main-login">
-                <input className="App-text-field" onChange={this.onInput}
-                    type="handle" placeholder="@handle" name="handle" height="20px">
-                </input>
-          <button className="App-button">
-              <Link to='/dashboard' onClick={this.launchDash}>Login</Link>
-         </button >
-          <p className="helloParagraph">
-            {this.state.helloText}
-          </p>
+            <button className="App-button">
+                <Link to='/dashboard' onClick={this.createAccountLaunchDash}>Create Account</Link>
+           </button>
+          </div>
+
+          <div className="App-main-login">
+            <button className="App-button">
+                <Link to='/dashboard' onClick={this.loginLaunchDash}>Login</Link>
+           </button >
           </div>
   </div>
 
     );
   }
 
-  launchDash = () => {
-    this.props.globalService.handle = "this.state.handle";
+  createAccountLaunchDash = () => {
+    this.props.globalService.playerHandleExists().then(
+      (exists) => {
+        if (!exists) {
+          //create account and route to dashboard
+        }
+      }
+    );
   }
 
-  onInput = (handleInput) => {
+  loginLaunchDash = () => {
+    this.props.globalService.handle = this.state.handle;
+  }
+
+  onInputChange = (handleInput) => {
     this.setState({handle:handleInput.target.value});
     this.props.globalService.handle = handleInput.target.value;
   }
+
 
   getHelloWorld = () => {
     var that = this;

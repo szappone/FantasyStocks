@@ -1,65 +1,81 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import '../App.css';
-import '../Sessions.css';
-import {Route, Links} from 'react-router-dom'
+
+import {Route, Link} from 'react-router-dom'
+import Dashboard from './Dashboard'
 
 const API_PREFIX = "http://localhost:8080";
+const API_HELLO = API_PREFIX + "/hello";
 
 class Session extends Component {
 
-  constructor() {
-    super();
-    this.state = {handle: "handle"};
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentSession: {players: ["a", "b", "c"]},
+      currentSessionId: 0
+    };
 
   }
+
+  componentWillMount(){
+    this.setCurrentSessionId();
+  }
+
 
   componentDidMount() {
     setTimeout(this.getHelloWorld, 3000);
   }
 
+  setCurrentSessionId() {
+    this.setState({
+      currentSessionId: parseInt(this.props.match.params.sessionId)
+    },
+      this.setSessionState);
+  }
+
+  setSessionState() {
+    if (this.props && this.props.globalService) {
+      this.setState({handle: this.props.globalService.handle});
+
+      this.props.globalService.getSessions().then(
+          (returnedSessions) => {
+            let currSession = returnedSessions.find(s => s.sessionId === this.state.currentSessionId);
+            if (currSession) {
+               this.setState({currentSession: currSession});
+            } else {
+                console.log("couldnt get currentSession");
+            }
+          }
+      );
+
+
+    } else {
+      console.log("cant access global service yet!");
+    }
+  }
+
   render() {
+    console.log(this.state.currentSession)
     return (
 
       <div className="App">
-
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to the Session!</h1>
+            <h1 className="App-title">Welcome to session #{this.props.match.params.sessionId}</h1>
         </header>
 
-
-        <button className="Dash-button">
-            <Link to='/Session'>Session</Link>
-        </button>
-
-        <button className="Dash-button">
-          Enter Session 2
-        </button>
-
-        <button className="Dash-button">
-          Enter Session 3
-        </button>
-
-
-
-          <p className="helloParagraph">
-            {this.state.helloText}
-          </p>
-          </div>
-  </div>
+        <ul>
+        {this.state.currentSession.players.map((player) => (
+          console.log(player),
+            <li>{player}</li>
+          ))}
+        </ul>
+      </div>
 
     );
   }
-
-  getHelloWorld = () => {
-    var that = this;
-    fetch(API_HELLO).then(function(response) {
-      return response.text()
-    }).then(function(jsonData) {
-      that.setState({helloText: jsonData});
-    });
-  }
 }
 
-export default Dashboard;
+export default Session;

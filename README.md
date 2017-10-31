@@ -1,6 +1,11 @@
 [![Build Status](https://travis-ci.com/jhu-oose/2017-group-8.svg?token=GFzTpsDvNNku4D8fo5y8&branch=setup)](https://travis-ci.com/jhu-oose/2017-group-8)
 
 # FantasyStocks
+## Dependencies
+maven
+npm
+mysql
+
 ## Build
 * The project root is split up into two subdirectories: backend/ and frontend/
 * Building the backend starts up a server that listens on localhost:8080
@@ -8,6 +13,12 @@
 
 
 ## Backend
+
+Currently our database is operated locally on the machine. This means to run
+the backend the user must have a mysql database connection available on
+localhost:3306
+username: root
+password: admin
 
 To build the backend:
 ```bash
@@ -30,7 +41,7 @@ To build the frontend:
 cd frontend
 make
 ```
-This should open your browser to localhost:3000 and start the application. It also uses **hot-reload**. This means that when you save a file you are working on, the browser will referesh.
+This should open your browser to localhost:3000 and start the application. It also uses **hot-reload**. This means that when you save a file you are working on, the browser will refresh.
 
 To test the frontend:
 ```bash

@@ -26,7 +26,11 @@ class Dashboard extends Component {
 
   setSessionDataInState() {
     if (this.props && this.props.globalService) {
-      this.setState({sessions: this.props.globalService.getSessions()});
+      this.props.globalService.getSessions().then(
+        (data) => {
+          this.setState({sessions: data})
+        }
+      );
       this.setState({handle: this.props.globalService.handle});
       console.log(this.props.globalService.handle);
       console.log("successfully set our state from global service");
@@ -42,6 +46,7 @@ class Dashboard extends Component {
     return (
 
       <div className="App">
+     <Route path='/session' component={Dashboard}/>
 
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -55,7 +60,10 @@ class Dashboard extends Component {
         {console.log("our sessions: " + this.state.sessions)}
         {console.log("our handle: " + currHandle)}
           {this.state.sessions.map((session) => (
-              <p>Session # {session.sessionId} . </p>
+              <button className="Dash-button">
+                <Link to={'/session/' + session.sessionId}>Session #{session.sessionId}</Link>
+            </button >
+
           ))}
 
       </div>
