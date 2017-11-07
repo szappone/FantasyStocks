@@ -66,6 +66,11 @@ class Dashboard extends Component {
 
           ))}
 
+          <h2> Start New Session </h2>
+          <button className="Add-new-button">
+              +
+              <Link to='/dashboard' onClick={this.createAccountLaunchDash}></Link>
+              </button>
       </div>
 
     );
