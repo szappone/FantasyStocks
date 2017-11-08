@@ -33,17 +33,14 @@ public class CreateUserIntegrationTest extends EasyMockSupport {
         PlayerService playerService = context.getBean(PlayerService.class);
 
         // Add Players
-        playerService.add(new Player("David", "Miller", "davmill", "david.miller@example.com"));
-        playerService.add(new Player("Sameer", "Singh", "mc_dicko","sameer.singh@example.com"));
-        playerService.add(new Player("Paul", "Smith", "paul_smith","paul.smith@example.com"));
+        playerService.add(new Player("David"));
+        playerService.add(new Player("Sameer"));
+        playerService.add(new Player("Paul"));
 
         // Get Players
         List<Player> persons = playerService.listPlayers();
         for (Player person : persons) {
-            System.out.println("Id = "+person.getId());
-            System.out.println("First Name = "+person.getFirstName());
-            System.out.println("Last Name = "+person.getLastName());
-            System.out.println("Email = "+person.getEmail());
+            System.out.println("Player Name = "+person.getPlayerName());
             System.out.println();
         }
 

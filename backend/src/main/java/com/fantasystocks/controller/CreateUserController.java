@@ -1,6 +1,6 @@
 package com.fantasystocks.controller;
 
-import com.fantasystocks.controller.api.CreateUserRequest;
+import com.fantasystocks.controller.api.CreatePlayerRequest;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.log4j.Log4j2;
@@ -19,16 +19,13 @@ public class CreateUserController {
 
     @ResponseBody
     @RequestMapping(value = "/player", method = RequestMethod.POST)
-    public Player createPlayer(@RequestBody CreateUserRequest body,
+    public Player createPlayer(@RequestBody CreatePlayerRequest body,
                                      HttpServletRequest request,
                                      HttpServletResponse response) {
         log.info("/player. Adding player ... " + body.toString());
         Player player = Player
                 .builder()
-                .firstName(body.getFirstName())
-                .lastName(body.getLastName())
-                .email(body.getEmail())
-                .username(body.getUsername())
+                .playerName(body.getPlayerName())
                 .build();
 
         playerService.add(player);
