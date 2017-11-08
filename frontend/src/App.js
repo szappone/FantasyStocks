@@ -4,6 +4,8 @@ import './App.css';
 import {Switch, Route} from 'react-router-dom'
 import Dashboard from './Components/Dashboard'
 import Session from './Components/Session'
+import NewSession from './Components/NewSession'
+import NewSessionDraft from './Components/NewSessionDraft'
 import getMockService from './services/mockService'
 import getRealService from './services/realService'
 const API_PREFIX = "http://localhost:8080";
@@ -30,6 +32,8 @@ class App extends Component {
             <PropsRoute exact path='/' component={Login} globalService={this.state.globalService}/>
             <PropsRoute exact path='/dashboard' component={Dashboard} globalService={this.state.globalService}/>
             <PropsRoute exact path='/session/:sessionId' component={Session} globalService={this.state.globalService}/>
+            <PropsRoute exact path='/newsession' component={NewSession} globalService={this.state.globalService}/>
+            <PropsRoute exact path='/newsessiondraft' component={NewSessionDraft} globalService={this.state.globalService}/>
         </Switch>
       </div>
     );

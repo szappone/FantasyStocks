@@ -28,6 +28,17 @@
   font-size: 1em;
 }
 
+.App-button-tall {
+  height: 65px;
+  width: 140px;
+  background-color: black;
+  color: white;
+  border-style:solid;
+  border-color: #3d3d3d;
+  border-width:thick;
+  font-size: 1em;
+}
+
 .Add-new-button {
   height: 80px;
   width: 80px;
@@ -52,12 +63,24 @@ height: 30px;
   line-height: 28px;
 }
 
+
+.App-text-field-long {
+  height: 33px;
+  width: 200px;
+  font-size: 1em;
+  line-height: 28px;
+}
+
 .App-title {
   font-size: 1.5em;
 }
 
 .App-intro {
   font-size: large;
+}
+
+ul {
+   list-style: none;
 }
 
 @keyframes App-logo-spin {

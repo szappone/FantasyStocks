@@ -29,15 +29,8 @@ class Login extends Component {
             <h1 className="App-title">Welcome to FantasyStocks!</h1>
         </header>
 
-        <p className="App-intro">
-          New Here?
-        </p>
-        <button className="App-button">
-          Create Account
-          </button>
-
           <p className="App-intro">
-          Already have an account.
+          Enter Handle
           </p>
 
           <div>
@@ -46,12 +39,13 @@ class Login extends Component {
             </input>
           </div>
 
+          <br></br>
           <div className="App-main-login">
             <button className="App-button">
                 <Link to='/dashboard' onClick={this.createAccountLaunchDash}>Create Account</Link>
            </button>
           </div>
-
+          <br></br>
           <div className="App-main-login">
             <button className="App-button">
                 <Link to='/dashboard' onClick={this.loginLaunchDash}>Login</Link>
