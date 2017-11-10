@@ -1,35 +1,35 @@
 package com.fantasystocks.controller;
 
+import com.fantasystocks.controller.api.CreatePlayerRequest;
 import com.fantasystocks.entity.Player;
-import com.fantasystocks.service.impl.PlayerServiceImpl;
 import com.fantasystocks.service.model.PlayerService;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.apachecommons.CommonsLog;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Controller
 @Log4j2
-public class GetUsersController {
+public class CreatePlayerController {
     @Autowired
     private PlayerService playerService;
 
     @ResponseBody
-    @RequestMapping(value = "/players", method = RequestMethod.GET)
-    public List<Player> getPlayers(HttpServletRequest request) {
-        log.info("/players. getPlayers() Called.");
-        return playerService.listPlayers();
+    @RequestMapping(value = "/player", method = RequestMethod.POST)
+    public Player createPlayer(@RequestBody CreatePlayerRequest body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+        log.info("/player. Adding player ... " + body.toString());
+        Player player = Player
+                .builder()
+                .playerName(body.getPlayerName())
+                .build();
+
+        playerService.add(player);
+        return player;
     }
 
     @ExceptionHandler(Exception.class)

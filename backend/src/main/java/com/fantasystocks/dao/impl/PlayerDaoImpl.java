@@ -21,8 +21,8 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     @Override
-    public Player getPlayer(String username) {
-        return null;
+    public Player getPlayer(String playerName) {
+        return (Player)(sessionFactory.getCurrentSession().get("Player", playerName));
     }
 
     @Override

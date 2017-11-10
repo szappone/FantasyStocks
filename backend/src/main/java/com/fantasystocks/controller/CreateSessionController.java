@@ -1,8 +1,9 @@
 package com.fantasystocks.controller;
 
-import com.fantasystocks.controller.api.CreateUserRequest;
-import com.fantasystocks.entity.Player;
+import com.fantasystocks.controller.api.CreateSessionRequest;
+import com.fantasystocks.entity.Session;
 import com.fantasystocks.service.model.PlayerService;
+import com.fantasystocks.service.model.SessionService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,26 +14,29 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @Log4j2
-public class CreateUserController {
+public class CreateSessionController {
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private SessionService sessionService;
 
     @ResponseBody
-    @RequestMapping(value = "/player", method = RequestMethod.POST)
-    public Player createPlayer(@RequestBody CreateUserRequest body,
+    @RequestMapping(value = "/session", method = RequestMethod.POST)
+    public Session createSession(@RequestBody CreateSessionRequest body,
                                      HttpServletRequest request,
                                      HttpServletResponse response) {
-        log.info("/player. Adding player ... " + body.toString());
-        Player player = Player
+        log.info("/session. Adding session ... " + body.toString());
+        Session session = Session
                 .builder()
-                .firstName(body.getFirstName())
-                .lastName(body.getLastName())
-                .email(body.getEmail())
-                .username(body.getUsername())
+                .sessionName(body.getSessionName())
                 .build();
 
-        playerService.add(player);
-        return player;
+        String[] playerNames = body.getPlayers();
+        for (int i = 0; i < playerNames.length ;i++){
+
+        }
+        sessionService.add(session);
+        return session;
     }
 
     @ExceptionHandler(Exception.class)

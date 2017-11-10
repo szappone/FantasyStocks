@@ -1,6 +1,7 @@
 package com.fantasystocks.config;
 
 import com.fantasystocks.entity.Player;
+import com.fantasystocks.entity.Session;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -45,7 +46,7 @@ public class AppConfig {
         props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(Player.class);
+        factoryBean.setAnnotatedClasses(Player.class, Session.class);
         return factoryBean;
     }
 
