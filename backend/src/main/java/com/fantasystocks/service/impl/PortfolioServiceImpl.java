@@ -1,6 +1,7 @@
 package com.fantasystocks.service.impl;
 
 import com.fantasystocks.dao.model.PlayerDao;
+import com.fantasystocks.dao.model.PortfolioDao;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.Portfolio;
 import com.fantasystocks.service.model.PlayerService;
@@ -21,12 +22,12 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Transactional
     @Override
     public void add(Portfolio portfolio) {
-        playerDao.add(portfolio);
+        portfolioDao.add(portfolio);
     }
 
     @Transactional
     @Override
-    public Player get(long portfolioID) {
+    public Portfolio get(long portfolioID) {
         return portfolioDao.get(portfolioID);
     }
 
