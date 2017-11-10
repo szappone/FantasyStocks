@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 @Table(name = "Players")
 @NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class Player {
     private static final int MAX_USER_CHARACTERS = 30;
     private static final int MIN_USER_CHARACTERS = 5;
@@ -20,28 +19,11 @@ public class Player {
             "Username must be between " + MIN_USER_CHARACTERS + " and " + MAX_USER_CHARACTERS + ".";
     private static final int MAX_NAME_CHARACTERS = 30;
 
+
+    @NonNull
+    @Column(name = "playerName")
+    @Size(max = MAX_NAME_CHARACTERS, message = "Name is too long.")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PID")
-    private long id;
+    private String playerName;
 
-    @NonNull
-    @Column(name = "first_name")
-    @Size(max = MAX_NAME_CHARACTERS, message = "Name is too long.")
-    private String firstName;
-
-    @NonNull
-    @Column(name = "last_name")
-    @Size(max = MAX_NAME_CHARACTERS, message = "Name is too long.")
-    private String lastName;
-
-    @NonNull
-    @Column(name = "user_name", unique = true)
-    @Size(max = MAX_USER_CHARACTERS, min = MIN_USER_CHARACTERS, message = USER_NAME_ERROR_MSG)
-    private String username;
-
-    @NonNull
-    @Column(name = "email", unique = true)
-    @Email
-    private String email;
 }

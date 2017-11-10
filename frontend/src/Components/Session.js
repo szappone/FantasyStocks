@@ -69,7 +69,7 @@ class Session extends Component {
         <ul>
         {this.state.currentSession.players.map((player) => (
           console.log(player),
-            <li>{player}</li>
+            <li><p>{player}</p></li>
           ))}
         </ul>
       </div>
