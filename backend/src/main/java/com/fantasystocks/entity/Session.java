@@ -32,6 +32,6 @@ public class Session {
     @NonNull
     @Column(name = "players")
     @Size(max = MAX_NAME_CHARACTERS, message = "Name is too long.")
-    private Player[] players;
+    private String[] players;
 
 }

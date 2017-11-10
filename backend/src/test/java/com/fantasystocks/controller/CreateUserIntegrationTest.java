@@ -34,6 +34,8 @@ public class CreateUserIntegrationTest extends EasyMockSupport {
 
         // Add Players
         playerService.add(new Player("David"));
+        playerService.add(new Player("Jacob"));
+        playerService.add(new Player("Barry"));
 
         // Get Players
         List<Player> persons = playerService.listPlayers();

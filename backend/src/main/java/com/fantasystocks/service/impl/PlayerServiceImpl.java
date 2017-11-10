@@ -22,6 +22,12 @@ public class PlayerServiceImpl implements PlayerService {
         playerDao.add(player);
     }
 
+    @Transactional
+    @Override
+    public Player get(String playerName) {
+        return playerDao.get(playerName);
+    }
+
     @Transactional(readOnly = true )
     @Override
     public List<Player> listPlayers() {
