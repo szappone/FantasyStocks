@@ -3,7 +3,9 @@ package com.fantasystocks.controller;
 import com.fantasystocks.controller.api.CreateSessionRequest;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Player;
+import com.fantasystocks.entity.PlayerInSession;
 import com.fantasystocks.entity.Session;
+import com.fantasystocks.service.model.PlayerInSessionService;
 import com.fantasystocks.service.model.PlayerService;
 import com.fantasystocks.service.model.SessionService;
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +23,8 @@ public class CreateSessionController {
     private PlayerService playerService;
     @Autowired
     private SessionService sessionService;
+    @Autowired
+    private PlayerInSessionService pisService;
 
     @ResponseBody
     @RequestMapping(value = "/session", method = RequestMethod.POST)
@@ -38,15 +42,25 @@ public class CreateSessionController {
                 return ResponseMessage.builder().message("Not all player names in session are registered as players").build();
             }
         }
-
+        //Create and store session
         Session session = Session
                 .builder()
                 .sessionName(body.getSessionName())
                 .players(playerNames)
                 .build();
-
-
         sessionService.add(session);
+
+        //Create and store PlayerInSession objects
+        long sessionID = session.getSessionId();
+        for (int i = 0; i < playerNames.length ;i++){
+            PlayerInSession pis = PlayerInSession
+                    .builder()
+                    .sessionID(sessionID)
+                    .playerName(playerNames[i])
+                    .build();
+            pisService.add(pis);
+
+        }
         return session;
     }
 
