@@ -1,6 +1,7 @@
 package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.CreateSessionRequest;
+import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.Session;
 import com.fantasystocks.service.model.PlayerService;
@@ -23,7 +24,7 @@ public class CreateSessionController {
 
     @ResponseBody
     @RequestMapping(value = "/session", method = RequestMethod.POST)
-    public Session createSession(@RequestBody CreateSessionRequest body,
+    public Object createSession(@RequestBody CreateSessionRequest body,
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws Exception {
         log.info("/session. Adding session ... " + body.toString());
@@ -34,7 +35,7 @@ public class CreateSessionController {
             Player p = playerService.get(playerNames[i]);
             if (p == null) {
                 handleError(request, response, new Exception("Not all player names in session are registered as players"));
-                return null;
+                return ResponseMessage.builder().message("Not all player names in session are registered as players").build();
             }
         }
 
@@ -53,5 +54,6 @@ public class CreateSessionController {
     public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error("Request: " + request.getRequestURL() + " threw " + ex);
         response.setStatus(400);
+
     }
 }

@@ -1,6 +1,7 @@
 package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.CreatePlayerRequest;
+import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.log4j.Log4j2;
@@ -19,7 +20,7 @@ public class CreatePlayerController {
 
     @ResponseBody
     @RequestMapping(value = "/player", method = RequestMethod.POST)
-    public Player createPlayer(@RequestBody CreatePlayerRequest body,
+    public Object createPlayer(@RequestBody CreatePlayerRequest body,
                                      HttpServletRequest request,
                                      HttpServletResponse response) {
         log.info("/player. Adding player ... " + body.toString());
@@ -28,7 +29,7 @@ public class CreatePlayerController {
         Player checkPlayerExists = playerService.get(body.getPlayerName());
         if (checkPlayerExists != null) {
             handleError(request, response, new Exception("Player already exists with that player name"));
-            return null;
+            return ResponseMessage.builder().message("Player already exists with that player name").build();
         }
         Player player = Player
                 .builder()
