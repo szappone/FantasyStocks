@@ -37,9 +37,11 @@ public class CreateUserIntegrationTest extends EasyMockSupport {
         playerService.add(new Player("Jacob"));
         playerService.add(new Player("Barry"));
 
+
         // Get Players
         List<Player> persons = playerService.listPlayers();
         for (Player person : persons) {
+
             System.out.println("PlayerName = " + person.getPlayerName());
             System.out.println();
         }
