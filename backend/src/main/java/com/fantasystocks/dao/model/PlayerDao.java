@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface PlayerDao {
     public void add(Player player);
-    public Player getPlayer(String username);
+    public Player get(String username);
     public List<Player> listPlayers();
 }
