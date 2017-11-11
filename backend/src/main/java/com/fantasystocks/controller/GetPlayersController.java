@@ -21,7 +21,7 @@ import java.util.List;
 
 @Controller
 @Log4j2
-public class GetUsersController {
+public class GetPlayersController {
     @Autowired
     private PlayerService playerService;
 
