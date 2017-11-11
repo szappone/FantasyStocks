@@ -19,9 +19,9 @@ public class GetOnePlayerController {
     private PlayerService playerService;
 
     @ResponseBody
-    @RequestMapping(value = "/player", params = "name", method = RequestMethod.GET)
-    public Object getPlayer( HttpServletRequest request,
-                                     HttpServletResponse response, @RequestParam("name") String playerName) {
+    @RequestMapping(value = "/player", params = "playerName", method = RequestMethod.GET)
+    public Object getOnePlayer( HttpServletRequest request,
+                                     HttpServletResponse response, @RequestParam("playerName") String playerName) {
         log.info("/player?name="+playerName+ ". Getting player: " + playerName);
 
         //Check to make sure that this player exists and if so return it
@@ -29,7 +29,7 @@ public class GetOnePlayerController {
         if (checkPlayerExists != null) {
             return checkPlayerExists;
         } else {
-            handleError(request, response, new Exception("Player does not exist"));
+            response.setStatus(400);
             return ResponseMessage.builder().message("Player does not exist").build();
         }
     }

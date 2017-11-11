@@ -26,7 +26,8 @@ public class PlayerInSessionDaoImpl implements PlayerInSessionDao {
     @Override
     public List<Long> getAll(String playerName) {
         @SuppressWarnings("unchecked")
-        Query query = sessionFactory.getCurrentSession().createQuery("select sessionID from PlayerInSession where playerName = " + playerName);
+        Query query = sessionFactory.getCurrentSession().createQuery("SELECT P.sessionID FROM PlayerInSession P where P.playerName = :playerName");
+        query.setParameter("playerName", playerName);
         return (List<Long>)query.getResultList();
     }
 

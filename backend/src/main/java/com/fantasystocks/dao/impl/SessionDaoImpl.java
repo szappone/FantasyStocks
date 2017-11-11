@@ -19,4 +19,8 @@ public class SessionDaoImpl implements SessionDao {
     public void add(Session session) { sessionFactory.getCurrentSession().save(session);
     }
 
+    @Override
+    public Session get(long sessionID) { return sessionFactory.getCurrentSession().get(Session.class, sessionID);
+    }
+
 }

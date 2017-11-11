@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SessionService {
     void add(Session session);
+    Session get(long sessionID);
 }

@@ -38,7 +38,7 @@ public class CreateSessionController {
         for (int i = 0; i < playerNames.length ;i++){
             Player p = playerService.get(playerNames[i]);
             if (p == null) {
-                handleError(request, response, new Exception("Not all player names in session are registered as players"));
+                response.setStatus(400);
                 return ResponseMessage.builder().message("Not all player names in session are registered as players").build();
             }
         }

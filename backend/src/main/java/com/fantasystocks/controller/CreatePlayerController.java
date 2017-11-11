@@ -28,7 +28,7 @@ public class CreatePlayerController {
         //Check to make sure that this player name is not already in use
         Player checkPlayerExists = playerService.get(body.getPlayerName());
         if (checkPlayerExists != null) {
-            handleError(request, response, new Exception("Player already exists with that player name"));
+            response.setStatus(400);
             return ResponseMessage.builder().message("Player already exists with that player name").build();
         }
         Player player = Player

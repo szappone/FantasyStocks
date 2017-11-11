@@ -22,4 +22,10 @@ public class SessionServiceImpl implements SessionService {
         sessionDao.add(session);
     }
 
+    @Transactional
+    @Override
+    public Session get(long sessionID) {
+        return sessionDao.get(sessionID);
+    }
+
 }
