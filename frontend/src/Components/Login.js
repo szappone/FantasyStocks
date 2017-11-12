@@ -11,11 +11,14 @@ class Login extends Component {
 
   constructor() {
     super();
-    this.state = {handle: ""};
+    this.state = {
+      handle: "",
+      errorMessage: ""
+    };
   }
 
   componentDidMount() {
-    setTimeout(this.getHelloWorld, 3000);
+    //setTimeout(this.getHelloWorld, 3000);
   }
 
   render() {
@@ -33,6 +36,10 @@ class Login extends Component {
           Enter Handle
           </p>
 
+          <p id="errorMessage">
+            {this.state.errorMessage}
+          </p>
+
           <div>
             <input className="App-text-field" onChange={this.onInputChange}
                 type="handle" placeholder="@handle" name="handle" height="20px">
@@ -41,14 +48,15 @@ class Login extends Component {
 
           <br></br>
           <div className="App-main-login">
-            <button className="App-button">
-                <Link to='/dashboard' onClick={this.createAccountLaunchDash}>Create Account</Link>
-           </button>
+          <button className="App-button" onClick={this.createAccountLaunchDash}>
+            Create Account
+          </button>
           </div>
           <br></br>
+
           <div className="App-main-login">
-            <button className="App-button">
-                <Link to='/dashboard' onClick={this.loginLaunchDash}>Login</Link>
+            <button className="App-button" onClick={this.loginLaunchDash}>
+                Login
            </button >
           </div>
   </div>
@@ -57,32 +65,36 @@ class Login extends Component {
   }
 
   createAccountLaunchDash = () => {
-    this.props.globalService.playerHandleExists().then(
-      (exists) => {
-        if (!exists) {
-          //create account and route to dashboard
-        }
+    let service = this.props.globalService;
+    service.createPlayer(service.getHandle()).then(
+      (response) => {
+        this.props.history.push("/dashboard");
+      }
+    ).catch(
+      (error) => {
+        this.setState({errorMessage: "Handle already exists"})
       }
     );
   }
 
   loginLaunchDash = () => {
-    this.props.globalService.handle = this.state.handle;
+    let service = this.props.globalService;
+    service.getPlayerByPlayerName(service.getHandle()).then(
+      (response) => {
+        this.props.history.push("/dashboard");
+      }
+    ).catch(
+      (error) => {
+        this.setState({errorMessage: "Invalid handle"})
+      }
+    );
   }
 
   onInputChange = (handleInput) => {
-    this.setState({handle:handleInput.target.value});
-    this.props.globalService.handle = handleInput.target.value;
-  }
-
-
-  getHelloWorld = () => {
-    var that = this;
-    fetch(API_HELLO).then(function(response) {
-      return response.text()
-    }).then(function(jsonData) {
-      that.setState({helloText: jsonData});
-    });
+    let handleText = handleInput.target.value;
+    this.setState({handle:handleText});
+    this.props.globalService.setHandle(handleText);
+    // console.log(this.props.globalService.getHandle());
   }
 }
 
