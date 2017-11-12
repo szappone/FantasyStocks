@@ -5,9 +5,6 @@ import '../App.css';
 import {Route, Link} from 'react-router-dom'
 import Dashboard from './Dashboard'
 
-const API_PREFIX = "http://localhost:8080";
-const API_HELLO = API_PREFIX + "/hello";
-
 class Session extends Component {
 
   constructor(props) {
@@ -21,11 +18,6 @@ class Session extends Component {
 
   componentWillMount(){
     this.setCurrentSessionId();
-  }
-
-
-  componentDidMount() {
-    setTimeout(this.getHelloWorld, 3000);
   }
 
   setCurrentSessionId() {
