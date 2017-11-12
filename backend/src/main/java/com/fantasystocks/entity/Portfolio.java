@@ -17,9 +17,9 @@ public class Portfolio {
     @Column(name = "portfolio_id")
     private long portfolioId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    /*@OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    private PlayerInGame playerInGame;
+    private PlayerInGame playerInGame;*/
 
     @Builder.Default
     @ElementCollection

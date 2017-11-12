@@ -25,7 +25,7 @@ public class PlayerInGame {
     @MapsId("sessionId")
     private Game game;
 
-    @OneToOne(mappedBy = "portfolio", cascade = CascadeType.ALL,
+    /*@OneToOne(mappedBy = "playerInGame", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, optional = false)
-    private Portfolio portfolio;
+    private Portfolio portfolio;*/
 }

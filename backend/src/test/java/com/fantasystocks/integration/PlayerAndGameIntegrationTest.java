@@ -6,6 +6,7 @@ import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.PlayerInGame;
 import lombok.extern.slf4j.Slf4j;
 import org.easymock.EasyMockSupport;
+import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.After;
@@ -55,7 +56,7 @@ public class PlayerAndGameIntegrationTest extends EasyMockSupport{
     public void test_AddSessionToDB() {
         String gameName = "test_gameName";
         Long gameId = 1234L;
-        session.save(buildSession(gameId, gameName));
+        session.replicate(buildGame(gameId, gameName), ReplicationMode.EXCEPTION);
 
         Game game = session.get(Game.class, gameId);
         assertEquals("The gameIDs do not match.", (long) gameId, game.getGameId());
@@ -68,14 +69,14 @@ public class PlayerAndGameIntegrationTest extends EasyMockSupport{
                 .build();
     }
 
-    private Game buildSession(Long sessionId, String gameName) {
+    private Game buildGame(Long sessionId, String gameName) {
         return Game.builder()
                 .gameId(sessionId)
                 .gameName(gameName)
                 .build();
     }
 
-    private Game buildSessionTotal(Long sessionId, String gameName, Set<PlayerInGame> players) {
+    private Game buildGameTotal(Long sessionId, String gameName, Set<PlayerInGame> players) {
         return Game.builder()
                 .gameName(gameName)
                 .players(players)
