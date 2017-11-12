@@ -8,14 +8,12 @@ import NewSession from './Components/NewSession'
 import NewSessionDraft from './Components/NewSessionDraft'
 import getMockService from './services/mockService'
 import getRealService from './services/realService'
-const API_PREFIX = "http://localhost:8080";
-const API_HELLO = API_PREFIX + "/hello";
 
 class App extends Component {
 
   constructor() {
     super();
-    this.state = {helloText: "about to send a request to " + API_HELLO + "...",
+    this.state = {
       globalService: this.getGlobalService()
     };
   }
@@ -38,22 +36,13 @@ class App extends Component {
       </div>
     );
   }
-
-  getHelloWorld = () => {
-    var that = this;
-    fetch(API_HELLO).then(function(response) {
-      return response.text()
-    }).then(function(jsonData) {
-      that.setState({helloText: jsonData});
-    });
-  }
-
   getGlobalService() {
     // ensure global session is a singleton
     if (this.state && this.state.globalService) {
       return this.state.globalService;
     }
     return getMockService();
+    //return getRealService();
   }
 }
 

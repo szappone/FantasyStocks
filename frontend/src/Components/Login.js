@@ -96,16 +96,6 @@ class Login extends Component {
     this.props.globalService.setHandle(handleText);
     // console.log(this.props.globalService.getHandle());
   }
-
-
-  getHelloWorld = () => {
-    var that = this;
-    fetch(API_HELLO).then(function(response) {
-      return response.text()
-    }).then(function(jsonData) {
-      that.setState({helloText: jsonData});
-    });
-  }
 }
 
 export default Login;
