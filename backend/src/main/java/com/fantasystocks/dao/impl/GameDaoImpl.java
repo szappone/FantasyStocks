@@ -13,11 +13,13 @@ public class GameDaoImpl implements GameDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void add(Game game) { sessionFactory.getCurrentSession().save(game);
+    public void add(Game game) {
+        sessionFactory.getCurrentSession().save(game);
     }
 
     @Override
-    public Game get(long sessionID) { return sessionFactory.getCurrentSession().get(Game.class, sessionID);
+    public Game get(long sessionID) {
+        return sessionFactory.getCurrentSession().get(Game.class, sessionID);
     }
 
 }

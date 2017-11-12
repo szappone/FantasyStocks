@@ -19,7 +19,8 @@ public class Player {
     @Size(max = EntityStd.MAX_USER_CHARACTERS,  min = EntityStd.MIN_USER_CHARACTERS,
           message = EntityStd.USER_NAME_ERROR_MSG)
     @Id
-    private String username;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String playerName;
 
     @NonNull
     @Builder.Default

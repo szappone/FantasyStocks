@@ -33,6 +33,4 @@ public class PlayerDaoIntegrationTest extends EasyMockSupport{
     @Test
     public void test_AddPlayerInSession() {
     }
-
-
 }

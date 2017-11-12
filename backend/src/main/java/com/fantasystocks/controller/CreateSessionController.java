@@ -52,7 +52,7 @@ public class CreateSessionController {
         Game game = Game
                 .builder()
                 .gameName(body.getSessionName())
-                .players(/*new HashSet<>(players)*/ new HashSet<>())
+                //.players(/*new HashSet<>(players)*/ new HashSet<>())
                 .build();
         gameService.add(game);
 

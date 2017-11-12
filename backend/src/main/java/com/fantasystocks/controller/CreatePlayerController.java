@@ -23,17 +23,20 @@ public class CreatePlayerController {
     public Object createPlayer(@RequestBody CreatePlayerRequest body,
                                      HttpServletRequest request,
                                      HttpServletResponse response) {
-        log.info("/player. Adding player ... " + body.toString());
+        log.debug("/player. Adding player ... " + body.toString());
 
         //Check to make sure that this player name is not already in use
-        Player checkPlayerExists = playerService.get(body.getUsername());
+        Player checkPlayerExists = playerService.get(body.getPlayerName());
         if (checkPlayerExists != null) {
             response.setStatus(400);
-            return ResponseMessage.builder().message("Player already exists with that player name").build();
+            return ResponseMessage
+                    .builder()
+                    .message("Player already exists with that player name")
+                    .build();
         }
         Player player = Player
                 .builder()
-                .username(body.getUsername())
+                .playerName(body.getPlayerName())
                 .build();
 
         playerService.add(player);

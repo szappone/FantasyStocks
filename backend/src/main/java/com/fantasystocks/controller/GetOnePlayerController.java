@@ -1,6 +1,7 @@
 package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.CreatePlayerRequest;
+import com.fantasystocks.controller.api.GetPlayerResponse;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
@@ -20,15 +21,18 @@ public class GetOnePlayerController {
     private PlayerService playerService;
 
     @ResponseBody
-    @RequestMapping(value = "/player", params = "playerName", method = RequestMethod.GET)
-    public Object getOnePlayer( HttpServletRequest request,
-                                     HttpServletResponse response, @RequestParam("playerName") String playerName) {
-        log.info("/player?name="+playerName+ ". Getting player: " + playerName);
+    @RequestMapping(value = "/players", params = "playerName", method = RequestMethod.GET)
+    public Object getOnePlayer(HttpServletRequest request,
+                               HttpServletResponse response,
+                               @RequestParam String playerName) {
+        log.info("Getting info for player with playerName: {}", playerName);
 
         //Check to make sure that this player exists and if so return it
         Player checkPlayerExists = playerService.get(playerName);
         if (checkPlayerExists != null) {
-            return checkPlayerExists;
+            return GetPlayerResponse.builder()
+                    .playeName(checkPlayerExists.getPlayerName())
+                    .build();
         } else {
             response.setStatus(400);
             return ResponseMessage.builder().message("Player does not exist").build();
