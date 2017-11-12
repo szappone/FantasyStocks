@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity(name = "PlayerInSession")
+@Entity(name = "PlayerInGame")
 @Table(name = "Player_In_Session")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayerInSession {
+public class PlayerInGame {
     @EmbeddedId
-    private PlayerInSessionId id;
+    private PlayerInGameId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("PlayerId")
@@ -23,5 +23,9 @@ public class PlayerInSession {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("sessionId")
-    private Session session;
+    private Game game;
+
+    @OneToOne(mappedBy = "portfolio", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Portfolio portfolio;
 }

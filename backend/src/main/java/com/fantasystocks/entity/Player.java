@@ -28,24 +28,24 @@ public class Player {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private Set<PlayerInSession> sessions = new HashSet<>();
+    private Set<PlayerInGame> sessions = new HashSet<>();
 
-    public void addSession(Session session) {
-        PlayerInSession playerInSession = PlayerInSession
+    public void addSession(Game game, Portfolio portfolio) {
+        PlayerInGame playerInGame = PlayerInGame
                 .builder()
                 .player(this)
-                .session(session)
+                .game(game)
                 .build();
-        sessions.add(playerInSession);
-        session.getPlayers().add(playerInSession);
+        sessions.add(playerInGame);
+        game.getPlayers().add(playerInGame);
     }
 
-    public void removeSession(Session session) {
+    public void removeSession(Game game) {
         sessions.removeIf(playerInSession ->  {
-            if (playerInSession.getSession().equals(session)) {
-                playerInSession.getSession().getPlayers().remove(playerInSession);
+            if (playerInSession.getGame().equals(game)) {
+                playerInSession.getGame().getPlayers().remove(playerInSession);
                 playerInSession.setPlayer(null);
-                playerInSession.setSession(null);
+                playerInSession.setGame(null);
                 return true;
             }
             return false;

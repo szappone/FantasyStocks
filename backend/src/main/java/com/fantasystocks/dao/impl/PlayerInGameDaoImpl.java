@@ -1,7 +1,7 @@
 package com.fantasystocks.dao.impl;
 
-import com.fantasystocks.dao.model.PlayerInSessionDao;
-import com.fantasystocks.entity.PlayerInSession;
+import com.fantasystocks.dao.model.PlayerInGameDao;
+import com.fantasystocks.entity.PlayerInGame;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,13 +10,13 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class PlayerInSessionDaoImpl implements PlayerInSessionDao {
+public class PlayerInGameDaoImpl implements PlayerInGameDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public void add(PlayerInSession Pis) {
+    public void add(PlayerInGame Pis) {
         sessionFactory.getCurrentSession().save(Pis);
     }
 
@@ -24,7 +24,7 @@ public class PlayerInSessionDaoImpl implements PlayerInSessionDao {
     public List<Long> getSessionsForPlayer(String playerName) {
         @SuppressWarnings("unchecked")
         Query query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT P.sessionID FROM PlayerInSession P where P.playerName = :playerName");
+                .createQuery("SELECT P.sessionID FROM PlayerInGame P where P.playerName = :playerName");
         query.setParameter("playerName", playerName);
         return (List<Long>)query.getResultList();
     }

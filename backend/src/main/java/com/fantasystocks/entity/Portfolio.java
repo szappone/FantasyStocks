@@ -1,6 +1,5 @@
 package com.fantasystocks.entity;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,6 +16,10 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "portfolio_id")
     private long portfolioId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private PlayerInGame playerInGame;
 
     @Builder.Default
     @ElementCollection

@@ -1,9 +1,9 @@
 package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.ResponseMessage;
-import com.fantasystocks.entity.Session;
-import com.fantasystocks.service.model.PlayerInSessionService;
-import com.fantasystocks.service.model.SessionService;
+import com.fantasystocks.entity.Game;
+import com.fantasystocks.service.model.PlayerInGameService;
+import com.fantasystocks.service.model.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +18,9 @@ import java.util.List;
 @Slf4j
 public class GetSessionsPlayerIsInController {
     @Autowired
-    private PlayerInSessionService pisService;
+    private PlayerInGameService pisService;
     @Autowired
-    private SessionService sessionService;
+    private GameService gameService;
 
     @ResponseBody
     @RequestMapping(value = "/sessions", params = "playerName", method = RequestMethod.GET)
@@ -30,16 +30,16 @@ public class GetSessionsPlayerIsInController {
 
         //Check to make sure that this player exists and if so return it
         List<Long> allSessionIds = pisService.getAll(playerName);
-        List<Session> allSessions = new ArrayList<>();
+        List<Game> allGames = new ArrayList<>();
         if (allSessionIds.size() == 0) {
             response.setStatus(404);
             return ResponseMessage.builder().message("Player currently not in any sessions").build();
         } else {
             for (int i = 0; i < allSessionIds.size(); i++){
-                allSessions.add(sessionService.get(allSessionIds.get(i)));
+                allGames.add(gameService.get(allSessionIds.get(i)));
             }
         }
-        return allSessions;
+        return allGames;
     }
 
     @ExceptionHandler(Exception.class)

@@ -1,7 +1,7 @@
 package com.fantasystocks.dao;
 
 import com.fantasystocks.config.TestConfig;
-import com.fantasystocks.dao.model.PlayerInSessionDao;
+import com.fantasystocks.dao.model.PlayerInGameDao;
 import org.easymock.EasyMockSupport;
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +18,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class PlayerDaoIntegrationTest extends EasyMockSupport{
     @Autowired
-    PlayerInSessionDao playerInSessionDao;
+    PlayerInGameDao playerInGameDao;
 
     @Before
     void setup() {

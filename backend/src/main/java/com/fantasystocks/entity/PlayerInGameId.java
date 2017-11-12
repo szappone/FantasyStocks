@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerInSessionId implements Serializable {
+public class PlayerInGameId implements Serializable {
     @Column(name = "player_id")
     private String playerId;
 

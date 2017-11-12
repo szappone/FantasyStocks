@@ -8,5 +8,5 @@ class EntityStd {
 
     static final int MAX_NAME_CHARACTERS = 30;
     static final String SESSION_NAME_ERROR_MSG = 
-            "Session name must be shorter than " + MAX_NAME_CHARACTERS + " characters.";
+            "Game name must be shorter than " + MAX_NAME_CHARACTERS + " characters.";
 }

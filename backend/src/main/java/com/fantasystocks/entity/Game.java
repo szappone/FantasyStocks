@@ -8,29 +8,29 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Sessions")
+@Table(name = "Games")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Session {
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "session_id")
-    private long sessionId;
+    @Column(name = "game_id")
+    private long gameId;
 
     @NonNull
-    @Column(name = "session_name")
+    @Column(name = "game_name")
     @Size(max = EntityStd.MAX_USER_CHARACTERS, message = EntityStd.SESSION_NAME_ERROR_MSG)
-    private String sessionName;
+    private String gameName;
 
     @NonNull
     @Builder.Default
     @OneToMany(
-            mappedBy = "session",
+            mappedBy = "game",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private Set<PlayerInSession> players = new HashSet<>();
+    private Set<PlayerInGame> players = new HashSet<>();
 
 }
