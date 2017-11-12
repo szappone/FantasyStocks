@@ -2,6 +2,7 @@ package com.fantasystocks.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 public class Stock {
+    @NonNull
+    @Column(name = "symbol", unique = true)
     @Id
     private String symbol;
 

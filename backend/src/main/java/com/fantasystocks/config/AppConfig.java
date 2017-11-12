@@ -46,7 +46,7 @@ public class AppConfig {
 
         factoryBean.setHibernateProperties(props);
         factoryBean.setAnnotatedClasses(Player.class, Game.class, Portfolio.class, Stock.class,
-                PlayerInGame.class, PlayerInGameId.class);
+                PlayerInGame.class);
         return factoryBean;
     }
 

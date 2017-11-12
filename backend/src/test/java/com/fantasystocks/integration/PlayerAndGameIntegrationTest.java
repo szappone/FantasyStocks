@@ -4,60 +4,39 @@ import com.fantasystocks.config.TestConfig;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.PlayerInGame;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
-import org.easymock.EasyMockSupport;
-import org.hibernate.ReplicationMode;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
+import org.hibernate.StatelessSession;
+import org.hibernate.query.Query;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.io.Serializable;
-import java.util.Set;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Slf4j
-public class PlayerAndGameIntegrationTest extends EasyMockSupport{
-    @Autowired
-    private SessionFactory sessionFactory;
-    private Session session;
+public class PlayerAndGameIntegrationTest extends IntegrationTestScaffold {
 
-    @Before
-    public void setup() {
-        session = sessionFactory.openSession();
-        replayAll();
-    }
-
-    @After
-    public void teardown() {
-        session.close();
-        verifyAll();
-    }
+    private static final String gameName = "test_gameName";
+    private static final String playerName = "test_playerName";
 
     @Test
     public void test_AddPlayerToDB() {
-        String username = "test_username";
-        session.save(buildPlayer(username));
+        StatelessSession session = sessionFactory.openStatelessSession();
+        session.insert(buildPlayer(playerName));
 
-        Player player = session.get(Player.class, username);
-        assertEquals("Player username is not correct.", username, player.getPlayerName());
+        Player player = (Player) session.get(Player.class, playerName);
+        assertEquals("PlayerName is not correct.", playerName, player.getPlayerName());
+        sessionFactory.close();
     }
-    
+
     @Test
-    public void test_AddSessionToDB() {
-        String gameName = "test_gameName";
+    public void test_AddGameToDB() {
         Game game = buildGame(gameName);
         Long id = (Long) session.save(game);
 
@@ -66,22 +45,30 @@ public class PlayerAndGameIntegrationTest extends EasyMockSupport{
         assertEquals("The game names do not match.", gameName, gameDB.getGameName());
     }
 
-    private Player buildPlayer(String playerName) {
-        return Player.builder()
-                .playerName(playerName)
-                .build();
-    }
+    @Test
+    public void test_AddGameWithPlayers() {
+        Player player = buildPlayer(playerName);
+        session.save(player);
+        Game game = buildGame(gameName);
+        Long gameId = (Long) session.save(game);
 
-    private Game buildGame(String gameName) {
-        return Game.builder()
-                .gameName(gameName)
+        PlayerInGame playerInGame = PlayerInGame.builder()
+                .player(player)
+                .game(game)
                 .build();
-    }
+        player.addSession(game, null);
+        session.save(player);
 
-    private Game buildGameTotal(Long sessionId, String gameName, Set<PlayerInGame> players) {
-        return Game.builder()
-                .gameName(gameName)
-                .players(players)
-                .build();
+        Game storedGame = session.byId(Game.class).load(gameId);
+        assertEquals("Game names are not the same.", gameName, storedGame.getGameName());
+        Player storedPlayer = session.byId(Player.class).load(playerName);
+        assertEquals("PlayerName is not correct.", playerName, storedPlayer.getPlayerName());
+
+        Query query = session
+                .createQuery("FROM PlayerInGame p WHERE p.player.playerName=:pid AND p.game.gameId=:gid")
+                .setParameter("pid", playerName)
+                .setParameter("gid", gameId);
+        PlayerInGame playerInGameStored = (PlayerInGame) query.getSingleResult();
+        assertEquals("The PlayerInGame objects are not equal. ", playerInGame, playerInGameStored);
     }
 }

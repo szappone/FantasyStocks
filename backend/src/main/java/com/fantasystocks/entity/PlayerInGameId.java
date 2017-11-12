@@ -1,21 +1,20 @@
 package com.fantasystocks.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Embeddable
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlayerInGameId implements Serializable {
-    @Column(name = "player_id")
-    private String playerId;
+    @ManyToOne(fetch = FetchType.LAZY)
 
-    @Column(name = "session_id")
-    private Long sessionId;
+    private Player player;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_id")
+    private Game game;
 }

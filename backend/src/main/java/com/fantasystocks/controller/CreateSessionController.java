@@ -4,7 +4,6 @@ import com.fantasystocks.controller.api.CreateSessionRequest;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
-import com.fantasystocks.entity.PlayerInGame;
 import com.fantasystocks.service.model.GameService;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -32,29 +30,17 @@ public class CreateSessionController {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws Exception {
         log.info("/game. Adding game ... " + body.toString());
-
         //Check if all players already exist
-        String[] playerNames = body.getPlayers();
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < playerNames.length ;i++){
-            Player p = playerService.get(playerNames[i]);
-            players.add(p);
-            if (p == null) {
-                response.setStatus(400);
-                return ResponseMessage
-                        .builder()
-                        .message("Not all player names in game are registered as players")
-                        .build();
-            }
-        }
-        //Create and store game
-        //TODO: properly enter players and portfolio into db.
+        List<String> playerNames = body.getPlayers();
+        List<Player> players = verifyPlayers(playerNames);
+        //Create a new game
         Game game = Game
                 .builder()
                 .gameName(body.getSessionName())
-                //.players(/*new HashSet<>(players)*/ new HashSet<>())
                 .build();
         gameService.add(game);
+        // Add Players to game.
+        players.forEach(player -> playerService.addToSession(player, game));
 
         //Create and store PlayerInGame objects
 
@@ -69,12 +55,38 @@ public class CreateSessionController {
                     .build();
             pisService.add(pis);
         }*/
-        return game;
+
+        //TODO: Properly get all session info (player objects + portfolios).
+        return null;
     }
 
-    @ExceptionHandler(Exception.class)
+    private List<Player> verifyPlayers(List<String> playerNames) throws PlayerNotFoundException {
+        List<Player> players = new ArrayList<>();
+        for (String pn: playerNames) {
+            Player p = playerService.get(pn);
+            if (p == null)
+                throw new PlayerNotFoundException("");
+            players.add(p);
+        }
+        return players;
+    }
+
+    //@ExceptionHandler(Exception.class)
     public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error("Request: " + request.getRequestURL() + " threw " + ex);
         response.setStatus(400);
+    }
+
+    @ExceptionHandler(PlayerNotFoundException.class)
+    public ResponseMessage handlePlayerNotFound(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        log.error("Request: " + request.getRequestURL() + " threw " + ex);
+        response.setStatus(404);
+        return ResponseMessage.builder().message(GameErrMsgs.PLAYER_NOT_FOUND).build();
+    }
+
+    private static class PlayerNotFoundException extends Exception {
+        public PlayerNotFoundException(String message) {
+            super(message);
+        }
     }
 }

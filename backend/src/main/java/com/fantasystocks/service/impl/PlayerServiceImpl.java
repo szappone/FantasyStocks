@@ -1,6 +1,7 @@
 package com.fantasystocks.service.impl;
 
 import com.fantasystocks.dao.model.PlayerDao;
+import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +22,18 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void add(Player player) {
         playerDao.add(player);
+    }
+
+    @Transactional
+    @Override
+    public void update(Player player) {
+        playerDao.update(player);
+    }
+
+    @Transactional
+    @Override
+    public void addToSession(Player player, Game game) {
+        playerDao.addToSession(player, game);
     }
 
     @Transactional

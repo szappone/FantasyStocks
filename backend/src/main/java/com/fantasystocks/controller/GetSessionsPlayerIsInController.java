@@ -42,7 +42,7 @@ public class GetSessionsPlayerIsInController {
         return allGames;
     }
 
-    @ExceptionHandler(Exception.class)
+    //@ExceptionHandler(Exception.class)
     public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error("Request: " + request.getRequestURL() + " threw " + ex);
         response.setStatus(400);
