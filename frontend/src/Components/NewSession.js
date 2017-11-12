@@ -4,21 +4,22 @@ import '../App.css';
 import {Route, Link, Switch} from 'react-router-dom'
 import Dashboard from './Dashboard'
 
-const API_PREFIX = "http://localhost:8080";
-const API_HELLO = API_PREFIX + "/hello";
-
 class NewSession extends Component {
 
   constructor() {
     super();
     this.state = {
       name: "",
-      friends: ["friend1", "friend2", "friend3"]
+      allPlayers: [],
+      checkedPlayers: []
     };
   }
 
   componentDidMount() {
-    setTimeout(this.getHelloWorld, 3000);
+    this.props.globalService.getAllPlayers()
+      .then((data) => {
+        this.setState({allPlayers: data});
+      });
   }
 
 
@@ -62,9 +63,22 @@ class NewSession extends Component {
           <br></br><br></br><br></br>
           Select 9 friends
           <ul>
-            {this.state.friends.map((friend) => (
-              console.log(friend),
-                <li><p>{friend}</p></li>
+            {this.state.allPlayers.map((friend) => (
+                <li>
+                  <p>
+                    <input type="checkbox" onClick={(cb) => {
+                      //console.log(friend);
+                      if (this.state.checkedPlayers.includes(friend)) {
+                        this.state.checkedPlayers.splice(this.state.checkedPlayers.indexOf(friend));
+                      } else {
+                        this.state.checkedPlayers.push(friend);
+                      }
+                      console.log(this.state.checkedPlayers);
+                    }
+                  }></input>
+                    {friend}
+                  </p>
+                </li>
               ))}
             </ul>
           </header>

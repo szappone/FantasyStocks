@@ -5,6 +5,12 @@
   padding-bottom: 600px;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

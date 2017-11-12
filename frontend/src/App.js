@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setTimeout(this.getHelloWorld, 3000);
+    // setTimeout(this.getHelloWorld, 3000);
   }
 
   render() {

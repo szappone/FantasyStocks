@@ -15,8 +15,8 @@ class Dashboard extends Component {
       sessions: ["a", "b", "c"],
       handle: "unknown"
   };
-    console.log("logging props from constructor");
-    console.log(this.props);
+    // console.log("logging props from constructor");
+    // console.log(this.props);
 
   }
 
@@ -32,16 +32,16 @@ class Dashboard extends Component {
         }
       );
       this.setState({handle: this.props.globalService.handle});
-      console.log(this.props.globalService.handle);
-      console.log("successfully set our state from global service");
+      // console.log(this.props.globalService.handle);
+      // console.log("successfully set our state from global service");
     } else {
-      console.log("cant access global service yet!");
+      // console.log("cant access global service yet!");
     }
   }
 
   render() {
     let currHandle = this.state.handle;
-    console.log("curr Handle: " + currHandle);
+    // console.log("curr Handle: " + currHandle);
 
     return (
 
@@ -57,8 +57,6 @@ class Dashboard extends Component {
         <h2> Your Sessions </h2>
 
 
-        {console.log("our sessions: " + this.state.sessions)}
-        {console.log("our handle: " + currHandle)}
           {this.state.sessions.map((session) => (
               <button className="Dash-button">
                 <Link to={'/session/' + session.sessionId}>Session #{session.sessionId}</Link>
