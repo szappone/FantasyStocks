@@ -10,7 +10,7 @@ class Session extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSession: {players: ["a", "b", "c"]},
+      currentSession: {players: []},
       currentSessionId: 0
     };
 
