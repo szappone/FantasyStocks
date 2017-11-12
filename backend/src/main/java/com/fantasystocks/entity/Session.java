@@ -21,7 +21,7 @@ public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SID")
+    @Column(name = "sessionID")
     private long sessionId;
 
     @NonNull

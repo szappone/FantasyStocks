@@ -4,9 +4,6 @@ import '../App.css';
 import {Route, Link, Switch} from 'react-router-dom'
 import Dashboard from './Dashboard'
 
-const API_PREFIX = "http://localhost:8080";
-const API_HELLO = API_PREFIX + "/hello";
-
 class NewSession extends Component {
 
   constructor() {
@@ -25,8 +22,7 @@ class NewSession extends Component {
 
 
   componentDidMount() {
-    setTimeout(this.getHelloWorld, 3000);
-      console.log("SESSIONNAME: " + this.state.name);
+    console.log("SESSIONNAME: " + this.state.name);
   }
 
     setDraftState() {
