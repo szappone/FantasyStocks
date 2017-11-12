@@ -13,14 +13,14 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:db.properties")
+@PropertySource("classpath:testdb.properties")
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("com.fantasystocks.controller"),
         @ComponentScan("com.fantasystocks.dao"),
         @ComponentScan("com.fantasystocks.service")
 })
-public class AppConfig {
+public class TestConfig {
     @Autowired
     private Environment env;
 
@@ -46,7 +46,7 @@ public class AppConfig {
 
         factoryBean.setHibernateProperties(props);
         factoryBean.setAnnotatedClasses(Player.class, Game.class, Portfolio.class, Stock.class,
-                PlayerInGame.class, PlayerInGameId.class);
+                PlayerInGame.class);
         return factoryBean;
     }
 

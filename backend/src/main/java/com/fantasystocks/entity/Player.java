@@ -1,29 +1,57 @@
 package com.fantasystocks.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
-@Builder
 @Entity
 @Table(name = "Players")
+@Data
+@Builder
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Player {
-    private static final int MAX_USER_CHARACTERS = 30;
-    private static final int MIN_USER_CHARACTERS = 5;
-    private static final String USER_NAME_ERROR_MSG =
-            "Username must be between " + MIN_USER_CHARACTERS + " and " + MAX_USER_CHARACTERS + ".";
-    private static final int MAX_NAME_CHARACTERS = 30;
-
+    @NonNull
+    @Column(name = "username", unique = true)
+    @Size(max = EntityStd.MAX_USER_CHARACTERS,  min = EntityStd.MIN_USER_CHARACTERS,
+          message = EntityStd.USER_NAME_ERROR_MSG)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String playerName;
 
     @NonNull
-    @Column(name = "playerName", unique = true)
-    @Size(max = MAX_USER_CHARACTERS, min = MIN_USER_CHARACTERS, message = USER_NAME_ERROR_MSG)
-    @Id
-    private String playerName;
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "player",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<PlayerInGame> sessions = new HashSet<>();
+
+    public void addSession(Game game, Portfolio portfolio) {
+        PlayerInGame playerInGame = PlayerInGame
+                .builder()
+                .player(this)
+                .game(game)
+                .build();
+        sessions.add(playerInGame);
+        game.getPlayers().add(playerInGame);
+    }
+
+    public void removeSession(Game game) {
+        sessions.removeIf(playerInSession ->  {
+            if (playerInSession.getGame().equals(game)) {
+                playerInSession.getGame().getPlayers().remove(playerInSession);
+                playerInSession.setPlayer(null);
+                playerInSession.setGame(null);
+                return true;
+            }
+            return false;
+        });
+    }
+
 
 }

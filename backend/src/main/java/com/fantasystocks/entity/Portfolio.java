@@ -1,30 +1,38 @@
 package com.fantasystocks.entity;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
-@Builder
 @Entity
 @Table(name = "Portfolios")
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Builder
 public class Portfolio {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "portfolioID")
+    @Column(name = "portfolio_id")
     private long portfolioId;
 
-    @Column(name = "longs")
-    private String[] longs;
+    /*@OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private PlayerInGame playerInGame;*/
 
-    @Column(name = "shorts")
-    private String[] shorts;
+    @Builder.Default
+    @ElementCollection
+    @Column(name = "offense")
+    private List<Stock> offense = new ArrayList<>();
 
+    @Builder.Default
+    @ElementCollection
+    @Column(name = "defense")
+     private List<Stock> defense = new ArrayList<>();
+
+    @Builder.Default
+    @ElementCollection
     @Column(name = "bench")
-    private String[] bench;
-
+    private List<Stock> bench = new ArrayList<>();
 }
