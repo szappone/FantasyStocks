@@ -4,34 +4,33 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
-@Builder
 @Entity
 @Table(name = "Sessions")
+@Data
+@Builder
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class Session {
-    private static final int MAX_USER_CHARACTERS = 30;
-    private static final int MIN_USER_CHARACTERS = 5;
-    private static final String USER_NAME_ERROR_MSG =
-            "Session name must be between " + MIN_USER_CHARACTERS + " and " + MAX_USER_CHARACTERS + ".";
-    private static final int MAX_NAME_CHARACTERS = 30;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SID")
+    @Column(name = "session_id")
     private long sessionId;
 
     @NonNull
     @Column(name = "session_name")
-    @Size(max = MAX_NAME_CHARACTERS, message = "Name is too long.")
+    @Size(max = EntityStd.MAX_USER_CHARACTERS, message = EntityStd.SESSION_NAME_ERROR_MSG)
     private String sessionName;
 
     @NonNull
-    @Column(name = "players")
-    @Size(max = MAX_NAME_CHARACTERS, message = "Name is too long.")
-    private String[] players;
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "session",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<PlayerInSession> players = new HashSet<>();
 
 }

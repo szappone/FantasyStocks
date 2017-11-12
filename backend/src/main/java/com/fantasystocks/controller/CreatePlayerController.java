@@ -1,13 +1,10 @@
 package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.CreatePlayerRequest;
-<<<<<<< HEAD:backend/src/main/java/com/fantasystocks/controller/CreatePlayerController.java
 import com.fantasystocks.controller.api.ResponseMessage;
-=======
->>>>>>> 222756d4ccd3355063023908530835c8c37267ac:backend/src/main/java/com/fantasystocks/controller/CreateUserController.java
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@Log4j2
+@Slf4j
 public class CreatePlayerController {
     @Autowired
     private PlayerService playerService;
@@ -29,14 +26,14 @@ public class CreatePlayerController {
         log.info("/player. Adding player ... " + body.toString());
 
         //Check to make sure that this player name is not already in use
-        Player checkPlayerExists = playerService.get(body.getPlayerName());
+        Player checkPlayerExists = playerService.get(body.getUsername());
         if (checkPlayerExists != null) {
             response.setStatus(400);
             return ResponseMessage.builder().message("Player already exists with that player name").build();
         }
         Player player = Player
                 .builder()
-                .playerName(body.getPlayerName())
+                .username(body.getUsername())
                 .build();
 
         playerService.add(player);

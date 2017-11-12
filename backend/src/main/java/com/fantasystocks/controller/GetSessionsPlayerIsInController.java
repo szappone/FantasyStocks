@@ -1,12 +1,10 @@
 package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.ResponseMessage;
-import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.Session;
 import com.fantasystocks.service.model.PlayerInSessionService;
-import com.fantasystocks.service.model.PlayerService;
 import com.fantasystocks.service.model.SessionService;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@Log4j2
+@Slf4j
 public class GetSessionsPlayerIsInController {
     @Autowired
     private PlayerInSessionService pisService;
@@ -28,7 +26,7 @@ public class GetSessionsPlayerIsInController {
     @RequestMapping(value = "/sessions", params = "playerName", method = RequestMethod.GET)
     public Object getAll( HttpServletRequest request,
                                      HttpServletResponse response, @RequestParam("playerName") String playerName) {
-        log.info("/sessions?playerName="+playerName+ ". Getting sessions the following player is in: " + playerName);
+        log.debug("/sessions?playerName="+playerName+ ". Getting sessions the following player is in: " + playerName);
 
         //Check to make sure that this player exists and if so return it
         List<Long> allSessionIds = pisService.getAll(playerName);

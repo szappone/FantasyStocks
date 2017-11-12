@@ -5,6 +5,7 @@ import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@Log4j2
+@Slf4j
 public class GetOnePlayerController {
     @Autowired
     private PlayerService playerService;

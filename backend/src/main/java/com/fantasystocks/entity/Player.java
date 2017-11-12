@@ -1,29 +1,56 @@
 package com.fantasystocks.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
-@Builder
 @Entity
 @Table(name = "Players")
+@Data
+@Builder
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Player {
-    private static final int MAX_USER_CHARACTERS = 30;
-    private static final int MIN_USER_CHARACTERS = 5;
-    private static final String USER_NAME_ERROR_MSG =
-            "Username must be between " + MIN_USER_CHARACTERS + " and " + MAX_USER_CHARACTERS + ".";
-    private static final int MAX_NAME_CHARACTERS = 30;
-
+    @NonNull
+    @Column(name = "username", unique = true)
+    @Size(max = EntityStd.MAX_USER_CHARACTERS,  min = EntityStd.MIN_USER_CHARACTERS,
+          message = EntityStd.USER_NAME_ERROR_MSG)
+    @Id
+    private String username;
 
     @NonNull
-    @Column(name = "playerName", unique = true)
-    @Size(max = MAX_USER_CHARACTERS, min = MIN_USER_CHARACTERS, message = USER_NAME_ERROR_MSG)
-    @Id
-    private String playerName;
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "player",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<PlayerInSession> sessions = new HashSet<>();
+
+    public void addSession(Session session) {
+        PlayerInSession playerInSession = PlayerInSession
+                .builder()
+                .player(this)
+                .session(session)
+                .build();
+        sessions.add(playerInSession);
+        session.getPlayers().add(playerInSession);
+    }
+
+    public void removeSession(Session session) {
+        sessions.removeIf(playerInSession ->  {
+            if (playerInSession.getSession().equals(session)) {
+                playerInSession.getSession().getPlayers().remove(playerInSession);
+                playerInSession.setPlayer(null);
+                playerInSession.setSession(null);
+                return true;
+            }
+            return false;
+        });
+    }
+
 
 }
