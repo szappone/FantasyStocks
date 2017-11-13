@@ -10,27 +10,34 @@ import java.util.Set;
 @Entity
 @Table(name = "Players")
 @Data
+@EqualsAndHashCode(exclude = "sessions")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Player {
     @NonNull
-    @Column(name = "username", unique = true)
+    @Column(name = "playername", unique = true)
     @Size(max = EntityStd.MAX_USER_CHARACTERS,  min = EntityStd.MIN_USER_CHARACTERS,
           message = EntityStd.USER_NAME_ERROR_MSG)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String playerName;
 
     @NonNull
     @Builder.Default
-    @OneToMany(
-            mappedBy = "player",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany( mappedBy = "player", cascade = CascadeType.ALL )
     private Set<PlayerInGame> sessions = new HashSet<>();
 
+    public void addSession(Game game) {
+        PlayerInGame playerInGame = PlayerInGame
+                .builder()
+                .player(this)
+                .game(game)
+                .build();
+        sessions.add(playerInGame);
+        game.getPlayers().add(playerInGame);
+    }
+
+    //TODO: Properly add portfolio info.
     public void addSession(Game game, Portfolio portfolio) {
         PlayerInGame playerInGame = PlayerInGame
                 .builder()
@@ -52,6 +59,4 @@ public class Player {
             return false;
         });
     }
-
-
 }

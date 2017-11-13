@@ -1,13 +1,15 @@
 package com.fantasystocks.dao.impl;
 
 import com.fantasystocks.dao.model.PlayerDao;
+import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
-import com.fantasystocks.entity.PlayerInGame;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -21,22 +23,53 @@ public class PlayerDaoImpl implements PlayerDao {
 
     @Override
     public void add(Player player) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
         session.save(player);
+        tx.commit();
+        session.close();
+    }
+
+    @Override
+    public void update(Player player) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(player);
+        tx.commit();
+        session.close();
+    }
+
+    @Override
+    public void addToSession(Player player, Game game) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        Player p = session.get(Player.class, player.getPlayerName());
+        p.addSession(game);
+        session.save(p);
+        tx.commit();
+        session.close();
     }
 
     @Override
     public Player get(String playerName) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
         log.debug("Fetching player with username: {}" + playerName);
         Player player = session.get(Player.class, playerName);
+        tx.commit();
+        session.close();
+
         return player;
     }
 
     @Override
     public List<Player> listPlayers() {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
         @SuppressWarnings("unchecked")
-        TypedQuery<Player> query = sessionFactory.getCurrentSession().createQuery("from Player");
+        TypedQuery<Player> query = session.createQuery("from Player");
+        tx.commit();
+        session.close();
         return query.getResultList();
     }
 }

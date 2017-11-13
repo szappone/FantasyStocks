@@ -6,26 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity(name = "PlayerInGame")
-@Table(name = "Player_In_Session")
+@Entity
+@Table(name = "PlayerInGame")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayerInGame {
-    @EmbeddedId
-    private PlayerInGameId id;
-
+@IdClass(PlayerInGameId.class)
+public class PlayerInGame implements Serializable {
+    @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("PlayerId")
+    @MapsId
     private Player player;
 
+    @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("sessionId")
+    @MapsId
     private Game game;
 
-    /*@OneToOne(mappedBy = "playerInGame", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-    private Portfolio portfolio;*/
+    @OneToOne(cascade=CascadeType.ALL)
+    private Portfolio portfolio;
 }
