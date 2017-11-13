@@ -20,7 +20,7 @@ function getRealService() {
          },
 
          getSessions: function() {
-            return fetch(GET_SESSIONS);
+            return fetch(GET_SESSIONS + this.handle);
          },
 
           getPlayerByPlayerName: function(inputName) {
@@ -32,16 +32,25 @@ function getRealService() {
           },
 
           createPlayer: function(inputName) {
-              return fetch(CREATE_PLAYER, {
-                method: "POST",
-                body: inputName
-              });
+            let requestBody = {
+              playerName: inputName
+            };
+
+            return fetch(CREATE_PLAYER, {
+              method: "POST",
+              body: requestBody
+            });
           },
 
           createSession: function(sessionName, playerIds) {
+            let requestBody = {
+            	players: playerIds,
+            	sessionName: sessionName
+            };
+
             return fetch(CREATE_SESSION, {
               method: "POST",
-              body: {sessionName, playerIds}
+              body: requestBody
             });
           }
     }

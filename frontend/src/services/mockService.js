@@ -109,6 +109,9 @@ function getMockService() {
 
     createSession: function(sessionName, playerIds) {
       return new Promise((resolve, reject) => {
+        if (!sessionName) {
+          reject(createErrorMessage("need a session name"));
+        }
         let createdSession = createSessionObject(
             this.allSessions.length + 1,
             sessionName,
@@ -117,6 +120,7 @@ function getMockService() {
             {},
             {}
           );
+        this.allSessions.push(createdSession);
         resolve(createdSession);
 
       });
