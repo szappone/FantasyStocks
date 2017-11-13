@@ -59,7 +59,7 @@ class Dashboard extends Component {
 
           {this.state.sessions.map((session) => (
               <button className="Dash-button">
-                <Link to={'/session/' + session.sessionId}>Session #{session.sessionId}</Link>
+                <Link to={'/session/' + session.sessionId}>{session.sessionName}</Link>
             </button >
 
           ))}

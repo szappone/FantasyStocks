@@ -10,7 +10,10 @@ class Session extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSession: {players: []},
+      currentSession: {
+        players: [],
+        sessionName: ""
+      },
       currentSessionId: 0
     };
 
@@ -55,7 +58,7 @@ class Session extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to session #{this.props.match.params.sessionId}</h1>
+            <h1 className="App-title">Welcome to Session: {this.state.currentSession.sessionName}</h1>
         </header>
 
         <ul>
