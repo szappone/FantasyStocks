@@ -17,13 +17,18 @@ import java.io.Serializable;
 @IdClass(PlayerInGameId.class)
 public class PlayerInGame implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "player_in_game_id")
+    private long playerInGameId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
+    @Column(name = "played_id")
     private Player player;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
+    @Column(name = "game_id")
     private Game game;
 
     @OneToOne(cascade=CascadeType.ALL)
