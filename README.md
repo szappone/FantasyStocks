@@ -1,10 +1,15 @@
-[![Build Status](https://travis-ci.com/jhu-oose/2017-group-8.svg?token=GFzTpsDvNNku4D8fo5y8&branch=setup)](https://travis-ci.com/jhu-oose/2017-group-8)
-
 # FantasyStocks
 ## Dependencies
 maven
 npm
 mysql
+a mysql database connection available on
+    localhost:3306
+    username: root
+    password: admin
+
+This can be accomplished on Macs with no mysql configuration by installing mysql and running "make db".
+
 
 ## Build
 * The project root is split up into two subdirectories: backend/ and frontend/

@@ -67,9 +67,9 @@ public class PlayerDaoImpl implements PlayerDao {
         Transaction tx = session.beginTransaction();
         @SuppressWarnings("unchecked")
         TypedQuery<Player> query = session.createQuery("from Player");
-        List<Player> res = query.getResultList();
+        List<Player> players = query.getResultList();
         tx.commit();
         session.close();
-        return res;
+        return players;
     }
 }
