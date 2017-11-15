@@ -47,7 +47,6 @@ public class PlayerDaoImpl implements PlayerDao {
         p.addSession(game);
         session.save(p);
         tx.commit();
-        session.close();
     }
 
     @Override
@@ -68,8 +67,9 @@ public class PlayerDaoImpl implements PlayerDao {
         Transaction tx = session.beginTransaction();
         @SuppressWarnings("unchecked")
         TypedQuery<Player> query = session.createQuery("from Player");
+        List<Player> res = query.getResultList();
         tx.commit();
         session.close();
-        return query.getResultList();
+        return res;
     }
 }
