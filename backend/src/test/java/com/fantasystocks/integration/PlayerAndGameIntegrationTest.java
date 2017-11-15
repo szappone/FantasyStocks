@@ -1,27 +1,15 @@
 package com.fantasystocks.integration;
 
-import com.fantasystocks.config.TestConfig;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.PlayerInGame;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.StatelessSession;
 import org.hibernate.query.Query;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Slf4j
 public class PlayerAndGameIntegrationTest extends IntegrationTestScaffold {
-
     private static final String gameName = "test_gameName";
     private static final String playerName = "test_playerName";
 
