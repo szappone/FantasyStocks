@@ -8,6 +8,7 @@ import NewSession from './Components/NewSession'
 import NewSessionDraft from './Components/NewSessionDraft'
 import getMockService from './services/mockService'
 import getRealService from './services/realService'
+import getCurrentService from './services/currentService'
 
 class App extends Component {
 
@@ -41,7 +42,8 @@ class App extends Component {
     if (this.state && this.state.globalService) {
       return this.state.globalService;
     }
-    return getMockService();
+
+    return getCurrentService();
     //return getRealService();
   }
 }
