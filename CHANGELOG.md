@@ -32,4 +32,4 @@ All notable changes will be logged here
   - Made database queries safe
 
  Changed  
-  - The way we store data by adding a relation to the database
+  - Implemented a relation for database storage
