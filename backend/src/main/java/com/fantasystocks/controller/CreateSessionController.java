@@ -25,11 +25,11 @@ public class CreateSessionController {
     private GameService gameService;
 
     @ResponseBody
-    @RequestMapping(value = "/game", method = RequestMethod.POST)
+    @RequestMapping(value = "/session", method = RequestMethod.POST)
     public Object createSession(@RequestBody CreateSessionRequest body,
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws Exception {
-        log.info("/game. Adding game ... " + body.toString());
+        log.info("/session. Adding game ... " + body.toString());
         //Check if all players already exist
         List<String> playerNames = body.getPlayers();
         List<Player> players = verifyPlayers(playerNames);
