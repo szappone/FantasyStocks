@@ -23,3 +23,13 @@ All notable changes will be logged here
   
   Removed
   - Roster object, consolidated it as a portfolio object with long/short/bench states
+
+## Version 1 1.2.0 - 2017-11-17
+ Added  
+  - Front End Components: mockService, currentService and realService
+  - Back End Components: Portfolio scoring algorithm set up and implementation
+  - Added Sessions and Portfolios and related endpoints
+  - Made database queries safe
+
+ Changed  
+  - The way we store data by adding a relation to the database
