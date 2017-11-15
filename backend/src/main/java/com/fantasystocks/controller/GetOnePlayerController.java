@@ -32,7 +32,7 @@ public class GetOnePlayerController {
         Player checkPlayerExists = playerService.get(playerName);
         if (checkPlayerExists != null) {
             return GetPlayerResponse.builder()
-                    .playeName(checkPlayerExists.getPlayerName())
+                    .playerName(checkPlayerExists.getPlayerName())
                     .build();
         } else {
             response.setStatus(400);
