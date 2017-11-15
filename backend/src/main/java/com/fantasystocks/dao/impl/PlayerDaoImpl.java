@@ -47,6 +47,7 @@ public class PlayerDaoImpl implements PlayerDao {
         p.addSession(game);
         session.save(p);
         tx.commit();
+        session.close();
     }
 
     @Override
@@ -57,7 +58,6 @@ public class PlayerDaoImpl implements PlayerDao {
         Player player = session.get(Player.class, playerName);
         tx.commit();
         session.close();
-
         return player;
     }
 
