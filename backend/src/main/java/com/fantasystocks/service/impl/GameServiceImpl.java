@@ -59,8 +59,8 @@ public class GameServiceImpl implements GameService {
             List<String> players = game.getPlayers().stream()
                     .map(pig -> {
                         String pn = pig.getPlayer().getPlayerName();
-                        Long portfolioId = pig.getPortfolio().getPortfolioId();
-                        portfolios.putIfAbsent(pn, portfolioId);
+                        //Long portfolioId = pig.getPortfolio().getPortfolioId();
+                        //portfolios.putIfAbsent(pn, portfolioId);
                         return pn;
                     })
                     .collect(Collectors.toList());
