@@ -1,24 +1,13 @@
 package com.fantasystocks.integration;
 
-import com.fantasystocks.config.TestConfig;
-import com.fantasystocks.entity.Game;
-import com.fantasystocks.entity.Player;
-import com.fantasystocks.entity.Portfolio;
-import com.fantasystocks.entity.Stock;
+import com.fantasystocks.entity.*;
 import com.google.common.collect.ImmutableList;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
     private static ImmutableList<String> offenseTest = ImmutableList.of("GOOGL", "AMZN", "MSFT", "FB", "NVDA");
@@ -29,8 +18,8 @@ public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
     private static List<Stock> bench = generateStocksFromSymbols(benchTest);
 
     private static final String gameName = "test_gameName";
-    private static final String playerName1 = "test_playerName1";
-    private static final String playerName2 = "test_playerName2";
+    private static final List<String> players = ImmutableList.of("test_playerName1","test_playerName2","test_playerName3");
+
 
     private static List<Stock> generateStocksFromSymbols(List<String> symbols) {
         return symbols.stream()
@@ -49,13 +38,48 @@ public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
 
     @Test
     public void test_addGameWithPortfolios() {
-        Player player = buildPlayer(playerName1);
-        session.save(player);
+        addPlayers(players);
         Game game = buildGame(gameName);
         Long gameId = (Long) session.save(game);
+        addStocks(benchTest);
+        addStocks(defenseTest);
+        addStocks(offenseTest);
+        Portfolio portfolio = Portfolio.builder()
+                .bench(buildStocks(benchTest))
+                .defense(buildStocks(defenseTest))
+                .offense(buildStocks(offenseTest))
+                .build();
+        Long portfolioId = (Long) session.save(portfolio);
+        Player player1 = session.get(Player.class, players.get(0));
+        PlayerInGame playerInGame = PlayerInGame.builder()
+                .player(player1)
+                .game(game)
+                .build();
+        PlayerInGameId pigId = (PlayerInGameId) session.save(playerInGame);
+        PlayerInGame playerInGameSaved = session.get(PlayerInGame.class, pigId);
+        playerInGameSaved.setPortfolio(portfolio);
+        session.save(playerInGameSaved);
+
+        PlayerInGame actual = session.get(PlayerInGame.class, pigId);
+        assertEquals("The player is not right.", players.get(0), actual.getPlayer().getPlayerName());
+        assertEquals("The game is not right.", gameId, (Long) actual.getGame().getGameId());
+        assertEquals("The portfolio is not right.", portfolioId, (Long) actual.getPortfolio().getPortfolioId());
     }
 
     private void addPlayers(List<String> playerNames) {
+        playerNames.forEach(p -> {
+            Player player = buildPlayer(p);
+            session.save(player);
+        });
+    }
 
+    private void addStocks(List<String> stockTickers) {
+        stockTickers.forEach(s -> session.save(Stock.builder().symbol(s).build()));
+    }
+
+    private List<Stock> buildStocks(List<String> stockTickers) {
+        return stockTickers.stream()
+                .map(s -> Stock.builder().symbol(s).build())
+                .collect(Collectors.toList());
     }
 }

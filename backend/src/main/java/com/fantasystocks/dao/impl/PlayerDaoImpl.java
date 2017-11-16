@@ -44,7 +44,8 @@ public class PlayerDaoImpl implements PlayerDao {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         Player p = session.get(Player.class, player.getPlayerName());
-        p.addSession(game);
+        Game g = session.get(Game.class, game.getGameId());
+        p.addSession(g);
         session.save(p);
         tx.commit();
         session.close();

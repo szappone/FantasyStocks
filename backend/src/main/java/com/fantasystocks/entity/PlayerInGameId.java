@@ -10,11 +10,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlayerInGameId implements Serializable {
-    @ManyToOne(fetch = FetchType.LAZY)
-
-    private Player player;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
-    private Game game;
+    private String player;
+    private Long game;
 }

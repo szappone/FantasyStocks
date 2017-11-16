@@ -1,12 +1,17 @@
 package com.fantasystocks.dao.impl;
 
 import com.fantasystocks.dao.model.PlayerInGameDao;
+import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.PlayerInGame;
+import lombok.Data;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -17,16 +22,39 @@ public class PlayerInGameDaoImpl implements PlayerInGameDao {
 
     @Override
     public void add(PlayerInGame Pis) {
-        sessionFactory.getCurrentSession().save(Pis);
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        session.save(Pis);
+
+        tx.commit();
+        session.close();
     }
 
     @Override
-    public List<Long> getSessionsForPlayer(String playerName) {
-        @SuppressWarnings("unchecked")
-        Query query = sessionFactory.getCurrentSession()
-                .createQuery("SELECT P.sessionID FROM PlayerInGame P where P.playerName = :playerName");
-        query.setParameter("playerName", playerName);
-        return (List<Long>)query.getResultList();
+    public void remove(PlayerInGame pis) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        session.delete(pis);
+
+        tx.commit();
+        session.close();
     }
 
+    @Override
+    public List<PlayerInGame> getGamesForPlayer(String playerName) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        @SuppressWarnings("unchecked")
+        Query query = session.createQuery("from PlayerInGame p where p.player.playerName = :pn");
+        query.setParameter("pn", playerName);
+        @SuppressWarnings("unchecked")
+        List<PlayerInGame> playerInGames = Collections.checkedList(query.getResultList(), PlayerInGame.class);
+
+        tx.commit();
+        session.close();
+        return playerInGames;
+    }
 }
