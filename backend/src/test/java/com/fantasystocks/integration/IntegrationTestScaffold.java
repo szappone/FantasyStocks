@@ -35,14 +35,12 @@ public class IntegrationTestScaffold extends EasyMockSupport {
     public void setup() {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        replayAll();
     }
 
     @After
     public void teardown() {
         tx.commit();
         session.close();
-        verifyAll();
     }
 
     Player buildPlayer(String playerName) {

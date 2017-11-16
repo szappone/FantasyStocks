@@ -43,13 +43,13 @@ public class PortfolioDaoImpl implements PortfolioDao {
     }
 
     @Override
-    public void addPortfolioToSession(long portfolioID, Player player, Game game) {
+    public void addPortfolioToSession(long portfolioID, String playerId, String gameId) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery("from PlayerInGame " +
                 "where player_id = :pid and game_id = :gid");
-        query.setParameter("pid", player.getPlayerName());
-        query.setParameter("gid", game.getGameId());
+        query.setParameter("pid", playerId);
+        query.setParameter("gid", gameId);
         PlayerInGame playerInGame = (PlayerInGame) query.getSingleResult();
         Portfolio portfolio = session.get(Portfolio.class, portfolioID);
         playerInGame.setPortfolio(portfolio);

@@ -17,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Game {
     @Id
+    @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_id")
     private long gameId;
@@ -29,7 +30,7 @@ public class Game {
 
     @NonNull
     @Builder.Default
-    @OneToMany( mappedBy = "game", cascade = CascadeType.ALL )
+    @OneToMany( mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PlayerInGame> players = new HashSet<>();
 
 }

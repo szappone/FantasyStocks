@@ -16,15 +16,16 @@ import java.util.Set;
 @AllArgsConstructor
 public class Player {
     @NonNull
-    @Column(name = "playername", unique = true)
+    @Column(name = "player_name", unique = true)
     @Size(max = EntityStd.MAX_USER_CHARACTERS,  min = EntityStd.MIN_USER_CHARACTERS,
           message = EntityStd.USER_NAME_ERROR_MSG)
     @Id
+    @Access(AccessType.PROPERTY)
     private String playerName;
 
     @NonNull
     @Builder.Default
-    @OneToMany( mappedBy = "player", cascade = CascadeType.ALL )
+    @OneToMany( mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PlayerInGame> sessions = new HashSet<>();
 
     public void addSession(Game game) {

@@ -1,10 +1,12 @@
 package com.fantasystocks.dao.model;
 
+import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.PlayerInGame;
 
 import java.util.List;
 
 public interface PlayerInGameDao {
-    public void add(PlayerInGame playerInGame);
-    public List<Long> getSessionsForPlayer(String playerName);
+    void add(PlayerInGame playerInGame);
+    void remove(PlayerInGame playerInGame);
+    List<PlayerInGame> getGamesForPlayer(String playerName);
 }

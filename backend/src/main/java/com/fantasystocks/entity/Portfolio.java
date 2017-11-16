@@ -1,6 +1,7 @@
 package com.fantasystocks.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Portfolio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "portfolio_id")
+    @Access(AccessType.PROPERTY)
     private long portfolioId;
 
     @OneToOne(cascade = CascadeType.ALL)

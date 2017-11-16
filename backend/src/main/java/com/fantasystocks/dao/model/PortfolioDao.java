@@ -5,7 +5,7 @@ import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.Portfolio;
 
 public interface PortfolioDao {
-    public void add(Portfolio portfolio);
-    public Portfolio get(long portfolioID);
-    public void addPortfolioToSession(long portfolioID, Player player, Game game);
+    void add(Portfolio portfolio);
+    Portfolio get(long portfolioID);
+    void addPortfolioToSession(long portfolioID, String playerId, String gameId);
 }
