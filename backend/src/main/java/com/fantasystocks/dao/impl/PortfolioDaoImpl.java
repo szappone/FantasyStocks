@@ -6,7 +6,6 @@ import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.PlayerInGame;
 import com.fantasystocks.entity.Portfolio;
-import com.sun.xml.internal.ws.wsdl.writer.document.Port;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -38,7 +37,6 @@ public class PortfolioDaoImpl implements PortfolioDao {
         Session session = sessionFactory.openSession();
         Portfolio p = session.get(Portfolio.class, portfolioID);
         session.close();
-
         return p;
     }
 
