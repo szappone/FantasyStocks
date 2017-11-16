@@ -23,7 +23,6 @@ public class Game {
     private long gameId;
 
     @NonNull
-    @NaturalId
     @Column(name = "game_name")
     @Size(max = EntityStd.MAX_NAME_CHARACTERS, message = EntityStd.SESSION_NAME_ERROR_MSG)
     private String gameName;
