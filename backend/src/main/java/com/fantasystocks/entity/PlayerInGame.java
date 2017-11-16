@@ -17,15 +17,15 @@ import java.io.Serializable;
 @IdClass(PlayerInGameId.class)
 public class PlayerInGame implements Serializable {
     @Id
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
     private Player player;
 
     @Id
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
     private Game game;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Portfolio portfolio;
 }

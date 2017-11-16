@@ -17,8 +17,6 @@ import java.util.Set;
 public class Player {
     @NonNull
     @Column(name = "player_name", unique = true)
-    @Size(max = EntityStd.MAX_USER_CHARACTERS,  min = EntityStd.MIN_USER_CHARACTERS,
-          message = EntityStd.USER_NAME_ERROR_MSG)
     @Id
     @Access(AccessType.PROPERTY)
     private String playerName;

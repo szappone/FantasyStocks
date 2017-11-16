@@ -2,6 +2,7 @@ package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.CreateSessionRequest;
 import com.fantasystocks.controller.api.ResponseMessage;
+import com.fantasystocks.controller.api.Session;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.GameService;
@@ -42,22 +43,26 @@ public class CreateSessionController {
         // Add Players to game.
         players.forEach(player -> playerService.addToSession(player, game));
 
+
         //Create and store PlayerInGame objects
 
         /*
         TODO: Properly add playerInGame Portfolio.
-        long sessionID = game.getGameId();
-        for (int i = 0; i < playerNames.length ;i++){
-            PlayerInGame pis = PlayerInGame
-                    .builder()
-                    .id(sessionID)
-                    .playerName(playerNames[i])
-                    .build();
-            pisService.add(pis);
         }*/
 
         //TODO: Properly get all session info (player objects + portfolios).
-        return null;
+        List<String> allPlayers = new ArrayList<>();
+        game.getPlayers().stream().forEach(pig -> {
+            allPlayers.add(pig.getPlayer().getPlayerName());
+        });
+        Session retSession = Session
+                .builder()
+                .sessionId(game.getGameId())
+                .sessionName(game.getGameName())
+                .players(allPlayers)
+                .build();
+
+        return retSession;
     }
 
     private List<Player> verifyPlayers(List<String> playerNames) throws PlayerNotFoundException {
