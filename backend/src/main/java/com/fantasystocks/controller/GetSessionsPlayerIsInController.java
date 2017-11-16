@@ -2,10 +2,13 @@ package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.controller.api.Session;
+import com.fantasystocks.dao.model.PlayerInGameDao;
 import com.fantasystocks.entity.Game;
+import com.fantasystocks.entity.PlayerInGame;
 import com.fantasystocks.service.model.PlayerInGameService;
 import com.fantasystocks.service.model.GameService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,7 @@ import java.util.List;
 public class GetSessionsPlayerIsInController {
     @Autowired
     private GameService gameService;
+
 
     @ResponseBody
     @RequestMapping(value = "/sessions", params = "playerName", method = RequestMethod.GET)
