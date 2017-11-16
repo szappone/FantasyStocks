@@ -73,4 +73,9 @@ public class GameServiceImpl implements GameService {
                     .build();
         }).collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true )
+    @Override
+    public List<Player> getAllPlayers(long gameid) {return sessionDao.getAllPlayers(gameid);}
+
 }

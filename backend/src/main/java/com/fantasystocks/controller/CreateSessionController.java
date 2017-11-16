@@ -5,6 +5,7 @@ import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.controller.api.Session;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
+import com.fantasystocks.entity.PlayerInGame;
 import com.fantasystocks.service.model.GameService;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.slf4j.Slf4j;
@@ -50,16 +51,16 @@ public class CreateSessionController {
         TODO: Properly add playerInGame Portfolio.
         }*/
 
+        List<String> allplayers = new ArrayList<>();
+        for (Player p : gameService.getAllPlayers(game.getGameId())){
+            allplayers.add(p.getPlayerName());
+        }
         //TODO: Properly get all session info (player objects + portfolios).
-        List<String> allPlayers = new ArrayList<>();
-        game.getPlayers().stream().forEach(pig -> {
-            allPlayers.add(pig.getPlayer().getPlayerName());
-        });
         Session retSession = Session
                 .builder()
                 .sessionId(game.getGameId())
                 .sessionName(game.getGameName())
-                .players(allPlayers)
+                .players(allplayers)
                 .build();
 
         return retSession;
