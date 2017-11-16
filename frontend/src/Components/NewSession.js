@@ -11,7 +11,8 @@ class NewSession extends Component {
     this.state = {
       name: "",
       allPlayers: [],
-      checkedPlayers: []
+      checkedPlayers: [],
+      errorMessage: ""
     };
   }
 
@@ -21,23 +22,6 @@ class NewSession extends Component {
         this.setState({allPlayers: data});
       });
   }
-
-
-  setSessionDataInState() {
-    if (this.props && this.props.globalService) {
-      this.props.globalService.getSessions().then(
-        (data) => {
-          this.setState({sessions: data})
-        }
-      );
-      this.setState({name: this.props.globalService.name});
-      console.log("successfully set our state from global service");
-    } else {
-      console.log("cant access global service yet!");
-    }
-  }
-
-
 
   render() {
     return (
@@ -83,31 +67,34 @@ class NewSession extends Component {
             </ul>
           </header>
 
-          <br></br>
-          <br></br>
-          <br></br>
+          <br/><br/><br/><br/><br/><br/>
           <div className="App-main-login">
-            <button className="App-button">
-                <Link to='/newsessiondraft' onClick={this.launchNewSessionDraft}>Next</Link>
-
+            <button className="App-button" onClick={this.handleCreate}>
+                Create
            </button >
+            <p>{this.state.errorMessage}</p>
           </div>
    </div>
 
     );
   }
 
-  createNewSession = () => {
-
-  }
-
-  launchNewSessionDraft = () => {
-    this.props.globalService.name = this.state.name;
+  handleCreate = () => {
+    this.props.globalService.createSession(this.state.name, this.state.checkedPlayers)
+      .then(() => {
+        this.props.history.push("/dashboard");
+      })
+      .catch((error) => {
+        let displayErrorMessage = "Could not create session";
+        if (error.message) {
+          displayErrorMessage = error.message;
+        }
+        this.setState({errorMessage: displayErrorMessage});
+      });
   }
 
   onInputChange = (newSessionInput) => {
     this.setState({name:newSessionInput.target.value});
-    this.props.globalService.name = newSessionInput.target.value;
   }
 
 }

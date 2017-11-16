@@ -1,11 +1,11 @@
 package com.fantasystocks.dao.model;
 
+import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.Portfolio;
 
-import java.util.List;
-
 public interface PortfolioDao {
-    public void add(Portfolio portfolio);
-    public Portfolio get(long portfolioID);
+    void add(Portfolio portfolio);
+    Portfolio get(long portfolioID);
+    void addPortfolioToSession(long portfolioID, String playerId, String gameId);
 }

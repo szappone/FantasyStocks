@@ -1,30 +1,47 @@
 package com.fantasystocks.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
-@Builder
 @Entity
 @Table(name = "Portfolios")
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(exclude="playerInGame")
+@Builder
 public class Portfolio {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "portfolioID")
+    @Column(name = "portfolio_id")
+    @Access(AccessType.PROPERTY)
     private long portfolioId;
 
-    @Column(name = "longs")
-    private String[] longs;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumns({
+            @JoinColumn(name = "player_id"),
+            @JoinColumn(name = "game_id")
+    })
+    private PlayerInGame playerInGame;
 
-    @Column(name = "shorts")
-    private String[] shorts;
+    @Builder.Default
+    @OneToMany
+    @JoinTable(name="offense_stocks")
+    @Column(name = "offense")
+    private List<Stock> offense = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany
+    @JoinTable(name="defense_stocks")
+    @Column(name = "defense")
+     private List<Stock> defense = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany
+    @JoinTable(name="bench_stocks")
     @Column(name = "bench")
-    private String[] bench;
-
+    private List<Stock> bench = new ArrayList<>();
 }

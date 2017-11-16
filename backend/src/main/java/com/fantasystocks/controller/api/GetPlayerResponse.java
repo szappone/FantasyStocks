@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CreatePlayerRequest {
+public class GetPlayerResponse {
     private String playerName;
 }

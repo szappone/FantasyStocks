@@ -1,12 +1,11 @@
 package com.fantasystocks.controller;
 
 import com.fantasystocks.controller.api.ResponseMessage;
-import com.fantasystocks.entity.Player;
-import com.fantasystocks.entity.Session;
-import com.fantasystocks.service.model.PlayerInSessionService;
-import com.fantasystocks.service.model.PlayerService;
-import com.fantasystocks.service.model.SessionService;
-import lombok.extern.log4j.Log4j2;
+import com.fantasystocks.controller.api.Session;
+import com.fantasystocks.entity.Game;
+import com.fantasystocks.service.model.PlayerInGameService;
+import com.fantasystocks.service.model.GameService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,34 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@Log4j2
+@Slf4j
 public class GetSessionsPlayerIsInController {
     @Autowired
-    private PlayerInSessionService pisService;
-    @Autowired
-    private SessionService sessionService;
+    private GameService gameService;
 
     @ResponseBody
     @RequestMapping(value = "/sessions", params = "playerName", method = RequestMethod.GET)
-    public Object getAll( HttpServletRequest request,
-                                     HttpServletResponse response, @RequestParam("playerName") String playerName) {
-        log.info("/sessions?playerName="+playerName+ ". Getting sessions the following player is in: " + playerName);
+    public Object getAll(HttpServletRequest request,
+                         HttpServletResponse response,
+                         @RequestParam("playerName") String playerName) {
+        log.debug("/sessions?playerName="+playerName+ ". Getting sessions the following player is in: " + playerName);
 
         //Check to make sure that this player exists and if so return it
-        List<Long> allSessionIds = pisService.getAll(playerName);
-        List<Session> allSessions = new ArrayList<>();
-        if (allSessionIds.size() == 0) {
-            response.setStatus(404);
-            return ResponseMessage.builder().message("Player currently not in any sessions").build();
-        } else {
-            for (int i = 0; i < allSessionIds.size(); i++){
-                allSessions.add(sessionService.get(allSessionIds.get(i)));
-            }
-        }
-        return allSessions;
+        return gameService.getAllSessions(playerName);
     }
 
-    @ExceptionHandler(Exception.class)
+    //@ExceptionHandler(Exception.class)
     public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error("Request: " + request.getRequestURL() + " threw " + ex);
         response.setStatus(400);

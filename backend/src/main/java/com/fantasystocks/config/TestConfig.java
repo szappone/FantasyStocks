@@ -8,34 +8,21 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:db.properties")
+@PropertySource("classpath:testdb.properties")
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("com.fantasystocks.controller"),
         @ComponentScan("com.fantasystocks.dao"),
         @ComponentScan("com.fantasystocks.service")
 })
-public class AppConfig {
+public class TestConfig {
     @Autowired
     private Environment env;
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("*").allowedOrigins("http://localhost:3000");
-            }
-        };
-    }
 
     @Bean(destroyMethod = "")
     public DataSource getDataSource() {

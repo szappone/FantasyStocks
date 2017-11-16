@@ -1,11 +1,15 @@
-package com.fantasystocks.config;
+package com.fantasystocks;
 
+import com.fantasystocks.config.AppConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-@SpringBootApplication
-public class ApplicationInitalizer extends AbstractAnnotationConfigDispatcherServletInitializer {
+@SpringBootApplication(exclude =  HibernateJpaAutoConfiguration.class)
+@Slf4j
+public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -23,6 +27,6 @@ public class ApplicationInitalizer extends AbstractAnnotationConfigDispatcherSer
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(ApplicationInitalizer.class, args);
+        SpringApplication.run(ApplicationInitializer.class, args);
     }
 }
