@@ -53,6 +53,10 @@ public class PlayerInGameDaoImpl implements PlayerInGameDao {
         @SuppressWarnings("unchecked")
         List<PlayerInGame> playerInGames = Collections.checkedList(query.getResultList(), PlayerInGame.class);
 
+        playerInGames.stream().forEach(playerInGame -> {
+            playerInGame.getGame();
+            playerInGame.getPlayer();
+        });
         tx.commit();
         session.close();
         return playerInGames;
