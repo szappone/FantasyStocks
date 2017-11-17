@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,8 @@ public class GameDaoImpl implements GameDao {
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery("from PlayerInGame p join fetch p.player where p.game.gameId = :pid");
         query.setParameter("pid", sessionID);
-        List<PlayerInGame> playerIGs = query.getResultList();
+        @SuppressWarnings("unchecked")
+        List<PlayerInGame> playerIGs = Collections.checkedList(query.getResultList(), PlayerInGame.class);
         List<Player> players = playerIGs.stream()
                 .map(PlayerInGame::getPlayer)
                 .collect(Collectors.toList());

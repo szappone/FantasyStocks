@@ -23,7 +23,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
-import static org.junit.Assert.assertEquals;
 
 
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
@@ -73,6 +72,17 @@ public class PlayerInGameDaoImplTest extends EasyMockSupport {
         replayAll();
 
         playerInGameDaoImpl.add(buildPlayerInGame(gameNameTest, playerNameTest));
+    }
+
+    @Test
+    public void test_remove() {
+        setup_open_close();
+        PlayerInGame playerInGame = buildPlayerInGame(gameNameTest, playerNameTest);
+        session.delete(playerInGame);
+        expectLastCall().andVoid();
+        replayAll();
+
+        playerInGameDaoImpl.remove(playerInGame);
     }
 
     private PlayerInGame buildPlayerInGame(String gameName, String playerName) {

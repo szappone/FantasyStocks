@@ -33,6 +33,15 @@ public class PortfolioDaoImpl implements PortfolioDao {
     }
 
     @Override
+    public void update(Portfolio portfolio) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(portfolio);
+        tx.commit();
+        session.close();
+    }
+
+    @Override
     public Portfolio get(long portfolioID) {
         Session session = sessionFactory.openSession();
         Portfolio p = session.get(Portfolio.class, portfolioID);

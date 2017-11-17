@@ -1,4 +1,4 @@
-package com.fantasystocks.integration;
+package com.fantasystocks.entity.integration;
 
 import com.fantasystocks.entity.*;
 import com.google.common.collect.ImmutableList;

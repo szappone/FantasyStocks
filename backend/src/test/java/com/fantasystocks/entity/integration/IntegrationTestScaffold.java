@@ -1,4 +1,4 @@
-package com.fantasystocks.integration;
+package com.fantasystocks.entity.integration;
 
 import com.fantasystocks.config.TestConfig;
 import com.fantasystocks.entity.*;
@@ -15,7 +15,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;

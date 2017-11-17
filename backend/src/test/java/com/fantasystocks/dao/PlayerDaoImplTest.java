@@ -19,8 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
 
 
@@ -38,6 +37,7 @@ public class PlayerDaoImplTest extends EasyMockSupport {
 
     private static final String playerNameTest = "test_playerName";
     private static final String gameNameTest = "test_gameName";
+    private static final Long gameIdTest = 1234L;
 
     @After
     public void teardown() {
@@ -82,9 +82,10 @@ public class PlayerDaoImplTest extends EasyMockSupport {
     @Test
     public void test_addToSession() {
         setup_open_close();
-        Game game = buildGame(gameNameTest);
+        Game game = buildGame(gameIdTest, gameNameTest);
         Player p = buildPlayer(playerNameTest);
         expect(session.get(Player.class, playerNameTest)).andReturn(p);
+        expect(session.get(Game.class, gameIdTest)).andReturn(game);
         expect(session.save(p)).andReturn(playerNameTest).once();
         replayAll();
 
@@ -99,8 +100,9 @@ public class PlayerDaoImplTest extends EasyMockSupport {
                 .build();
     }
 
-    private Game buildGame(String gameName) {
+    private Game buildGame(Long id, String gameName) {
         return Game.builder()
+                .gameId(id)
                 .gameName(gameName)
                 .build();
     }
