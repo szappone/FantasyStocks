@@ -1,12 +1,17 @@
+import 'whatwg-fetch';
+
+
 const API_PREFIX = "http://localhost:8080";
-const GET_SESSIONS = API_PREFIX + "?playerName=";
-const CREATE_SESSION = API_PREFIX + "/session"
-const CREATE_PLAYER = API_PREFIX + "/player"
-const GET_ALL_PLAYERS = API_PREFIX + "/players"
-const GET_THIS_PLAYER = API_PREFIX + "/players?playerName="
+const GET_SESSIONS = API_PREFIX + "/sessions?playerName=";
+const CREATE_SESSION = API_PREFIX + "/session";
+const CREATE_PLAYER = API_PREFIX + "/player";
+const GET_ALL_PLAYERS = API_PREFIX + "/players";
+const GET_THIS_PLAYER = API_PREFIX + "/players?playerName=";
 
 
 function getRealService() {
+
+  const defaultHeaders = new Headers({'Content-Type': 'application/json'});
   return {
 
         handle: "not set",
@@ -20,7 +25,8 @@ function getRealService() {
          },
 
          getSessions: function() {
-            return fetch(GET_SESSIONS + this.handle);
+            return fetch(GET_SESSIONS + this.handle, {
+            });
          },
 
           getPlayerByPlayerName: function(inputName) {
@@ -35,8 +41,10 @@ function getRealService() {
             let requestBody = {
               playerName: inputName
             };
+            requestBody = JSON.stringify(requestBody);
 
             return fetch(CREATE_PLAYER, {
+              headers: new Headers({'Content-Type': 'application/json'}),
               method: "POST",
               body: requestBody
             });
