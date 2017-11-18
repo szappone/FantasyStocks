@@ -15,6 +15,7 @@ function getRealService() {
   return {
 
         handle: "not set",
+        playerIsLoggedIn: false,
 
         setHandle: function(input) {
           this.handle = input;
@@ -22,6 +23,14 @@ function getRealService() {
 
          getHandle: function() {
           return this.handle;
+         },
+
+         isLoggedIn: function() {
+           return this.playerIsLoggedIn;
+         },
+
+         setIsLoggedIn: function(input) {
+           this.playerIsLoggedIn = input;
          },
 
          getSessions: function() {
@@ -55,8 +64,10 @@ function getRealService() {
             	players: playerIds,
             	sessionName: sessionName
             };
+            requestBody = JSON.stringify(requestBody);
 
             return fetch(CREATE_SESSION, {
+              headers: new Headers({'Content-Type': 'application/json'}),
               method: "POST",
               body: requestBody
             });

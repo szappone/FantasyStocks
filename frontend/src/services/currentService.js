@@ -3,39 +3,29 @@ import getRealService from './realService'
 
 function getCurrentService() {
 
+  // closure!
   let mockService = getMockService();
   let realService = getRealService();
 
   return {
-        handle: "not set",
 
-        setHandle: function(input) {
-          return realService.setHandle(input);
-        },
+          setHandle: realService.setHandle,
 
-         getHandle: function() {
-            return realService.getHandle();
-         },
+          getHandle: realService.getHandle,
 
-         getSessions: function() {
-           return realService.getHandle();
-         },
+          isLoggedIn: realService.isLoggedIn,
 
-          getPlayerByPlayerName: function(inputName) {
-            return realService.getPlayerByPlayerName(inputName);
-          },
+          setIsLoggedIn: realService.setIsLoggedIn,
 
-          getAllPlayers: function() {
-            return realService.getAllPlayers();
-          },
+          getSessions: realService.getSessions,
 
-          createPlayer: function(inputName) {
-            return realService.createPlayer(inputName);
-          },
+          getPlayerByPlayerName: realService.getPlayerByPlayerName,
 
-          createSession: function(sessionName, playerIds) {
-            return mockService.createSession(sessionName, playerIds);
-          }
+          getAllPlayers: realService.getAllPlayers,
+
+          createPlayer: realService.createPlayer,
+
+          createSession: realService.createSession
     }
 }
 

@@ -18,7 +18,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    //setTimeout(this.getHelloWorld, 3000);
+
   }
 
   render() {
@@ -71,6 +71,7 @@ class Login extends Component {
         console.log("logging create account response");
         console.log(response);
         if (response.ok) {
+          service.setIsLoggedIn(true);
           this.props.history.push("/dashboard");
         } else {
           this.setState({errorMessage: "Handle already exists"});
@@ -89,6 +90,7 @@ class Login extends Component {
     service.getPlayerByPlayerName(service.getHandle()).then(
       (response) => {
         if (response.ok) {
+          service.setIsLoggedIn(true);
           this.props.history.push("/dashboard");
         } else {
           this.setState({errorMessage: "Invalid handle"})

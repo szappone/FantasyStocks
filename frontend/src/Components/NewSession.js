@@ -3,8 +3,10 @@ import logo from '../logo.svg';
 import '../App.css';
 import {Route, Link, Switch} from 'react-router-dom'
 import Dashboard from './Dashboard'
+import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
 
-class NewSession extends Component {
+
+class NewSession extends FantasyStocksBaseComponent {
 
   constructor() {
     super();
@@ -17,9 +19,16 @@ class NewSession extends Component {
   }
 
   componentDidMount() {
-    this.props.globalService.getAllPlayers()
+    super.componentDidMount();
+    let service = this.props.globalService;
+    service.getAllPlayers()
       .then((data) => {
-        this.setState({allPlayers: data});
+        return data.json()
+      }).then((jsonData) => {
+        let playerArray = jsonData.playerNames;
+        // remove logged in player from playerArray
+        playerArray.splice(playerArray.indexOf(service.getHandle()), 1);
+        this.setState({allPlayers: playerArray});
       });
   }
 
@@ -53,7 +62,7 @@ class NewSession extends Component {
                     <input type="checkbox" onClick={(cb) => {
                       //console.log(friend);
                       if (this.state.checkedPlayers.includes(friend)) {
-                        this.state.checkedPlayers.splice(this.state.checkedPlayers.indexOf(friend));
+                        this.state.checkedPlayers.splice(this.state.checkedPlayers.indexOf(friend), 1);
                       } else {
                         this.state.checkedPlayers.push(friend);
                       }
@@ -80,9 +89,17 @@ class NewSession extends Component {
   }
 
   handleCreate = () => {
-    this.props.globalService.createSession(this.state.name, this.state.checkedPlayers)
-      .then(() => {
-        this.props.history.push("/dashboard");
+    let service = this.props.globalService;
+    let invitedPlayers = this.state.checkedPlayers.slice();
+    //add logged in player to invited players
+    invitedPlayers.push(service.getHandle());
+    service.createSession(this.state.name, invitedPlayers)
+      .then((response) => {
+        if (response.ok) {
+          this.props.history.push("/dashboard");
+        } else {
+          this.setState({errorMessage: "Error: Could not create session"});
+        }
       })
       .catch((error) => {
         let displayErrorMessage = "Could not create session";
