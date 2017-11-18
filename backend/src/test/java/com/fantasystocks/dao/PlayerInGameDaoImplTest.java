@@ -1,9 +1,11 @@
 package com.fantasystocks.dao;
 
 import com.fantasystocks.config.TestConfig;
-import com.fantasystocks.dao.impl.PlayerDaoImpl;
+import com.fantasystocks.dao.impl.PlayerInGameDaoImpl;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
+import com.fantasystocks.entity.PlayerInGame;
+import com.fantasystocks.entity.PlayerInGameId;
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
@@ -19,13 +21,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.assertEquals;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
 
 
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
 @RunWith(EasyMockRunner.class)
-public class PlayerDaoImplTest extends EasyMockSupport {
+public class PlayerInGameDaoImplTest extends EasyMockSupport {
     @Mock
     private SessionFactory sessionFactory;
     @Mock
@@ -33,10 +35,10 @@ public class PlayerDaoImplTest extends EasyMockSupport {
     @Mock
     private Transaction transaction;
     @TestSubject
-    private PlayerDaoImpl playerDaoImpl = new PlayerDaoImpl();
+    private PlayerInGameDaoImpl playerInGameDaoImpl = new PlayerInGameDaoImpl();
 
-    private static final String playerNameTest = "test_playerName";
     private static final String gameNameTest = "test_gameName";
+    private static final String playerNameTest = "test_playerName";
     private static final Long gameIdTest = 1234L;
 
     @After
@@ -46,7 +48,7 @@ public class PlayerDaoImplTest extends EasyMockSupport {
 
     @Before
     public void setupAutowiredMocks() {
-        ReflectionTestUtils.setField(playerDaoImpl, "sessionFactory", sessionFactory);
+        ReflectionTestUtils.setField(playerInGameDaoImpl, "sessionFactory", sessionFactory);
     }
 
     private void setup_open_close() {
@@ -61,49 +63,38 @@ public class PlayerDaoImplTest extends EasyMockSupport {
     @Test
     public void test_add() {
         setup_open_close();
-        Player player = buildPlayer(playerNameTest);
-        expect(session.save(player)).andReturn(playerNameTest);
+        PlayerInGame game = buildPlayerInGame(gameNameTest, playerNameTest);
+        PlayerInGameId playerInGameId = PlayerInGameId.builder()
+                .game(gameIdTest)
+                .player(playerNameTest)
+                .build();
+        expect(session.save(game)).andReturn(playerInGameId);
         replayAll();
 
-        playerDaoImpl.add(player);
+        playerInGameDaoImpl.add(buildPlayerInGame(gameNameTest, playerNameTest));
     }
 
     @Test
-    public void test_update() {
+    public void test_remove() {
         setup_open_close();
-        Player player = buildPlayer(playerNameTest);
-        session.saveOrUpdate(player);
-        expectLastCall().andVoid().once();
+        PlayerInGame playerInGame = buildPlayerInGame(gameNameTest, playerNameTest);
+        session.delete(playerInGame);
+        expectLastCall().andVoid();
         replayAll();
 
-        playerDaoImpl.update(player);
+        playerInGameDaoImpl.remove(playerInGame);
     }
 
-    @Test
-    public void test_addToSession() {
-        setup_open_close();
-        Game game = buildGame(gameIdTest, gameNameTest);
-        Player p = buildPlayer(playerNameTest);
-        expect(session.get(Player.class, playerNameTest)).andReturn(p);
-        expect(session.get(Game.class, gameIdTest)).andReturn(game);
-        expect(session.save(p)).andReturn(playerNameTest).once();
-        replayAll();
-
-        playerDaoImpl.addToSession(p, game);
-        assertEquals("Player names are not the same.", playerNameTest, p.getPlayerName());
-        assertEquals("Game is not in player.", 1, p.getSessions().size());
-    }
-
-    private Player buildPlayer(String playerName) {
-        return Player.builder()
+    private PlayerInGame buildPlayerInGame(String gameName, String playerName) {
+        Game game = Game.builder()
+                .gameName(gameName)
+                .build();
+        Player player = Player.builder()
                 .playerName(playerName)
                 .build();
-    }
-
-    private Game buildGame(Long id, String gameName) {
-        return Game.builder()
-                .gameId(id)
-                .gameName(gameName)
+        return PlayerInGame.builder()
+                .game(game)
+                .player(player)
                 .build();
     }
 }

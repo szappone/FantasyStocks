@@ -48,15 +48,15 @@ public class PlayerInGameDaoImpl implements PlayerInGameDao {
         Transaction tx = session.beginTransaction();
 
         @SuppressWarnings("unchecked")
-        Query query = session.createQuery("from PlayerInGame p where p.player.playerName = :pn");
+        Query query = session.createQuery(
+                "from PlayerInGame p " +
+                "join fetch p.player " +
+                "join fetch p.game " +
+                "where p.player.playerName = :pn");
         query.setParameter("pn", playerName);
+
         @SuppressWarnings("unchecked")
         List<PlayerInGame> playerInGames = Collections.checkedList(query.getResultList(), PlayerInGame.class);
-
-        playerInGames.stream().forEach(playerInGame -> {
-            playerInGame.getGame();
-            playerInGame.getPlayer();
-        });
         tx.commit();
         session.close();
         return playerInGames;
