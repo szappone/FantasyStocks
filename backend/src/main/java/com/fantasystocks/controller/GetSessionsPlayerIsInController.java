@@ -20,6 +20,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@CrossOrigin
 public class GetSessionsPlayerIsInController {
     @Autowired
     private GameService gameService;

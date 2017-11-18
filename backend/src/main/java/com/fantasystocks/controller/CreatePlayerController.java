@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @Slf4j
+@CrossOrigin
 public class CreatePlayerController {
     @Autowired
     private PlayerService playerService;
