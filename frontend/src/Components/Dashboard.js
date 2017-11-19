@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import logo from '../logo.svg';
 import '../App.css';
 import './Dashboard.css';
-import {Route, Link} from 'react-router-dom'
+import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
+import {Route, Link} from 'react-router-dom';
 
 const API_PREFIX = "http://localhost:8080";
 
-class Dashboard extends Component {
+class Dashboard extends FantasyStocksBaseComponent {
 
   constructor(props) {
     super(props);
     this.setSessionDataInState = this.setSessionDataInState.bind(this);
     this.state = {
-      sessions: ["a", "b", "c"],
-      handle: "unknown"
+      sessions: ["a", "b", "c"]
   };
     // console.log("logging props from constructor");
     // console.log(this.props);
@@ -25,23 +25,20 @@ class Dashboard extends Component {
   }
 
   setSessionDataInState() {
-    if (this.props && this.props.globalService) {
-      this.props.globalService.getSessions().then(
-        (data) => {
-          this.setState({sessions: data})
+    this.props.globalService.getSessions()
+      .then(
+        (response) => {
+          return response.json();
+        }
+      ).then(
+        (jsonData) => {
+          this.setState({sessions: jsonData});
         }
       );
-      this.setState({handle: this.props.globalService.handle});
-      // console.log(this.props.globalService.handle);
-      // console.log("successfully set our state from global service");
-    } else {
-      // console.log("cant access global service yet!");
-    }
   }
 
   render() {
-    let currHandle = this.state.handle;
-    // console.log("curr Handle: " + currHandle);
+    let currHandle = this.props.globalService.getHandle();
 
     return (
 

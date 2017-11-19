@@ -18,7 +18,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    //setTimeout(this.getHelloWorld, 3000);
+
   }
 
   render() {
@@ -68,11 +68,19 @@ class Login extends Component {
     let service = this.props.globalService;
     service.createPlayer(service.getHandle()).then(
       (response) => {
-        this.props.history.push("/dashboard");
+        console.log("logging create account response");
+        console.log(response);
+        if (response.ok) {
+          service.setIsLoggedIn(true);
+          this.props.history.push("/dashboard");
+        } else {
+          this.setState({errorMessage: "Handle already exists"});
+        }
       }
     ).catch(
       (error) => {
-        this.setState({errorMessage: "Handle already exists"})
+        this.setState({errorMessage: "Error: could not create account"});
+        console.log(error);
       }
     );
   }
@@ -81,11 +89,16 @@ class Login extends Component {
     let service = this.props.globalService;
     service.getPlayerByPlayerName(service.getHandle()).then(
       (response) => {
-        this.props.history.push("/dashboard");
+        if (response.ok) {
+          service.setIsLoggedIn(true);
+          this.props.history.push("/dashboard");
+        } else {
+          this.setState({errorMessage: "Invalid handle"})
+        }
       }
     ).catch(
       (error) => {
-        this.setState({errorMessage: "Invalid handle"})
+        this.setState({errorMessage: "Error: could not log in"})
       }
     );
   }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import '../App.css';
+import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
+
 
 import {Route, Link} from 'react-router-dom'
 import Dashboard from './Dashboard'
 
-class Session extends Component {
+class Session extends FantasyStocksBaseComponent {
 
   constructor(props) {
     super(props);
@@ -32,17 +34,19 @@ class Session extends Component {
 
   setSessionState() {
     if (this.props && this.props.globalService) {
-      this.setState({handle: this.props.globalService.handle});
-
       this.props.globalService.getSessions().then(
-          (returnedSessions) => {
-            let currSession = returnedSessions.find(s => s.sessionId === this.state.currentSessionId);
-            if (currSession) {
-               this.setState({currentSession: currSession});
-            } else {
-                console.log("couldnt get currentSession");
-            }
+        (response) => {
+          return response.json();
+        }
+      ).then(
+        (jsonData) => {
+          let currSession = jsonData.find(s => s.sessionId === this.state.currentSessionId);
+          if (currSession) {
+             this.setState({currentSession: currSession});
+          } else {
+              console.log("couldnt get currentSession");
           }
+        }
       );
 
 
@@ -61,6 +65,7 @@ class Session extends Component {
             <h1 className="App-title">Welcome to Session: {this.state.currentSession.sessionName}</h1>
         </header>
 
+        <h4> Players in this Session </h4>
         <ul>
         {this.state.currentSession.players.map((player) => (
           console.log(player),

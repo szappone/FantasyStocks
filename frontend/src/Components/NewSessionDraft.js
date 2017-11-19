@@ -3,8 +3,10 @@ import logo from '../logo.svg';
 import '../App.css';
 import {Route, Link, Switch} from 'react-router-dom'
 import Dashboard from './Dashboard'
+import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
 
-class NewSession extends Component {
+
+class NewSessionDraft extends FantasyStocksBaseComponent {
 
   constructor() {
     super();
@@ -22,6 +24,7 @@ class NewSession extends Component {
 
 
   componentDidMount() {
+    super.componentDidMount();
     console.log("SESSIONNAME: " + this.state.name);
   }
 
@@ -75,4 +78,4 @@ class NewSession extends Component {
 
 }
 
-export default NewSession;
+export default NewSessionDraft;

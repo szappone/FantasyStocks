@@ -1,6 +1,7 @@
 function getMockService() {
   return {
     handle: "not set",
+    playerIsLoggedIn: true,
     playerIds: ["ak", "shiv", "sarah", "ajo", "archan"],
     allSessions: [
       createSessionObject(1, "first session",
@@ -58,6 +59,14 @@ function getMockService() {
 
     getHandle: function() {
       return this.handle;
+    },
+
+    isLoggedIn: function() {
+      return this.playerIsLoggedIn;
+    },
+
+    setIsLoggedIn: function(input) {
+      this.playerIsLoggedIn = input;
     },
 
     getSessions: function() {
