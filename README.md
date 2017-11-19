@@ -16,6 +16,9 @@ This can be accomplished on Macs with no mysql configuration by installing mysql
 * Building the backend starts up a server that listens on localhost:8080
 * Building the frontend starts up a server that listens on localhost:3000
 
+## Deploy
+We are deployed to Google Cloud at http://35.196.59.216:3000
+The deployment process is to install dependencies using scripts/deploy.sh, then to build frontend and backend as specified below.
 
 ## Backend
 
