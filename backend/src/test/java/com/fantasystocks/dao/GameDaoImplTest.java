@@ -81,6 +81,17 @@ public class GameDaoImplTest extends EasyMockSupport {
         gameDaoImpl.update(game);
     }
 
+    @Test
+    public void test_get() {
+        setup_open_close();
+        Game game = buildGame(gameNameTest);
+        expect(session.get(Game.class, gameIdTest)).andReturn(game).once();
+        replayAll();
+
+        Game actual = gameDaoImpl.get(gameIdTest);
+        assertEquals(game, actual);
+    }
+
     private Game buildGame(String gameName) {
         return Game.builder()
                 .gameName(gameName)

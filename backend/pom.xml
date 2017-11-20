@@ -163,6 +163,12 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.9</version>
+                <configuration>
+                    <excludes>
+                        <exclude>com/fantasystocks/controller/api/*.class</exclude>
+                        <exclude>com/fantasystocks/entity/*.class</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -191,8 +197,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                </configuration>
             </plugin>
         </plugins>
     </build>

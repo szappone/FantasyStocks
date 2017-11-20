@@ -80,6 +80,17 @@ public class PlayerDaoImplTest extends EasyMockSupport {
     }
 
     @Test
+    public void test_get() {
+        setup_open_close();
+        Player player = buildPlayer(playerNameTest);
+        expect(session.get(Player.class, playerNameTest)).andReturn(player).once();
+        replayAll();
+
+        Player actual = playerDaoImpl.get(playerNameTest);
+        assertEquals(player, actual);
+    }
+
+    @Test
     public void test_addToSession() {
         setup_open_close();
         Game game = buildGame(gameIdTest, gameNameTest);
