@@ -28,7 +28,8 @@ All notable changes will be logged here
  Added  
   - Front End Components: mockService, currentService and realService
   - Back End Components: Portfolio scoring algorithm set up and implementation
-  - Added Sessions and Portfolios and related endpoints
+  - Sessions, Portfolios and related endpoints
+  - Tests for get methods on DAOs
   - Made database queries safe
 
  Changed  
