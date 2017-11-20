@@ -2,6 +2,7 @@ package com.fantasystocks.dao;
 
 import com.fantasystocks.config.TestConfig;
 import com.fantasystocks.dao.impl.PortfolioDaoImpl;
+import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Portfolio;
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
@@ -20,6 +21,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
+import static org.junit.Assert.assertEquals;
 
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
 @RunWith(EasyMockRunner.class)
@@ -73,6 +75,17 @@ public class PortfolioDaoImplTest extends EasyMockSupport {
         replayAll();
 
         portfolioDaoImpl.update(portfolio);
+    }
+
+    @Test
+    public void test_get() {
+        setup_open_close();
+        Portfolio portfolio = buildPortfolio(portfolioIdTest);
+        expect(session.get(Portfolio.class, portfolioIdTest)).andReturn(portfolio).once();
+        replayAll();
+
+        Portfolio actual = portfolioDaoImpl.get(portfolioIdTest);
+        assertEquals(portfolio, actual);
     }
 
     private Portfolio buildPortfolio(Long portfolioId) {
