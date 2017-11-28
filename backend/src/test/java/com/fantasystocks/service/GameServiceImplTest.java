@@ -6,6 +6,7 @@ import com.fantasystocks.dao.model.PlayerInGameDao;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.PlayerInGame;
+import com.fantasystocks.entity.Portfolio;
 import com.fantasystocks.service.impl.GameServiceImpl;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -100,7 +101,8 @@ public class GameServiceImplTest extends EasyMockSupport {
             String gameName = games.get(x);
             Set<String> playerNames = playerNamesInGames.get(x);
             playerInGames.add(buildPlayerInGame(playerNameTest, gameId, gameName));
-            expect(sessionDao.get(gameId)).andReturn(buildGame(gameId, gameName, playerNames)).once();
+            expect(sessionDao.get(gameId)).andReturn(buildGame(gameId, gameName, playerNames));
+            expect(sessionDao.getAllPlayerInGame(gameId)).andReturn(buildPlayersInGame(playerNames, gameId, gameName));
         }
         expect(playerInGameDao.getGamesForPlayer(playerNameTest)).andReturn(playerInGames).once();
     }
@@ -151,6 +153,17 @@ public class GameServiceImplTest extends EasyMockSupport {
         return PlayerInGame.builder()
                 .player(buildPlayer(playerName))
                 .game(buildGame(gameId, gameName))
+                .portfolio(Portfolio.builder().portfolioId(1L).build())
                 .build();
+    }
+
+    private List<PlayerInGame> buildPlayersInGame(Set<String> playerNames, long gameId, String gameName) {
+        return playerNames.stream().map(name -> {
+            return PlayerInGame.builder()
+                    .player(buildPlayer(name))
+                    .game(buildGame(gameId, gameName))
+                    .portfolio(Portfolio.builder().portfolioId(1L).build())
+                    .build();
+        }).collect(Collectors.toList());
     }
 }
