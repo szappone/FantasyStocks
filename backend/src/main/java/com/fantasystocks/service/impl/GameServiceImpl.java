@@ -46,36 +46,43 @@ public class GameServiceImpl implements GameService {
         return sessionDao.get(sessionID);
     }
 
-    @Transactional(readOnly = true )
+    @Transactional(readOnly = true)
     @Override
     public List<Session> getAllSessions(String playerName) {
         List<PlayerInGame> playerInGames = playerInGameDao.getGamesForPlayer(playerName);
 
         return playerInGames.stream().map(playerInGame -> {
-            Game game = sessionDao.get(playerInGame.getGame().getGameId());
-            Long sessionId = game.getGameId();
-            String sessionName = game.getGameName();
-            Map<String, Long> portfolios = new HashMap<>();
-            List<String> players = game.getPlayers().stream()
-                    .map(pig -> {
-                        String pn = pig.getPlayer().getPlayerName();
-                        //Long portfolioId = pig.getPortfolio().getPortfolioId();
-                        //portfolios.putIfAbsent(pn, portfolioId);
-                        return pn;
-                    })
-                    .collect(Collectors.toList());
-            // TODO: Add matchups and PlayerScores.
-            return Session.builder()
-                    .players(players)
-                    .portfolios(portfolios)
-                    .sessionId(sessionId)
-                    .sessionName(sessionName)
-                    .build();
+            long sessionId = playerInGame.getGame().getGameId();
+            return createSessionAPI(sessionId);
         }).collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true )
+    @Transactional
     @Override
-    public List<Player> getAllPlayers(long gameid) {return sessionDao.getAllPlayers(gameid);}
+    public Session getSessionAPI(long sessionId) {
+        return createSessionAPI(sessionId);
+    }
 
+    private Session createSessionAPI(long sessionId) {
+        Game game = sessionDao.get(sessionId);
+        String gameName = game.getGameName();
+        Session session = Session.builder()
+                .sessionId(sessionId)
+                .sessionName(gameName)
+                .players(new ArrayList<>())
+                .portfolios(new HashMap<>())
+                .matchupIds(new ArrayList<>())
+                .playerScores(new HashMap<>())
+                .build();
+
+        List<PlayerInGame> playerInGames = sessionDao.getAllPlayerInGame(sessionId);
+        playerInGames.forEach(playerInGame -> {
+            String playerName = playerInGame.getPlayer().getPlayerName();
+            session.getPlayers().add(playerName);
+            Long portfolioId = playerInGame.getPortfolio().getPortfolioId();
+            session.getPortfolios().putIfAbsent(playerName, portfolioId);
+        });
+
+        return session;
+    }
 }

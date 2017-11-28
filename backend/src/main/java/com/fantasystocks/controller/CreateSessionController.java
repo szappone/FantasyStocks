@@ -29,7 +29,7 @@ public class CreateSessionController {
 
     @ResponseBody
     @RequestMapping(value = "/session", method = RequestMethod.POST)
-    public Object createSession(@RequestBody CreateSessionRequest body,
+    public Session createSession(@RequestBody CreateSessionRequest body,
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws Exception {
         log.info("/session. Adding game ... " + body.toString());
@@ -44,27 +44,7 @@ public class CreateSessionController {
         gameService.add(game);
         // Add Players to game.
         players.forEach(player -> playerService.addToSession(player, game));
-
-
-        //Create and store PlayerInGame objects
-
-        /*
-        TODO: Properly add playerInGame Portfolio.
-        }*/
-
-        List<String> allplayers = new ArrayList<>();
-        for (Player p : gameService.getAllPlayers(game.getGameId())){
-            allplayers.add(p.getPlayerName());
-        }
-        //TODO: Properly get all session info (player objects + portfolios).
-        Session retSession = Session
-                .builder()
-                .sessionId(game.getGameId())
-                .sessionName(game.getGameName())
-                .players(allplayers)
-                .build();
-
-        return retSession;
+        return gameService.getSessionAPI(game.getGameId());
     }
 
     private List<Player> verifyPlayers(List<String> playerNames) throws PlayerNotFoundException {
