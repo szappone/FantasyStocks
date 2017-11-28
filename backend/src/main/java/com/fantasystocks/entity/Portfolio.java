@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(exclude="playerInGame")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Portfolio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -23,4 +23,5 @@ public class Stock {
     @Column(name = "company_name")
     @Size(max = EntityStd.MAX_NAME_CHARACTERS)
     private String companyName;
+
 }
