@@ -11,5 +11,5 @@ public interface GameService {
     void update(Game game);
     Game get(long sessionID);
     List<Session> getAllSessions(String playerName);
-    List<Player> getAllPlayers(long gameid);
+    Session getSessionAPI(long sessionId);
 }

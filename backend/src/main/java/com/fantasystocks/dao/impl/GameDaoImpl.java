@@ -53,19 +53,23 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public List<Player> getAllPlayers(long sessionID) {
+    public List<PlayerInGame> getAllPlayerInGame(long sessionID) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        Query query = session.createQuery("from PlayerInGame p join fetch p.player where p.game.gameId = :pid");
-        query.setParameter("pid", sessionID);
+
         @SuppressWarnings("unchecked")
-        List<PlayerInGame> playerIGs = Collections.checkedList(query.getResultList(), PlayerInGame.class);
-        List<Player> players = playerIGs.stream()
-                .map(PlayerInGame::getPlayer)
-                .collect(Collectors.toList());
+        javax.persistence.Query query = session.createQuery(
+                "from PlayerInGame p " +
+                        "join fetch p.player " +
+                        "join fetch p.game " +
+                        "join fetch p.portfolio " +
+                        "where p.game.gameId = :gid");
+        query.setParameter("gid", sessionID);
+
+        @SuppressWarnings("unchecked")
+        List<PlayerInGame> playerInGames = Collections.checkedList(query.getResultList(), PlayerInGame.class);
         tx.commit();
         session.close();
-        return players;
+        return playerInGames;
     }
-
 }
