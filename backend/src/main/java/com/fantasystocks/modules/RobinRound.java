@@ -12,11 +12,7 @@ public class RobinRound {
         String[][][] matchups = RoundRobin(players);
         Matchup[] tournaments = createMatchupIDs(matchups);
 
-        for (int i = 0; i < 45; i++) {
-            System.out.print(tournaments[i].getPlayer1Name() + " ");
-            System.out.print(tournaments[i].getPlayer2Name() + " ");
-            System.out.println(tournaments[i].getActiveWeek());
-        }
+        
 
     }
     public static String[][][] RoundRobin(String[] players) {
