@@ -25,7 +25,7 @@ public class GetOneStockController {
 
     @ResponseBody
     @RequestMapping(value = "/stocks/{stockID}", method = RequestMethod.GET)
-    public Object getOnePlayer(HttpServletRequest request,
+    public Object getOneStock(HttpServletRequest request,
                                HttpServletResponse response,
                                @PathVariable("stockID") String stockID) {
         log.info("Getting info for stock with stockID: {}", stockID);

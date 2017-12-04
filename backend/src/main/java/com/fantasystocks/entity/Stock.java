@@ -16,9 +16,9 @@ import javax.validation.constraints.Size;
 @Builder
 public class Stock {
     @NonNull
-    @Column(name = "symbol", unique = true)
+    @Column(name = "ticker", unique = true)
     @Id
-    private String symbol;
+    private String ticker;
 
     @Column(name = "company_name")
     @Size(max = EntityStd.MAX_NAME_CHARACTERS)

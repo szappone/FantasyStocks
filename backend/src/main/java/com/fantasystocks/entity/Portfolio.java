@@ -33,13 +33,13 @@ public class Portfolio {
     @OneToMany
     @JoinTable(name="offense_stocks")
     @Column(name = "offense")
-    private List<Stock> offense = new ArrayList<>();
+    private List<Stock> longs = new ArrayList<>();
 
     @Builder.Default
     @OneToMany
     @JoinTable(name="defense_stocks")
     @Column(name = "defense")
-     private List<Stock> defense = new ArrayList<>();
+     private List<Stock> shorts = new ArrayList<>();
 
     @Builder.Default
     @OneToMany

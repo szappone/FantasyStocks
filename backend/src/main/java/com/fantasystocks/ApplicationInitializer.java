@@ -1,7 +1,9 @@
 package com.fantasystocks;
 
 import com.fantasystocks.config.AppConfig;
+import com.fantasystocks.config.StockInitializer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
@@ -10,6 +12,8 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 @SpringBootApplication(exclude =  HibernateJpaAutoConfiguration.class)
 @Slf4j
 public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+    @Autowired
+    private static StockInitializer stockInit;
 
     @Override
     protected Class<?>[] getRootConfigClasses() {

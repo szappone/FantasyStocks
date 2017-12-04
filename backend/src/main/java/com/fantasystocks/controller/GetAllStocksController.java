@@ -21,7 +21,7 @@ public class GetAllStocksController {
 
     @ResponseBody
     @RequestMapping(value = "/stocks", method = RequestMethod.GET)
-    public Object getOnePlayer(HttpServletRequest request,
+    public Object getAllStocks(HttpServletRequest request,
                                HttpServletResponse response) {
         log.info("Getting all stocks");
 
