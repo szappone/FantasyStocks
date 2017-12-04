@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
+import fsLogo from '../fsLogo.svg';
 import '../App.css';
 import {Route, Link, Switch} from 'react-router-dom'
 import Dashboard from './Dashboard'
@@ -40,7 +40,7 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
       <div className="App">
 
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={fsLogo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to {sessionName}s draft phase!</h1>
         </header>
 
