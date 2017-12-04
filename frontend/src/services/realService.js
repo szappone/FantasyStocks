@@ -71,7 +71,14 @@ function getRealService() {
               method: "POST",
               body: requestBody
             });
+          },
+
+          getPortfolioById: function(portfolioId) {
+            return {};
           }
+
+
+    //end return statement
     }
 }
 

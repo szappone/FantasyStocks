@@ -16,7 +16,8 @@ class Session extends FantasyStocksBaseComponent {
         players: [],
         sessionName: ""
       },
-      currentSessionId: 0
+      currentSessionId: 0,
+      playerPortfolio: undefined
     };
 
   }
@@ -32,7 +33,7 @@ class Session extends FantasyStocksBaseComponent {
       this.setSessionState);
   }
 
-  setSessionState() {
+  setSessionState = () => {
     if (this.props && this.props.globalService) {
       this.props.globalService.getSessions().then(
         (response) => {
@@ -43,20 +44,37 @@ class Session extends FantasyStocksBaseComponent {
           let currSession = jsonData.find(s => s.sessionId === this.state.currentSessionId);
           if (currSession) {
              this.setState({currentSession: currSession});
+             return currSession;
           } else {
+              let error = "couldnt get currentSession";
               console.log("couldnt get currentSession");
+              throw error;
           }
         }
-      );
-
-
+      ).then((currSession) => {
+        let service = this.props.globalService;
+        let handle = service.getHandle();
+        let playerPortfolioId = currSession.portfolios[handle];
+        // console.log("portfolio id: " + playerPortfolioId);
+        // console.log(currSession);
+        service.getPortfolioById(playerPortfolioId)
+          .then((portfolioObj) => {
+            this.setState({playerPortfolio: portfolioObj});
+          });
+      });
     } else {
       console.log("cant access global service yet!");
     }
   }
 
   render() {
-    console.log(this.state.currentSession)
+    //console.log(this.state.currentSession);
+    let matchupInfo = "You have not drafted yet!";
+    // this if statement depends on how backend will return data when the player hasn't drafted yet
+    if (this.state.playerPortfolio) {
+      matchupInfo = "Yay";
+    }
+
     return (
 
       <div className="App">
@@ -64,6 +82,12 @@ class Session extends FantasyStocksBaseComponent {
           <img src={fsLogo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to Session: {this.state.currentSession.sessionName}</h1>
         </header>
+
+        <div id="portfolioDiv">
+          {
+            matchupInfo
+          }
+        </div>
 
         <h4> Players in this Session </h4>
         <ul>
