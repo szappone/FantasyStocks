@@ -25,7 +25,9 @@ function getCurrentService() {
 
           createPlayer: realService.createPlayer,
 
-          createSession: realService.createSession
+          createSession: realService.createSession,
+
+          getPortfolioById: mockService.getPortfolioById
     }
 }
 
