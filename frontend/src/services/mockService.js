@@ -133,13 +133,29 @@ function getMockService() {
         resolve(createdSession);
 
       });
+    },
+
+    getPortfolioById: function(portfolioId) {
+      return new Promise((resolve, reject) => {
+        let longs = ["AAPL", "AMZN", "GM"];
+        let shorts = ["TRIP", "AMT", "LUK"];
+        let bench = ["GOOG", "IBM", "WDC"];
+        let fakePortfolio = createPortfolio(portfolioId, longs, shorts, bench);
+        resolve(fakePortfolio);
+      });
     }
-
-
-
+    // end of return statement
     };
 }
 
+function createPortfolio(id, longs, shorts, bench) {
+  return {
+    portfolioId: id,
+    longs: longs,
+    shorts: shorts,
+    bench: bench
+  }
+}
 function createPlayerObject(name) {
   return {
     playerName: name
