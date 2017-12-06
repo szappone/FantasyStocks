@@ -27,6 +27,12 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     @Transactional
     @Override
+    public void update(Portfolio portfolio) {
+        portfolioDao.update(portfolio);
+    }
+
+    @Transactional
+    @Override
     public Portfolio get(long portfolioID) {
         return portfolioDao.get(portfolioID);
     }
