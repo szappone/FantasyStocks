@@ -32,7 +32,7 @@ class App extends Component {
             <PropsRoute exact path='/dashboard' component={Dashboard} globalService={this.state.globalService}/>
             <PropsRoute exact path='/session/:sessionId' component={Session} globalService={this.state.globalService}/>
             <PropsRoute exact path='/newsession' component={NewSession} globalService={this.state.globalService}/>
-            <PropsRoute exact path='/newsessiondraft' component={NewSessionDraft} globalService={this.state.globalService}/>
+            <PropsRoute exact path='/draft/:portfolioId' component={NewSessionDraft} globalService={this.state.globalService}/>
         </Switch>
       </div>
     );

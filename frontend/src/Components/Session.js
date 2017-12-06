@@ -68,11 +68,20 @@ class Session extends FantasyStocksBaseComponent {
   }
 
   render() {
-    //console.log(this.state.currentSession);
-    let matchupInfo = "You have not drafted yet!";
-    // this if statement depends on how backend will return data when the player hasn't drafted yet
+    console.log(this.state.playerPortfolio);
+    let matchupInfo = "";
     if (this.state.playerPortfolio) {
-      matchupInfo = "Yay";
+      matchupInfo = <button className="Dash-button">
+        <Link to={'/draft/' + this.state.playerPortfolio.portfolioId}>{"ENTER DRAFT"}</Link>
+      </button >;
+        //console.log("set button");
+    } else {
+      //console.log("waiting");
+    }
+
+    // this if statement depends on how backend will return data when the player hasn't drafted yet
+    if (this.state.playerPortfolio && this.state.playerPortfolio.longs.length>0) {
+      matchupInfo = "<<Displaying Matchup Object>>";
     }
 
     return (
@@ -83,13 +92,17 @@ class Session extends FantasyStocksBaseComponent {
             <h1 className="App-title">Welcome to Session: {this.state.currentSession.sessionName}</h1>
         </header>
 
-        <div id="portfolioDiv">
-          {
-            matchupInfo
-          }
-        </div>
+       <br></br><br></br><br></br><br></br><br></br>
 
-        <h4> Players in this Session </h4>
+       <div id="portfolioDiv">
+         {
+           matchupInfo
+         }
+       </div>
+
+
+        <div><h4> Players in this Session </h4></div>
+
         <ul>
         {this.state.currentSession.players.map((player) => (
           console.log(player),
