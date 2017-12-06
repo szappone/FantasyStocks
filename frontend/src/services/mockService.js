@@ -141,6 +141,7 @@ function getMockService() {
         let shorts = ["TRIP", "AMT", "LUK"];
         let bench = ["GOOG", "IBM", "WDC"];
         let fakePortfolio = createPortfolio(portfolioId, longs, shorts, bench);
+        fakePortfolio = createPortfolio(portfolioId, [],[],[]);
         resolve(fakePortfolio);
       });
     }

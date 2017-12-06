@@ -47,9 +47,10 @@ class Dashboard extends FantasyStocksBaseComponent {
 
         <header className="App-header">
           <img src={fsLogo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to the dashboard {currHandle}!</h1>
+
         </header>
 
+        <h1 className="App-title">Welcome to the dashboard {currHandle}!</h1>
 
         <h2> Your Sessions </h2>
 
