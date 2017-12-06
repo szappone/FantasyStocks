@@ -4,6 +4,7 @@ import com.fantasystocks.controller.api.GetPlayerResponse;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.service.model.PlayerService;
+import com.fantasystocks.service.model.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import java.util.List;
 @Slf4j
 @CrossOrigin
 public class GetAllStocksController {
+    @Autowired
+    private StockService stockService;
 
     @ResponseBody
     @RequestMapping(value = "/stocks", method = RequestMethod.GET)
@@ -25,9 +28,7 @@ public class GetAllStocksController {
                                HttpServletResponse response) {
         log.info("Getting all stocks");
 
-        String[] allStocks = {"AAPL", "AMZN", "GM", "TRIP", "AMT","LUK","GOOG","IBM","WDC", "C"};
-
-        return allStocks;
+        return stockService.listStockIDs();
     }
 
     //@ExceptionHandler(Exception.class)
