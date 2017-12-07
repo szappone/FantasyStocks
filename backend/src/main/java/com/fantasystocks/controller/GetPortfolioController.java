@@ -39,6 +39,7 @@ public class GetPortfolioController {
                     .portfolioID(portfolioExists.getPortfolioId())
                     .build();
         } else {
+            response.setStatus(404);
             return ResponseMessage.builder().message("Portfolio with that portfolioID does not exist").build();
         }
     }

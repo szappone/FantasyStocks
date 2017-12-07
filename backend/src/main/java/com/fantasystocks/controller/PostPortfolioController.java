@@ -37,15 +37,19 @@ public class PostPortfolioController {
         log.debug("First stock update for portfolio with portfolioID: {}", portfolioID);
 
         Portfolio portfolioExists = portfolioService.get(portfolioID);
-        if (portfolioExists != null){
+        if (portfolioExists == null) {
+            response.setStatus(400);
+            return ResponseMessage.builder().message("Can't post portfolio to portfolioID which has not yet been mapped in a game").build();
+        } else if (portfolioExists.getBench().size() > 0 && portfolioExists.getLongs().size() > 0 && portfolioExists.getShorts().size() > 0) {
+            response.setStatus(400);
+            return ResponseMessage.builder().message("Can't Draft to portfolio already in use").build();
+        } else {
             portfolioExists.setBench(body.getBench());
             portfolioExists.setLongs(body.getLongs());
             portfolioExists.setShorts(body.getShorts());
             portfolioService.update(portfolioExists);
             body.setPortfolioID(portfolioID);
             return body;
-        } else {
-            return ResponseMessage.builder().message("Can't post portfolio to portfolioID which has not yet been mapped in a game").build();
         }
     }
 
