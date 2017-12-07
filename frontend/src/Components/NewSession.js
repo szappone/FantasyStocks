@@ -43,6 +43,7 @@ class NewSession extends FantasyStocksBaseComponent {
             <h1 className="App-title">Create new session</h1>
         </header>
 
+        <br/><br/><br/><br/>
 
         <p className="App-intro">
           Step 1 of 2: Invite 9 friends to play

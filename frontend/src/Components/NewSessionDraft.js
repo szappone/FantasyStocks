@@ -14,7 +14,9 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
     this.state = {
       name: "",
       stocks: ["stock1", "stock2", "stock3","stock4", "stock5",
-              "stock6","stock7", "stock8", "stock9"]
+              "stock6","stock7", "stock8", "stock9", "stock10",
+              "stock11", "stock12", "stock13"],
+      checkedStocks: [],
     };
   }
 
@@ -44,24 +46,60 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
             <h1 className="App-title">Welcome to {sessionName}s draft phase!</h1>
         </header>
 
+        <br></br><br></br><br></br><br></br>
         <p className="App-intro">
-          Step 2 of 2: Draft phase, draft 9 stocks for your portfolio
+          Draft 9 stocks for your portfolio
         </p>
 
         <ul>
+          L S B
           {this.state.stocks.map((stock) => (
-            console.log(stock),
-              <li><p>{stock}</p></li>
+              <li>
+                <p>
+
+
+                  <label for="long">long</label>
+                  <input type="radio" id="long" ></input>
+                  <label for="short">short</label>
+                  <input type="radio" id="short" ></input>
+                  <label for="bench">bench</label>
+                  <input type="radio" id="bench" ></input>
+
+                    <input type="checkbox" onClick={(cb) => {
+
+                    //console.log(friend);
+                    if (this.state.checkedStocks.includes(stock)) {
+                      this.state.checkedStocks.splice(this.state.checkedStocks.indexOf(stock), 1);
+                    } else {
+                      this.state.checkedStocks.push(stock);
+                    }
+                    console.log(this.state.checkedStocks);
+                  }
+                }></input>
+                  {stock}
+                </p>
+              </li>
             ))}
           </ul>
 
-          <button className="App-button-tall">
+
+
+          <button className="App-button-tall"  onClick={this.handleDraft}>
             START SESSION
          </button >
+
    </div>
 
     );
   }
+
+  handleDraft = () => {
+    let service = this.props.globalService;
+    let draftedStocks = this.state.checkedStocks.slice();
+    //add drafted stock to portfolio
+
+  }
+
 
   createNewSession = () => {
 
