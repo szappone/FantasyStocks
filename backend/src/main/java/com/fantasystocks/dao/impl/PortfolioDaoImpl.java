@@ -45,6 +45,10 @@ public class PortfolioDaoImpl implements PortfolioDao {
     public Portfolio get(long portfolioID) {
         Session session = sessionFactory.openSession();
         Portfolio p = session.get(Portfolio.class, portfolioID);
+        p.getLongs();
+        p.getShorts();
+        p.getBench();
+        p.getPlayerInGame();
         session.close();
         return p;
     }

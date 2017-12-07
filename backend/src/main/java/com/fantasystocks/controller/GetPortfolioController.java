@@ -32,7 +32,12 @@ public class GetPortfolioController {
 
         Portfolio portfolioExists = portfolioService.get(portfolioID);
         if (portfolioExists != null){
-            return portfolioExists;
+            return GetPortfolioResponse.builder()
+                    .bench(portfolioExists.getBench())
+                    .longs(portfolioExists.getLongs())
+                    .shorts(portfolioExists.getShorts())
+                    .portfolioID(portfolioExists.getPortfolioId())
+                    .build();
         } else {
             return ResponseMessage.builder().message("Portfolio with that portfolioID does not exist").build();
         }

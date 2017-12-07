@@ -2,6 +2,7 @@ package com.fantasystocks.entity;
 
 import lombok.*;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,6 +23,27 @@ public class Portfolio {
     @Access(AccessType.PROPERTY)
     private long portfolioId;
 
+    @Column(name = "longs_ticker")
+    @Fetch(FetchMode.SELECT)
+    @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "longs",
+            joinColumns = @JoinColumn(name="portfolioId"))
+    private List<String> longs;
+
+    @Column(name = "shorts_ticker")
+    @Fetch(FetchMode.SELECT)
+    @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "shorts",
+            joinColumns = @JoinColumn(name="portfolioId"))
+    private List<String> shorts;
+
+    @Column(name = "bench_ticker")
+    @Fetch(FetchMode.SELECT)
+    @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "bench",
+            joinColumns = @JoinColumn(name="portfolioId"))
+    private List<String> bench;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumns({
             @JoinColumn(name = "player_id"),
@@ -29,21 +51,4 @@ public class Portfolio {
     })
     private PlayerInGame playerInGame;
 
-    @Builder.Default
-    @OneToMany
-    @JoinTable(name="offense_stocks")
-    @Column(name = "offense")
-    private List<Stock> longs = new ArrayList<>();
-
-    @Builder.Default
-    @OneToMany
-    @JoinTable(name="defense_stocks")
-    @Column(name = "defense")
-     private List<Stock> shorts = new ArrayList<>();
-
-    @Builder.Default
-    @OneToMany
-    @JoinTable(name="bench_stocks")
-    @Column(name = "bench")
-    private List<Stock> bench = new ArrayList<>();
 }

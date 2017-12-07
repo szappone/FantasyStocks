@@ -38,19 +38,11 @@ public class PostPortfolioController {
 
         Portfolio portfolioExists = portfolioService.get(portfolioID);
         if (portfolioExists != null){
-            //Check if portfolio is composed of valid stockIDs
-            List<Stock> longs = new ArrayList<>();
-            List<Stock> shorts = new ArrayList<>();
-            List<Stock> bench = new ArrayList<>();
-            for (int i = 0; i < 3; i++){
-                longs.add(stockService.get(body.getLongs().get(i)));
-                shorts.add(stockService.get(body.getShorts().get(i)));
-                bench.add(stockService.get(body.getBench().get(i)));
-            }
-            portfolioExists.setBench(bench);
-            portfolioExists.setLongs(longs);
-            portfolioExists.setShorts(shorts);
+            portfolioExists.setBench(body.getBench());
+            portfolioExists.setLongs(body.getLongs());
+            portfolioExists.setShorts(body.getShorts());
             portfolioService.update(portfolioExists);
+            body.setPortfolioID(portfolioID);
             return body;
         } else {
             return ResponseMessage.builder().message("Can't post portfolio to portfolioID which has not yet been mapped in a game").build();

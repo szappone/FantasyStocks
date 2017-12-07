@@ -29,7 +29,7 @@ public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
 
     @Test
     public void test_addPortfolio() {
-        Portfolio expected = buildPortfolio(offense, defense, bench);
+        Portfolio expected = buildPortfolio(offenseTest, defenseTest, benchTest);
         Long portfolioId = (Long) session.save(expected);
 
         Portfolio actual = session.get(Portfolio.class, portfolioId);
@@ -41,13 +41,13 @@ public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
         addPlayers(players);
         Game game = buildGame(gameName);
         Long gameId = (Long) session.save(game);
-        addStocks(benchTest);
+        /*addStocks(benchTest);
         addStocks(defenseTest);
-        addStocks(offenseTest);
+        addStocks(offenseTest);*/
         Portfolio portfolio = Portfolio.builder()
-                .bench(buildStocks(benchTest))
-                .shorts(buildStocks(defenseTest))
-                .longs(buildStocks(offenseTest))
+                .bench(benchTest)
+                .shorts(defenseTest)
+                .longs(offenseTest)
                 .build();
         Long portfolioId = (Long) session.save(portfolio);
         Player player1 = session.get(Player.class, players.get(0));
