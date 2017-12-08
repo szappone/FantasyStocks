@@ -67,11 +67,11 @@ public class IntegrationTestScaffold extends EasyMockSupport {
                 .build();
     }
     
-    Portfolio buildPortfolio(List<Stock> offense, List<Stock> defense, List<Stock> bench) {
+    Portfolio buildPortfolio(List<String> offense, List<String> defense, List<String> bench) {
         return Portfolio.builder()
                 .bench(bench)
-                .defense(defense)
-                .offense(offense)
+                .shorts(defense)
+                .longs(offense)
                 .build();
     }
 }

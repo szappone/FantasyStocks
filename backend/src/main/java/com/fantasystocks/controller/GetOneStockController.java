@@ -5,9 +5,11 @@ import com.fantasystocks.controller.api.GetStockResponse;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Player;
 import com.fantasystocks.entity.Portfolio;
+import com.fantasystocks.entity.Stock;
 import com.fantasystocks.modules.priceCalculator;
 import com.fantasystocks.service.model.PlayerService;
 import com.fantasystocks.service.model.PortfolioService;
+import com.fantasystocks.service.model.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +24,21 @@ import java.util.Arrays;
 @Slf4j
 @CrossOrigin
 public class GetOneStockController {
+    @Autowired
+    private StockService stockService;
 
     @ResponseBody
     @RequestMapping(value = "/stocks/{stockID}", method = RequestMethod.GET)
-    public Object getOnePlayer(HttpServletRequest request,
+    public Object getOneStock(HttpServletRequest request,
                                HttpServletResponse response,
                                @PathVariable("stockID") String stockID) {
         log.info("Getting info for stock with stockID: {}", stockID);
 
-        String[] allStocks = {"AAPL", "AMZN", "GM", "TRIP", "AMT","LUK","GOOG","IBM","WDC", "C"};
-        if (ArrayUtils.contains(allStocks, stockID)) {
+        Stock stock = stockService.get(stockID);
+        if (stock != null) {
              return GetStockResponse.builder()
                     .stockID(stockID)
+                     .company_name(stock.getCompanyName())
                     .lastMondayPrice(priceCalculator.getMonday(stockID))
                     .todayPrice(priceCalculator.getCurrentDay(stockID))
                     .build();

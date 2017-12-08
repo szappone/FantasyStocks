@@ -23,13 +23,13 @@ public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
 
     private static List<Stock> generateStocksFromSymbols(List<String> symbols) {
         return symbols.stream()
-                .map(s -> Stock.builder().symbol(s).build())
+                .map(s -> Stock.builder().ticker(s).build())
                 .collect(Collectors.toList());
     }
 
     @Test
     public void test_addPortfolio() {
-        Portfolio expected = buildPortfolio(offense, defense, bench);
+        Portfolio expected = buildPortfolio(offenseTest, defenseTest, benchTest);
         Long portfolioId = (Long) session.save(expected);
 
         Portfolio actual = session.get(Portfolio.class, portfolioId);
@@ -41,13 +41,13 @@ public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
         addPlayers(players);
         Game game = buildGame(gameName);
         Long gameId = (Long) session.save(game);
-        addStocks(benchTest);
+        /*addStocks(benchTest);
         addStocks(defenseTest);
-        addStocks(offenseTest);
+        addStocks(offenseTest);*/
         Portfolio portfolio = Portfolio.builder()
-                .bench(buildStocks(benchTest))
-                .defense(buildStocks(defenseTest))
-                .offense(buildStocks(offenseTest))
+                .bench(benchTest)
+                .shorts(defenseTest)
+                .longs(offenseTest)
                 .build();
         Long portfolioId = (Long) session.save(portfolio);
         Player player1 = session.get(Player.class, players.get(0));
@@ -74,12 +74,12 @@ public class PortfoliosAndGameIntegrationTest extends IntegrationTestScaffold {
     }
 
     private void addStocks(List<String> stockTickers) {
-        stockTickers.forEach(s -> session.save(Stock.builder().symbol(s).build()));
+        stockTickers.forEach(s -> session.save(Stock.builder().ticker(s).build()));
     }
 
     private List<Stock> buildStocks(List<String> stockTickers) {
         return stockTickers.stream()
-                .map(s -> Stock.builder().symbol(s).build())
+                .map(s -> Stock.builder().ticker(s).build())
                 .collect(Collectors.toList());
     }
 }

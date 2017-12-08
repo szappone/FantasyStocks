@@ -1,8 +1,6 @@
 package com.fantasystocks.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,14 +12,15 @@ import javax.validation.constraints.Size;
 @Table(name = "Stocks")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Stock {
     @NonNull
-    @Column(name = "symbol", unique = true)
+    @Column(name = "ticker", unique = true)
     @Id
-    private String symbol;
+    private String ticker;
 
     @Column(name = "company_name")
-    @Size(max = EntityStd.MAX_NAME_CHARACTERS)
     private String companyName;
 
 }
