@@ -4,6 +4,8 @@ import '../App.css';
 import './Dashboard.css';
 import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
 import {Route, Link} from 'react-router-dom';
+import NavBar from './NavBar';
+import NewSessionDraft from './NewSessionDraft';
 
 const API_PREFIX = "http://localhost:8080";
 
@@ -20,7 +22,8 @@ class Dashboard extends FantasyStocksBaseComponent {
 
   }
 
-  componentWillMount(){
+  componentDidMount(){
+    super.componentDidMount();
     this.setSessionDataInState();
   }
 
@@ -39,10 +42,17 @@ class Dashboard extends FantasyStocksBaseComponent {
 
   render() {
     let currHandle = this.props.globalService.getHandle();
+    let navBar = "";
+    if (this.props && this.props.globalService) {
+      currHandle = this.props.globalService.getHandle();
+      navBar = <NavBar globalService={this.props.globalService}
+                       history={this.props.history}/>;
+    }
 
     return (
 
       <div className="App">
+        {navBar}
      <Route path='/session' component={Dashboard}/>
 
         <header className="App-header">

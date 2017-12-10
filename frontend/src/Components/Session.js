@@ -4,8 +4,10 @@ import '../App.css';
 import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
 
 
-import {Route, Link} from 'react-router-dom'
-import Dashboard from './Dashboard'
+import {Route, Link} from 'react-router-dom';
+import Dashboard from './Dashboard';
+import NavBar from './NavBar';
+
 
 class Session extends FantasyStocksBaseComponent {
 
@@ -84,9 +86,17 @@ class Session extends FantasyStocksBaseComponent {
       matchupInfo = "<<Displaying Matchup Object>>";
     }
 
+    // NavBar stuff
+    let navBar = "";
+    if (this.props && this.props.globalService) {
+      navBar = <NavBar globalService={this.props.globalService}
+                       history={this.props.history}/>;
+    }
+
     return (
 
       <div className="App">
+        {navBar}
         <header className="App-header">
           <img src={fsLogo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to Session: {this.state.currentSession.sessionName}</h1>

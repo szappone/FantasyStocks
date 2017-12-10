@@ -62,10 +62,19 @@ function getMockService() {
     },
 
     isLoggedIn: function() {
+      if (window.localStorage.getItem("isLoggedIn")) {
+        this.handle = window.localStorage.getItem("playerHandle");
+        console.log("local storage logged in");
+        return true;
+      }
       return this.playerIsLoggedIn;
     },
 
     setIsLoggedIn: function(input) {
+      console.log("############# Local storage");
+      console.log(window.localStorage);
+      window.localStorage.setItem("isLoggedIn", input);
+      window.localStorage.setItem("playerHandle", this.handle)
       this.playerIsLoggedIn = input;
     },
 

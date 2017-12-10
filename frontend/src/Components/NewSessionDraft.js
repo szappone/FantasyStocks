@@ -57,13 +57,15 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
               <li>
                 <p>
 
-
-                  <label for="long">long</label>
-                  <input type="radio" id="long" ></input>
-                  <label for="short">short</label>
-                  <input type="radio" id="short" ></input>
-                  <label for="bench">bench</label>
-                  <input type="radio" id="bench" ></input>
+                  <form>
+                    <label>long</label>
+                    <input type="radio" name={stock}></input>
+                    <label >short</label>
+                    <input type="radio" name={stock}></input>
+                    <label >bench</label>
+                    <input type="radio" name={stock}></input>
+                    stock
+                  </form>
 
                     <input type="checkbox" onClick={(cb) => {
 
