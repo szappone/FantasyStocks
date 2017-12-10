@@ -14,7 +14,7 @@ function getRealService() {
   const defaultHeaders = new Headers({'Content-Type': 'application/json'});
   return {
 
-        handle: "not set",
+        handle: null,
         playerIsLoggedIn: false,
 
         setHandle: function(input) {
@@ -22,19 +22,38 @@ function getRealService() {
         },
 
          getHandle: function() {
-          return this.handle;
+           if (this.handle !== null && this.handle !== undefined) {
+             return this.handle;
+           }
+          if (this.isLoggedIn()) {
+            return window.localStorage.getItem("playerHandle");
+          }
+          return null;
          },
 
          isLoggedIn: function() {
-           return this.playerIsLoggedIn;
+           if (this.playerIsLoggedIn === true) {
+             return true;
+           }
+           let storedHandle = window.localStorage.getItem("playerHandle");
+           console.log("stored handle: " + storedHandle);
+           console.log(typeof(storedHandle));
+           if (storedHandle === null || storedHandle === undefined || storedHandle === "null") {
+             return false;
+           }
+           return true;
          },
 
          setIsLoggedIn: function(input) {
-           this.playerIsLoggedIn = input;
+           if (input === true) {
+             window.localStorage.setItem("playerHandle", this.handle);
+           } else {
+             window.localStorage.setItem("playerHandle", null);
+           }
          },
 
          getSessions: function() {
-            return fetch(GET_SESSIONS + this.handle, {
+            return fetch(GET_SESSIONS + this.getHandle(), {
             });
          },
 

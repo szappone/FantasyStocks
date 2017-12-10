@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import '../App.css';
-import {Route, Link, Switch} from 'react-router-dom'
-import Dashboard from './Dashboard'
+import {Route, Link, Switch} from 'react-router-dom';
+import Dashboard from './Dashboard';
 import fsLogo from '../fsLogo.svg';
 
 const API_PREFIX = "http://localhost:8080";
@@ -19,7 +19,9 @@ class Login extends Component {
   }
 
   componentDidMount() {
-
+    if (this.props.globalService.isLoggedIn()) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   render() {
