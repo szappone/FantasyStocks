@@ -34,3 +34,14 @@ All notable changes will be logged here
 
  Changed  
   - Implemented a relation for database storage
+  
+  ## Version 1 1.3.0 - 2017-12-08
+ Added  
+  - Front End Components: FantasyStocksBaseComponent, NavBar, official FantasyStocks Logo
+  - Back End Components: hitting portfolio, matchup and stocks endpoints
+  - More integration and unit testing
+  - Draft phase complete
+
+ Changed  
+  - Boosted noncrud operations: round robin and scoring algorithm not supplemented with stock recommender 
+  - Stock selection workflow: radio buttons rather than autocomplete to set play state (long/short/bench) at time of draft
