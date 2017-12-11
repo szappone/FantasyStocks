@@ -27,7 +27,9 @@ function getCurrentService() {
 
           createSession: realService.createSession,
 
-          getPortfolioById: mockService.getPortfolioById
+          getPortfolioById: realService.getPortfolioById,
+
+          draftPortfolio: realService.draftPortfolio
     }
 }
 

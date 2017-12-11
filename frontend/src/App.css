@@ -5,6 +5,25 @@
   padding-bottom: 600px;
 }
 
+.portfolioBox {
+  text-align: center;
+  background-color: #333;
+}
+
+.errorMessage:not(:empty) {
+  color: #D8000C;
+  background-color: #FFD2D2;
+  padding: 30px;
+  margin: 30px;
+}
+
+.successMessage:not(:empty) {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  padding: 30px;
+  margin: 30px;
+}
+
 a {
   color: white;
   text-decoration: none;

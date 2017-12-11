@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import '../App.css';
-import {Route, Link, Switch} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import Dashboard from './Dashboard';
 import fsLogo from '../fsLogo.svg';
-
-const API_PREFIX = "http://localhost:8080";
-const API_HELLO = API_PREFIX + "/hello";
 
 class Login extends Component {
 

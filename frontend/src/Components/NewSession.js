@@ -4,7 +4,7 @@ import '../App.css';
 import {Route, Link, Switch} from 'react-router-dom'
 import Dashboard from './Dashboard'
 import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
-
+import NavBar from './NavBar';
 
 class NewSession extends FantasyStocksBaseComponent {
 
@@ -33,9 +33,15 @@ class NewSession extends FantasyStocksBaseComponent {
   }
 
   render() {
+    let navBar = "";
+    if (this.props && this.props.globalService) {
+      navBar = <NavBar globalService={this.props.globalService}
+                       history={this.props.history}/>;
+    }
     return (
 
       <div className="App">
+        {navBar}
       <Route path='/dashboard' component={Dashboard}/>
 
         <header className="App-header">
@@ -82,7 +88,7 @@ class NewSession extends FantasyStocksBaseComponent {
             <button className="App-button" onClick={this.handleCreate}>
                 Create
            </button >
-            <p>{this.state.errorMessage}</p>
+            <div id="errorMessage">{this.state.errorMessage}</div>
           </div>
    </div>
 

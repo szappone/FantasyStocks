@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fsLogo from '../fsLogo.svg';
 import '../App.css';
 import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
+import Portfolio from './Portfolio';
 
 
 import {Route, Link} from 'react-router-dom';
@@ -19,7 +20,8 @@ class Session extends FantasyStocksBaseComponent {
         sessionName: ""
       },
       currentSessionId: 0,
-      playerPortfolio: undefined
+      playerPortfolio: undefined,
+      playerPortfolioId: -1
     };
 
   }
@@ -57,9 +59,13 @@ class Session extends FantasyStocksBaseComponent {
         let service = this.props.globalService;
         let handle = service.getHandle();
         let playerPortfolioId = currSession.portfolios[handle];
+        this.setState({playerPortfolioId, playerPortfolioId});
         // console.log("portfolio id: " + playerPortfolioId);
         // console.log(currSession);
         service.getPortfolioById(playerPortfolioId)
+          .then((response) => {
+            return response.json();
+          })
           .then((portfolioObj) => {
             this.setState({playerPortfolio: portfolioObj});
           });
@@ -73,17 +79,18 @@ class Session extends FantasyStocksBaseComponent {
     console.log(this.state.playerPortfolio);
     let matchupInfo = "";
     if (this.state.playerPortfolio) {
-      matchupInfo = <button className="Dash-button">
-        <Link to={'/draft/' + this.state.playerPortfolio.portfolioId}>{"ENTER DRAFT"}</Link>
-      </button >;
-        //console.log("set button");
+      if (this.state.playerPortfolio.longs.length > 0) {
+        matchupInfo = <Portfolio
+            portfolioId={this.state.playerPortfolioId}
+            globalService={this.props.globalService}
+            />
+      } else {
+        matchupInfo = <button className="Dash-button">
+          <Link to={'/draft/' + this.state.playerPortfolioId}>{"ENTER DRAFT"}</Link>
+        </button >;
+      }
     } else {
       //console.log("waiting");
-    }
-
-    // this if statement depends on how backend will return data when the player hasn't drafted yet
-    if (this.state.playerPortfolio && this.state.playerPortfolio.longs.length>0) {
-      matchupInfo = "<<Displaying Matchup Object>>";
     }
 
     // NavBar stuff
@@ -97,28 +104,28 @@ class Session extends FantasyStocksBaseComponent {
 
       <div className="App">
         {navBar}
+        <div>
         <header className="App-header">
           <img src={fsLogo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to Session: {this.state.currentSession.sessionName}</h1>
         </header>
+        </div>
 
-       <br></br><br></br><br></br><br></br><br></br>
-
-       <div id="portfolioDiv">
-         {
-           matchupInfo
-         }
-       </div>
-
-
+        <br/><br/><br/><br/>
         <div><h4> Players in this Session </h4></div>
 
         <ul>
         {this.state.currentSession.players.map((player) => (
-          console.log(player),
-            <li><p>{player}</p></li>
+            <li key={player}><p>{player}</p></li>
           ))}
         </ul>
+
+
+        <div id="portfolioDiv">
+          {
+            matchupInfo
+          }
+        </div>
       </div>
 
     );

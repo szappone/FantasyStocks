@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import fsLogo from '../fsLogo.svg';
 import '../App.css';
 import './Dashboard.css';
