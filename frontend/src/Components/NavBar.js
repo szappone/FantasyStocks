@@ -24,10 +24,10 @@ class NavBar extends Component {
 
     return (
       <div>
-        <ul>
-          <li>Hello, {handle}</li>
-          <li className="clickable"><Link to={'/dashboard'}>Home</Link></li>
-          <li className="clickable" onClick={this.handleLogout}>Logout</li>
+        <ul className="navul">
+          <li className="navli">Hello, {handle}</li>
+          <li className="clickable navli"><Link to={'/dashboard'}>Home</Link></li>
+          <li className="clickable navli" onClick={this.handleLogout}>Logout</li>
         </ul>
       </div>
 

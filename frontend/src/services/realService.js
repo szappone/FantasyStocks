@@ -7,6 +7,8 @@ const CREATE_SESSION = API_PREFIX + "/session";
 const CREATE_PLAYER = API_PREFIX + "/player";
 const GET_ALL_PLAYERS = API_PREFIX + "/players";
 const GET_THIS_PLAYER = API_PREFIX + "/players?playerName=";
+const DRAFT_PORTFOLIO = API_PREFIX + "/portfolio/";
+const GET_PORTFOLIO = API_PREFIX + "/portfolio/";
 
 
 function getRealService() {
@@ -36,8 +38,8 @@ function getRealService() {
              return true;
            }
            let storedHandle = window.localStorage.getItem("playerHandle");
-           console.log("stored handle: " + storedHandle);
-           console.log(typeof(storedHandle));
+           // console.log("stored handle: " + storedHandle);
+           // console.log(typeof(storedHandle));
            if (storedHandle === null || storedHandle === undefined || storedHandle === "null") {
              return false;
            }
@@ -92,8 +94,17 @@ function getRealService() {
             });
           },
 
+          draftPortfolio: function(portfolioId, body) {
+            body = JSON.stringify(body);
+            return fetch(DRAFT_PORTFOLIO + portfolioId, {
+              headers: new Headers({'Content-Type': 'application/json'}),
+              method: "POST",
+              body: body
+            });
+          },
+
           getPortfolioById: function(portfolioId) {
-            return {};
+            return fetch(GET_PORTFOLIO + portfolioId);
           }
 
 
