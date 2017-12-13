@@ -87,6 +87,17 @@ public class CreateSessionControllerTest extends EasyMockSupport {
         }
     }
 
+    @Test
+    public void handlePlayerNotFound_test() {
+        expect(httpServletRequest.getRequestURL()).andReturn(new StringBuffer("/test")).once();
+        httpServletResponse.setStatus(404);
+        expectLastCall().once();
+        replayAll();
+
+        Object out = createSessionController.handlePlayerNotFound(httpServletRequest, httpServletResponse, new Exception());
+        assertNotNull(out);
+    }
+
     private Player buildPlayer(String playerName) {
         return Player.builder()
                 .playerName(playerName)

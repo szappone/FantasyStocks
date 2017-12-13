@@ -19,8 +19,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import org.hibernate.query.Query;
+import javax.persistence.TypedQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
@@ -32,6 +39,8 @@ public class PlayerDaoImplTest extends EasyMockSupport {
     private Session session;
     @Mock
     private Transaction transaction;
+    @Mock
+    private Query query;
     @TestSubject
     private PlayerDaoImpl playerDaoImpl = new PlayerDaoImpl();
 
@@ -103,6 +112,17 @@ public class PlayerDaoImplTest extends EasyMockSupport {
         playerDaoImpl.addToSession(p, game);
         assertEquals("Player names are not the same.", playerNameTest, p.getPlayerName());
         assertEquals("Game is not in player.", 1, p.getSessions().size());
+    }
+
+    @Test
+    public void test_listPlayers() {
+        setup_open_close();
+        expect(session.createQuery(anyString())).andReturn(query).once();
+        expect(query.getResultList()).andReturn(new ArrayList());
+        replayAll();
+
+        List<Player> playerList = playerDaoImpl.listPlayers();
+        assertNotNull(playerList);
     }
 
     private Player buildPlayer(String playerName) {

@@ -5,7 +5,6 @@ import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.controller.api.Session;
 import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Player;
-import com.fantasystocks.entity.PlayerInGame;
 import com.fantasystocks.service.model.GameService;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,7 @@ import java.util.List;
 @Controller
 @Slf4j
 @CrossOrigin
-public class CreateSessionController {
+public class CreateSessionController extends ControllerErrorHandler {
     @Autowired
     private PlayerService playerService;
     @Autowired
@@ -56,12 +55,6 @@ public class CreateSessionController {
             players.add(p);
         }
         return players;
-    }
-
-    //@ExceptionHandler(Exception.class)
-    public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.error("Request: " + request.getRequestURL() + " threw " + ex);
-        response.setStatus(400);
     }
 
     @ExceptionHandler(PlayerNotFoundException.class)

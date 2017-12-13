@@ -50,7 +50,7 @@ public class PortfolioDaoImpl implements PortfolioDao {
     }
 
     @Override
-    public void addPortfolioToSession(long portfolioID, String playerId, String gameId) {
+    public void addPortfolioToSession(long portfolioID, String playerId, long gameId) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery("from PlayerInGame " +

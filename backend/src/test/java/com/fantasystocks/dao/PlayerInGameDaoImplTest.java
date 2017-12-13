@@ -13,6 +13,7 @@ import org.easymock.TestSubject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.easymock.EasyMock.anyString;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
+import static org.junit.Assert.assertNotNull;
 
 
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
@@ -34,6 +40,8 @@ public class PlayerInGameDaoImplTest extends EasyMockSupport {
     private Session session;
     @Mock
     private Transaction transaction;
+    @Mock
+    private Query query;
     @TestSubject
     private PlayerInGameDaoImpl playerInGameDaoImpl = new PlayerInGameDaoImpl();
 
@@ -83,6 +91,18 @@ public class PlayerInGameDaoImplTest extends EasyMockSupport {
         replayAll();
 
         playerInGameDaoImpl.remove(playerInGame);
+    }
+
+    @Test
+    public void test_listPlayers() {
+        setup_open_close();
+        expect(session.createQuery(anyString())).andReturn(query).once();
+        expect(query.setParameter("pn", playerNameTest)).andReturn(null);
+        expect(query.getResultList()).andReturn(new ArrayList());
+        replayAll();
+
+        List<PlayerInGame> playerInGames = playerInGameDaoImpl.getGamesForPlayer(playerNameTest);
+        assertNotNull(playerInGames);
     }
 
     private PlayerInGame buildPlayerInGame(String gameName, String playerName) {

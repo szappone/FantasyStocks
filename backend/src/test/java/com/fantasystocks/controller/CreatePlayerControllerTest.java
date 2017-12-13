@@ -25,7 +25,6 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.junit.Assert.assertNotNull;
 
-
 @ContextConfiguration(classes = { TestConfig.class }, loader = AnnotationConfigContextLoader.class)
 @RunWith(EasyMockRunner.class)
 public class CreatePlayerControllerTest extends EasyMockSupport {

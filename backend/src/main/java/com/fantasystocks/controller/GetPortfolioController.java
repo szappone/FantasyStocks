@@ -3,9 +3,7 @@ package com.fantasystocks.controller;
 import com.fantasystocks.controller.api.GetPortfolioResponse;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Portfolio;
-import com.fantasystocks.entity.Stock;
 import com.fantasystocks.service.model.PortfolioService;
-import com.fantasystocks.service.model.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @Slf4j
 @CrossOrigin
-public class GetPortfolioController {
+public class GetPortfolioController extends ControllerErrorHandler {
     @Autowired
     private PortfolioService portfolioService;
 
@@ -42,11 +38,5 @@ public class GetPortfolioController {
             response.setStatus(404);
             return ResponseMessage.builder().message("Portfolio with that portfolioID does not exist").build();
         }
-    }
-
-    //@ExceptionHandler(Exception.class)
-    public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.error("Request: " + request.getRequestURL() + " threw " + ex);
-        response.setStatus(400);
     }
 }

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @Slf4j
 @CrossOrigin
-public class CreatePlayerController {
+public class CreatePlayerController extends ControllerErrorHandler {
     @Autowired
     private PlayerService playerService;
 
@@ -42,11 +42,5 @@ public class CreatePlayerController {
 
         playerService.add(player);
         return player;
-    }
-
-    //@ExceptionHandler(Exception.class)
-    public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.error("Request: " + request.getRequestURL() + " threw " + ex);
-        response.setStatus(400);
     }
 }
