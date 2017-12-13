@@ -1,5 +1,8 @@
 package com.fantasystocks.modules;
 
+import com.fantasystocks.controller.api.GetPortfolioScoreResponse;
+import com.fantasystocks.entity.Portfolio;
+import com.fantasystocks.entity.Stock;
 import com.jimmoores.quandl.*;
 import com.jimmoores.quandl.classic.ClassicQuandlSession;
 import org.threeten.bp.DayOfWeek;
@@ -7,6 +10,7 @@ import org.threeten.bp.LocalDate;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class priceCalculator {
@@ -24,6 +28,7 @@ public class priceCalculator {
         for (String key : scorer.keySet()){
             System.out.println("For stock " + key + ", value is " + scorer.get(key) + "%");
         }
+
 
     }
 
@@ -83,5 +88,17 @@ public class priceCalculator {
 
         }
         return scorer;
+    }
+    public static HashMap<String, Double> PortfolioScores(Portfolio p) {
+        HashMap<String, String> x = new HashMap<String, String>();
+        for (String ss : p.getShorts()) {
+            x.put(ss, "Short");
+        }
+        for (String ss : p.getLongs()) {
+            x.put(ss, "Long");
+        }
+        HashMap<String, Double> y = score(x);
+        return y;
+
     }
 }
