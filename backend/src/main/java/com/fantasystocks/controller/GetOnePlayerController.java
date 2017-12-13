@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @Slf4j
 @CrossOrigin
-public class GetOnePlayerController {
+public class GetOnePlayerController extends ControllerErrorHandler {
     @Autowired
     private PlayerService playerService;
 
@@ -36,11 +36,5 @@ public class GetOnePlayerController {
             response.setStatus(400);
             return ResponseMessage.builder().message("Player does not exist").build();
         }
-    }
-
-    //@ExceptionHandler(Exception.class)
-    public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.error("Request: " + request.getRequestURL() + " threw " + ex);
-        response.setStatus(400);
     }
 }

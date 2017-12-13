@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @Slf4j
 @CrossOrigin
-public class PutPortfolioController {
+public class PutPortfolioController extends ControllerErrorHandler {
     @Autowired
     private PortfolioService portfolioService;
     @Autowired
@@ -25,9 +25,9 @@ public class PutPortfolioController {
     @ResponseBody
     @RequestMapping(value = "/portfolio/{portfolioID}", method = RequestMethod.PUT)
     public Object putPortfolio(@RequestBody GetPortfolioResponse body,
-                                     HttpServletRequest request,
-                                     HttpServletResponse response,
-                                    @PathVariable("portfolioID") long portfolioID) {
+                               HttpServletRequest request,
+                               HttpServletResponse response,
+                               @PathVariable("portfolioID") long portfolioID) {
         log.debug("Updating portfolio with portfolioID: {}", portfolioID);
 
         Portfolio portfolioExists = portfolioService.get(portfolioID);
@@ -45,11 +45,5 @@ public class PutPortfolioController {
             body.setPortfolioID(portfolioID);
             return body;
         }
-    }
-
-    //@ExceptionHandler(Exception.class)
-    public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.error("Request: " + request.getRequestURL() + " threw " + ex);
-        response.setStatus(400);
     }
 }

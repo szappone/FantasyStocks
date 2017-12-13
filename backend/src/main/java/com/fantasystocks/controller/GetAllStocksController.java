@@ -30,10 +30,4 @@ public class GetAllStocksController {
 
         return stockService.listStockIDs();
     }
-
-    //@ExceptionHandler(Exception.class)
-    public void handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        log.error("Request: " + request.getRequestURL() + " threw " + ex);
-        response.setStatus(400);
-    }
 }

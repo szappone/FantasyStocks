@@ -167,6 +167,8 @@
                     <excludes>
                         <exclude>com/fantasystocks/controller/api/*.class</exclude>
                         <exclude>com/fantasystocks/entity/*.class</exclude>
+                        <exclude>com/fantasystocks/config/*.class</exclude>
+                        <exclude>com/fantasystocks/modules/*.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
