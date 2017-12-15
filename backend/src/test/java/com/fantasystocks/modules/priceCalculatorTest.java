@@ -18,7 +18,7 @@ public class priceCalculatorTest {
     public void test_PortfolioScores(){
         List<String> l = Lists.newArrayList("AAPL","AMZN","GM");
         List<String> s = Lists.newArrayList("TRIP","AMT","LUK");
-        List<String> b = Lists.newArrayList("AAPL","AMZN","GM");
+        List<String> b = Lists.newArrayList("IBM","WDC","C");
         Portfolio portfolios = Portfolio.builder()
                 .bench(b)
                 .longs(l)
