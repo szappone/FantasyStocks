@@ -44,6 +44,7 @@ public class CreateSessionController extends ControllerErrorHandler {
         Game game = Game
                 .builder()
                 .gameName(body.getSessionName())
+                .currentWeek(1)
                 .build();
         gameService.add(game);
         // Add Players to game.

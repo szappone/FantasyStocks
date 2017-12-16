@@ -45,15 +45,17 @@ public class MatchupDaoImpl implements MatchupDao {
     }
 
     @Override
-    public List<Long> listMatchupIDs(long gameID) {
+    public List<Long> listMatchupIDs(long gameID, long currentWeek) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
 
         @SuppressWarnings("unchecked")
         javax.persistence.Query query = session.createQuery(
                 "from Matchup m " +
-                        "where m.game.gameId = :gid");
+                        "where m.game.gameId = :gid " +
+                        "and activeWeek = :week");
         query.setParameter("gid", gameID);
+        query.setParameter("week", currentWeek);
 
         @SuppressWarnings("unchecked")
         List<Matchup> matchups = Collections.checkedList(query.getResultList(), Matchup.class);

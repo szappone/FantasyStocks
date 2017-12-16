@@ -76,6 +76,7 @@ public class GameServiceImpl implements GameService {
                 .portfolios(new HashMap<>())
                 .matchupIds(new ArrayList<>())
                 .playerScores(new HashMap<>())
+                .currentWeek(game.getCurrentWeek())
                 .build();
 
         List<PlayerInGame> playerInGames = sessionDao.getAllPlayerInGame(sessionId);
@@ -85,7 +86,7 @@ public class GameServiceImpl implements GameService {
             Long portfolioId = playerInGame.getPortfolio().getPortfolioId();
             session.getPortfolios().putIfAbsent(playerName, portfolioId);
         });
-        session.setMatchupIds(matchupDao.listMatchupIDs(sessionId));
+        session.setMatchupIds(matchupDao.listMatchupIDs(sessionId, game.getCurrentWeek()));
 
         return session;
     }

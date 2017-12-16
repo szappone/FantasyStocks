@@ -7,5 +7,5 @@ import java.util.List;
 public interface MatchupService {
     void add(Matchup matchup);
     Matchup get(long matchupID);
-    List<Long> listMatchupIDs(long gameID);
+    List<Long> listMatchupIDs(long gameID, long currentWeek);
 }

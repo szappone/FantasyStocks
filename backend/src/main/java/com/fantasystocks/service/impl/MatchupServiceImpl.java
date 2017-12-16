@@ -33,8 +33,8 @@ public class MatchupServiceImpl implements MatchupService {
 
     @Transactional
     @Override
-    public List<Long> listMatchupIDs(long gameID){
-        return matchupDao.listMatchupIDs(gameID);
+    public List<Long> listMatchupIDs(long gameID, long currentWeek){
+        return matchupDao.listMatchupIDs(gameID, currentWeek);
     }
 
 }

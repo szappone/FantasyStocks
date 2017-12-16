@@ -17,5 +17,6 @@ public class Session {
     private List<Long> matchupIds;
     private Map<String, Long> portfolios;
     private Map<String, Double> playerScores;
+    private int currentWeek;
     //private List<List<Week>> scheduleTable;
 }
