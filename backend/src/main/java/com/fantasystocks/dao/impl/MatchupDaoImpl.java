@@ -2,10 +2,8 @@ package com.fantasystocks.dao.impl;
 
 import com.fantasystocks.dao.model.MatchupDao;
 import com.fantasystocks.dao.model.PortfolioDao;
-import com.fantasystocks.entity.Matchup;
-import com.fantasystocks.entity.PlayerInGame;
-import com.fantasystocks.entity.Portfolio;
-import com.fantasystocks.entity.Stock;
+import com.fantasystocks.entity.*;
+import com.fantasystocks.modules.RobinRound;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -67,6 +65,19 @@ public class MatchupDaoImpl implements MatchupDao {
         tx.commit();
         session.close();
         return mids;
+    }
+
+    @Override
+    public void createForSession(Game game, List<String> playerNames){
+        String[] playerArray = playerNames.toArray(new String[0]);
+        Matchup[] matchups = RobinRound.createMatchupIDs(RobinRound.RoundRobin(playerArray));
+        for (int i = 0; i < matchups.length; i++){
+            Matchup curr = matchups[i];
+            if (curr != null) {
+                curr.setGame(game);
+                add(curr);
+            }
+        }
     }
 
 }

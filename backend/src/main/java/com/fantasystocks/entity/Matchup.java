@@ -28,10 +28,9 @@ public class Matchup {
     @Column(name = "player2Name")
     private String player2Name;
 
-    @Column(name = "p1Score")
+    @Transient
     private long p1Score;
-
-    @Column(name = "p2Score")
+    @Transient
     private long p2Score;
 
     @Column(name = "activeWeek")

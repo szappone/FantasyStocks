@@ -51,15 +51,7 @@ public class CreateSessionController extends ControllerErrorHandler {
         players.forEach(player -> playerService.addToSession(player, game));
 
         // Add Matchups to game
-        String[] playerArray = playerNames.toArray(new String[0]);
-        Matchup[] matchups = RobinRound.createMatchupIDs(RobinRound.RoundRobin(playerArray));
-        for (int i = 0; i < matchups.length; i++){
-            Matchup curr = matchups[i];
-            if (curr != null) {
-                curr.setGame(game);
-                matchupService.add(curr);
-            }
-        }
+        matchupService.createForSession(game, playerNames);
 
         return gameService.getSessionAPI(game.getGameId());
     }

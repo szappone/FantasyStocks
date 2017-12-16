@@ -2,6 +2,7 @@ package com.fantasystocks.service.impl;
 
 import com.fantasystocks.dao.model.MatchupDao;
 import com.fantasystocks.dao.model.StockDao;
+import com.fantasystocks.entity.Game;
 import com.fantasystocks.entity.Matchup;
 import com.fantasystocks.entity.Stock;
 import com.fantasystocks.service.model.MatchupService;
@@ -35,6 +36,12 @@ public class MatchupServiceImpl implements MatchupService {
     @Override
     public List<Long> listMatchupIDs(long gameID, long currentWeek){
         return matchupDao.listMatchupIDs(gameID, currentWeek);
+    }
+
+    @Transactional
+    @Override
+    public void createForSession(Game game, List<String> playerNames){
+        matchupDao.createForSession(game, playerNames);
     }
 
 }
