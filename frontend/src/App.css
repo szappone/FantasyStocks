@@ -38,7 +38,28 @@ a {
 .App-header {
   background-color: #222;
   height: 160px;
-  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 8px;
+  color: white;
+}
+
+.App-key {
+  background-color: #b9c8df;
+  height: 60px;
+  width: 510px;
+  align-items: center;
+  justify-content: center;
+  border-color: #3d3d3d;
+  color: white;
+}
+
+.App-key-2 {
+  background-color: #b9c8df;
+  height: 40px;
+  width: 450px;
+  align-items: center;
+  justify-content: center;
+  border-color: #3d3d3d;
   color: white;
 }
 
@@ -102,6 +123,7 @@ height: 30px;
 
 .App-intro {
   font-size: large;
+  padding-bottom: 0px;
 }
 
 ul {

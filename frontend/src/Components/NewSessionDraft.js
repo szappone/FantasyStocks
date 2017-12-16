@@ -64,6 +64,15 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
           Draft 9 stocks for your portfolio.
         </p>
 
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div>
+           <p className="App-key" style={{display: 'flex', justifyContent: 'center'}}>
+            Play 3 stocks long: make money when their prices go up <br></br>
+            Play 3 stocks short: make money when their prices fall <br></br>
+            Put 3 stocks on your bench: play them another week
+            </p>
+          </div>
+        </div>
         <ul className="navul">
                 {this.state.stocks.map((stock) => (
                     <li key={stock} className="navli">
