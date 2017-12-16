@@ -43,6 +43,7 @@ public class Player {
                 .builder()
                 .player(this)
                 .game(game)
+                .portfolio(portfolio)
                 .build();
         sessions.add(playerInGame);
         game.getPlayers().add(playerInGame);

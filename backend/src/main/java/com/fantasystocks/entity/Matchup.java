@@ -1,6 +1,8 @@
 package com.fantasystocks.entity;
 
 import lombok.*;
+import org.springframework.context.annotation.Primary;
+import org.springframework.web.bind.annotation.Mapping;
 
 import javax.persistence.*;
 
@@ -12,19 +14,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Matchup {
     @Id
-    @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "matchup_id")
+    @Access(AccessType.PROPERTY)
     private long matchupId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId
     private Game game;
 
     @Column(name = "player1Name")
     private String player1Name;
 
-    @Column(name = "player1Name")
+    @Column(name = "player2Name")
     private String player2Name;
 
     @Column(name = "p1Score")

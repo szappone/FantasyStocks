@@ -4,8 +4,11 @@ import com.fantasystocks.controller.api.CreateSessionRequest;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.controller.api.Session;
 import com.fantasystocks.entity.Game;
+import com.fantasystocks.entity.Matchup;
 import com.fantasystocks.entity.Player;
+import com.fantasystocks.modules.RobinRound;
 import com.fantasystocks.service.model.GameService;
+import com.fantasystocks.service.model.MatchupService;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class CreateSessionController extends ControllerErrorHandler {
     private PlayerService playerService;
     @Autowired
     private GameService gameService;
+    @Autowired
+    private MatchupService matchupService;
 
     @ResponseBody
     @RequestMapping(value = "/session", method = RequestMethod.POST)
@@ -43,6 +48,18 @@ public class CreateSessionController extends ControllerErrorHandler {
         gameService.add(game);
         // Add Players to game.
         players.forEach(player -> playerService.addToSession(player, game));
+
+        // Add Matchups to game
+        String[] playerArray = playerNames.toArray(new String[0]);
+        Matchup[] matchups = RobinRound.createMatchupIDs(RobinRound.RoundRobin(playerArray));
+        for (int i = 0; i < matchups.length; i++){
+            Matchup curr = matchups[i];
+            if (curr != null) {
+                curr.setGame(game);
+                matchupService.add(curr);
+            }
+        }
+
         return gameService.getSessionAPI(game.getGameId());
     }
 

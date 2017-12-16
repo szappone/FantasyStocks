@@ -2,6 +2,7 @@ package com.fantasystocks.service.impl;
 
 import com.fantasystocks.controller.api.Session;
 import com.fantasystocks.dao.model.GameDao;
+import com.fantasystocks.dao.model.MatchupDao;
 import com.fantasystocks.dao.model.PlayerInGameDao;
 import com.fantasystocks.dao.model.PortfolioDao;
 import com.fantasystocks.entity.Game;
@@ -27,6 +28,8 @@ public class GameServiceImpl implements GameService {
     private GameDao sessionDao;
     @Autowired
     private PlayerInGameDao playerInGameDao;
+    @Autowired
+    private MatchupDao matchupDao;
 
     @Transactional
     @Override
@@ -82,6 +85,7 @@ public class GameServiceImpl implements GameService {
             Long portfolioId = playerInGame.getPortfolio().getPortfolioId();
             session.getPortfolios().putIfAbsent(playerName, portfolioId);
         });
+        session.setMatchupIds(matchupDao.listMatchupIDs(sessionId));
 
         return session;
     }
