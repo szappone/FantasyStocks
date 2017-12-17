@@ -144,6 +144,55 @@ function getMockService() {
       });
     },
 
+    getMatchupById: function(matchupId) {
+      return new Promise((resolve, reject) => {
+        let obj = {
+            "matchupId": 1,
+            "gameID": 1,
+            "player1Name": "David",
+            "player2Name": "Brian",
+          "p1Score": {
+        	"longs": {
+                "TRIP": -1.5415358264344814,
+                "AAPL": 2.760047281323885,
+                "C": 1.0431991440417399
+        	},
+        	"shorts": {
+        	            "AMT": -0.4062762678621379,
+                    "AMZN": 1.248497338141874,
+                		"GM": -2.220630372492838
+        	},
+                "total": {
+        "total": 0.14721688278634035
+        }
+            },
+          "p2Score": {
+        	"longs": {
+                "TRIP": -1.5415358264344814,
+                "AAPL": 2.76,
+                "C": 1.043
+        	},
+        	"shorts": {
+        	            "AMT": -0.40,
+                    "AMZN": 1.24,
+                		"GM": -2.22
+        	},
+                "total": {
+        "total": 0.14
+        }
+            },
+            "activeWeek": 0
+        };
+
+        let responseObj = {
+          json: function() {
+            return obj;
+          }
+        }
+        resolve(responseObj);
+      })
+    },
+
     getPortfolioById: function(portfolioId) {
       return new Promise((resolve, reject) => {
         let longs = ["AAPL", "AMZN", "GM"];

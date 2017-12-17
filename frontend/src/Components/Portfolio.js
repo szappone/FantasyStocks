@@ -30,26 +30,35 @@ class NewSessionDraft extends Component {
   render() {
     if (this.state.portfolioObj !== null) {
       return (
+
         <div className="portfolioBox">
-          <h2>Portfolio</h2>
-          Longs:
-            <ul>
-              {this.state.portfolioObj.longs.map((stockId) => (
-                <li key={stockId}>{stockId}</li>
-              ))}
-            </ul>
+        <h2>Portfolio</h2>
+        <table width="300">
+          <tr>
+           <th>
+            Longs:
+              <ul>
+                {this.state.portfolioObj.longs.map((stockId) => (
+                  <li key={stockId}>{stockId}</li>
+                ))}
+              </ul>
+          </th><th>
           Shorts:
             <ul>
               {this.state.portfolioObj.shorts.map((stockId) => (
                 <li key={stockId}>{stockId}</li>
               ))}
             </ul>
+          </th><th>
           Bench:
             <ul>
               {this.state.portfolioObj.bench.map((stockId) => (
                 <li key={stockId}>{stockId}</li>
               ))}
             </ul>
+              </th>
+        </tr>
+      </table>
         </div>
       );
     } else {

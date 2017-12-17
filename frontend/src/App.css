@@ -7,6 +7,18 @@
 
 .portfolioBox {
   text-align: center;
+  padding-top: 1px;
+  margin: 0 auto;
+  width: 320px;
+  height: 180px;
+  background-color: #333;
+}
+
+.matchupBox {
+  text-align: center;
+  margin: 0 auto;
+  width: 320px;
+  padding-bottom: 3px;
   background-color: #333;
 }
 
@@ -124,6 +136,13 @@ height: 30px;
 .App-intro {
   font-size: large;
   padding-bottom: 0px;
+}
+
+.App-red {
+  color: red;
+}
+.App-green {
+  color: #00FF00;
 }
 
 ul {

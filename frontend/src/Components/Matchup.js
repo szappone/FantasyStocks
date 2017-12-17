@@ -31,15 +31,21 @@ class Matchup extends Component {
           this.setState({matchupObj: json});
       });
   }
-  
+
   createDivArrayFromScoreObj = (scoreObj) => {
     let divArray = [];
     for (let stockId in scoreObj) {
       let score = scoreObj[stockId];
       score = parseFloat(score);
       score = score.toFixed(4);//Math.round(score, -2);
+
+      let displayColor = "App-green";
+      if (score.includes("-")) {
+        displayColor = "App-red";
+      }
       divArray.push(
-        <div> {stockId} {score} </div>
+        <div className={displayColor}> {stockId} {score} </div>
+        //<div className="App-red"> {stockId} {score} </div>
       );
     }
     return divArray;
@@ -48,31 +54,52 @@ class Matchup extends Component {
   render() {
     let p1Name= this.state.matchupObj.player1Name;
     let p2Name= this.state.matchupObj.player2Name;
-    
-    let p1ScoreArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p1Score);
-    let p2ScoreArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p2Score);
+
+    let p1LongArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p1Score.longs);
+    let p1ShortArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p1Score.shorts);
+    let p2LongArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p2Score.longs);
+    let p2ShortArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p2Score.shorts);
 
     return (
 
-      <div>
-        <div>
-          <ul className="navul">
+    <div className="matchupBox">
+
+      <table width="320">
+        <tr>
+          <th>
             <h2>{p1Name}</h2>
-            {p1ScoreArray.map((val) => (
-              <li key={val}>{val}</li>
-            ))}
-          </ul>
-        </div>
-        
-        <div>
-          <ul className="navul">
-          <h2>{p2Name}</h2>
-            {p2ScoreArray.map((val) => (
-              <li key={val}>{val}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
+              <h4> Longs </h4>
+              <ul className="navul2">
+                {p1LongArray.map((val) => (
+                  <li key={val}>{val}</li>
+                ))}
+              </ul>
+              <ul className="navul2">
+                <h4> Shorts </h4>
+                {p1ShortArray.map((val) => (
+                  <li key={val}>{val}</li>
+                ))}
+              </ul>
+          </th>
+          <th> VS </th>
+          <th>
+            <h2>{p2Name}</h2>
+            <h4> Longs </h4>
+            <ul className="navul">
+              {p2LongArray.map((val) => (
+                <li key={val}>{val}</li>
+              ))}
+              </ul>
+              <ul className="navul">
+              <h4> Shorts </h4>
+              {p2ShortArray.map((val) => (
+                <li key={val}>{val}</li>
+              ))}
+              </ul>
+          </th>
+        </tr>
+    </table>
+</div>
 
     );
   }
