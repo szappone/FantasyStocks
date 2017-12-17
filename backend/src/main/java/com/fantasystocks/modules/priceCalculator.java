@@ -3,8 +3,11 @@ package com.fantasystocks.modules;
 import com.fantasystocks.controller.api.GetPortfolioScoreResponse;
 import com.fantasystocks.entity.Portfolio;
 import com.fantasystocks.entity.Stock;
+import com.fantasystocks.service.model.StockService;
 import com.jimmoores.quandl.*;
 import com.jimmoores.quandl.classic.ClassicQuandlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 
@@ -12,11 +15,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class priceCalculator {
+
+
     public static void main(String[] args) {
 
-        HashMap<String, String> x = new HashMap<String, String>();
+       /* HashMap<String, String> x = new HashMap<String, String>();
         x.put("AAPL","Long");
         x.put("AMZN","Long");
         x.put("GM","Long");
@@ -27,7 +31,7 @@ public class priceCalculator {
         HashMap<String, Double> scorer = score(x);
         for (String key : scorer.keySet()){
             System.out.println("For stock " + key + ", value is " + scorer.get(key) + "%");
-        }
+        }*/
 
 
     }
@@ -69,13 +73,13 @@ public class priceCalculator {
         return value;
     }
 
-    public static HashMap<String, Double> score (HashMap<String, String> input) {
+    public static HashMap<String, Double> score (HashMap<String, String> input, StockService stockService) {
         HashMap<String, Double> scorer = new HashMap<String, Double>();
-        ClassicQuandlSession session = ClassicQuandlSession.create();
         double sum = 0;
         for (String key : input.keySet()){
-            Double value = getCurrentDay(key);
-            Double value2 = getMonday(key);
+            Stock stock = stockService.get(key);
+            Double value = stock.getTodayPrice();
+            Double value2 = stock.getLastMondayPrice();
             if (input.get(key).equalsIgnoreCase("Long")) {
                 sum = sum + (value/value2 - 1)*100;
                 scorer.put(key,(value/value2 - 1)*100);
@@ -89,7 +93,7 @@ public class priceCalculator {
         }
         return scorer;
     }
-    public static HashMap<String, Double> PortfolioScores(Portfolio p) {
+    public static HashMap<String, Double> PortfolioScores(Portfolio p, StockService stockService) {
         HashMap<String, String> x = new HashMap<String, String>();
         for (String ss : p.getShorts()) {
             x.put(ss, "Short");
@@ -97,7 +101,7 @@ public class priceCalculator {
         for (String ss : p.getLongs()) {
             x.put(ss, "Long");
         }
-        HashMap<String, Double> y = score(x);
+        HashMap<String, Double> y = score(x, stockService);
         return y;
 
     }

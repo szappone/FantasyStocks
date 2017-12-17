@@ -29,12 +29,7 @@ public class GetOneStockController extends ControllerErrorHandler {
 
         Stock stock = stockService.get(stockID);
         if (stock != null) {
-             return GetStockResponse.builder()
-                    .stockID(stockID)
-                     .company_name(stock.getCompanyName())
-                    .lastMondayPrice(priceCalculator.getMonday(stockID))
-                    .todayPrice(priceCalculator.getCurrentDay(stockID))
-                    .build();
+             return stock;
         } else {
             return ResponseMessage.builder().message("That stock is not currently supported").build();
         }

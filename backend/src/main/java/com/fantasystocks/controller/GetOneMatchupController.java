@@ -6,6 +6,7 @@ import com.fantasystocks.entity.Matchup;
 import com.fantasystocks.service.model.MatchupService;
 import com.fantasystocks.service.model.PortfolioService;
 import com.fantasystocks.modules.priceCalculator;
+import com.fantasystocks.service.model.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class GetOneMatchupController extends ControllerErrorHandler {
     private MatchupService matchupService;
     @Autowired
     private PortfolioService portfolioService;
+    @Autowired
+    private StockService stockService;
 
     @ResponseBody
     @RequestMapping(value = "/matchups/{matchupID}", method = RequestMethod.GET)
@@ -35,8 +38,8 @@ public class GetOneMatchupController extends ControllerErrorHandler {
         //Check to make sure that this player exists and if so return it
         Matchup checkMatchupExists = matchupService.get(matchupID);
         if (checkMatchupExists != null) {
-            Map<String, Double> p1scores = priceCalculator.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer1Name(), checkMatchupExists.getGame().getGameId()));
-            Map<String, Double> p2scores = priceCalculator.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer2Name(), checkMatchupExists.getGame().getGameId()));
+            Map<String, Double> p1scores = priceCalculator.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer1Name(), checkMatchupExists.getGame().getGameId()), stockService);
+            Map<String, Double> p2scores = priceCalculator.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer2Name(), checkMatchupExists.getGame().getGameId()), stockService);
             return GetMatchupResponse.builder()
                     .player1Name(checkMatchupExists.getPlayer1Name())
                     .player2Name(checkMatchupExists.getPlayer2Name())
