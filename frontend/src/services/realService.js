@@ -9,6 +9,8 @@ const GET_ALL_PLAYERS = API_PREFIX + "/players";
 const GET_THIS_PLAYER = API_PREFIX + "/players?playerName=";
 const DRAFT_PORTFOLIO = API_PREFIX + "/portfolio/";
 const GET_PORTFOLIO = API_PREFIX + "/portfolio/";
+const GET_MATCHUP = API_PREFIX + "/matchups/";
+const GET_STOCKS= API_PREFIX + "/stocks";
 
 
 function getRealService() {
@@ -105,6 +107,14 @@ function getRealService() {
 
           getPortfolioById: function(portfolioId) {
             return fetch(GET_PORTFOLIO + portfolioId);
+          },
+          
+          getMatchupById: function(matchupId) {
+            return fetch(GET_MATCHUP + matchupId);
+          },
+          
+          getAllStocks: function() {
+            return fetch(GET_STOCKS);
           }
 
 

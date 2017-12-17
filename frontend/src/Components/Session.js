@@ -3,6 +3,7 @@ import fsLogo from '../fsLogo.svg';
 import '../App.css';
 import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
 import Portfolio from './Portfolio';
+import Matchup from './Matchup';
 
 
 import {Route, Link} from 'react-router-dom';
@@ -17,7 +18,8 @@ class Session extends FantasyStocksBaseComponent {
     this.state = {
       currentSession: {
         players: [],
-        sessionName: ""
+        sessionName: "",
+        matchupIds: []
       },
       currentSessionId: 0,
       playerPortfolio: undefined,
@@ -119,12 +121,20 @@ class Session extends FantasyStocksBaseComponent {
             <li key={player}><p>{player}</p></li>
           ))}
         </ul>
-
-
+        
         <div id="portfolioDiv">
           {
             matchupInfo
           }
+        </div>
+        
+        <div id="matchupDiv">
+          <h2>Matchups in this Session</h2>
+          <ul id="matchupList">
+            {this.state.currentSession.matchupIds.map((matchupId) => (
+              <li key={matchupId}> <Matchup globalService={this.props.globalService} matchupId={matchupId}/> </li>
+            ))}
+          </ul>
         </div>
       </div>
 
