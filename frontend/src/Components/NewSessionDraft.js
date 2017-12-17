@@ -26,6 +26,7 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
 
   componentWillMount(){
     this.setPortfolioId();
+    this.setStocks();
   }
 
 
@@ -39,7 +40,16 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
       () => {
         console.log("portfolio id: " + this.state.portfolioId);
       });
-
+  }
+  
+  setStocks = () => {
+    this.props.globalService.getAllStocks().then(
+      (response) => {
+        return response.json();
+      }).then(
+        (json) => {
+          this.setState({stocks: json});
+      })
   }
 
   render() {
