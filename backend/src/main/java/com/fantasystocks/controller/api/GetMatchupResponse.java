@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import java.util.Map;
 
 @Data
 @Builder
@@ -15,7 +16,7 @@ public class GetMatchupResponse {
     private long gameID;
     private String player1Name;
     private String player2Name;
-    private long p1Score;
-    private long p2Score;
+    private Map<String, Double> p1Score;
+    private Map<String, Double> p2Score;
     private long activeWeek;
 }
