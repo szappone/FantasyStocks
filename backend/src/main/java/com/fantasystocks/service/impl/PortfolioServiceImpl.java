@@ -37,4 +37,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         return portfolioDao.get(portfolioID);
     }
 
+    @Transactional
+    @Override
+    public Portfolio get(String playerName, long gameID){ return portfolioDao.get(playerName, gameID);}
 }

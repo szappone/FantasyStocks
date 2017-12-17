@@ -45,7 +45,7 @@ public class TestConfig {
         props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(Player.class, Game.class, Portfolio.class, Stock.class,
+        factoryBean.setAnnotatedClasses(Player.class, Game.class, Portfolio.class, Stock.class, Matchup.class,
                 PlayerInGame.class);
         return factoryBean;
     }
