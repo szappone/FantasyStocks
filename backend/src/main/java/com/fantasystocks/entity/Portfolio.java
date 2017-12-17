@@ -26,22 +26,17 @@ public class Portfolio {
     @Column(name = "longs_ticker")
     @Fetch(FetchMode.SELECT)
     @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "longs",
-            joinColumns = @JoinColumn(name="portfolioId"))
+
     private List<String> longs;
 
     @Column(name = "shorts_ticker")
     @Fetch(FetchMode.SELECT)
     @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "shorts",
-            joinColumns = @JoinColumn(name="portfolioId"))
     private List<String> shorts;
 
     @Column(name = "bench_ticker")
     @Fetch(FetchMode.SELECT)
     @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "bench",
-            joinColumns = @JoinColumn(name="portfolioId"))
     private List<String> bench;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -50,5 +45,6 @@ public class Portfolio {
             @JoinColumn(name = "game_id")
     })
     private PlayerInGame playerInGame;
+
 
 }

@@ -50,9 +50,9 @@ public class PlayerInGameDaoImpl implements PlayerInGameDao {
         @SuppressWarnings("unchecked")
         Query query = session.createQuery(
                 "from PlayerInGame p " +
-                "join fetch p.player " +
-                "join fetch p.game " +
-                "where p.player.playerName = :pn");
+                        "join fetch p.player " +
+                        "join fetch p.game " +
+                        "where p.player.playerName = :pn");
         query.setParameter("pn", playerName);
 
         @SuppressWarnings("unchecked")

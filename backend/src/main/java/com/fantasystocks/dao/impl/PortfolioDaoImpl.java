@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
@@ -45,6 +46,28 @@ public class PortfolioDaoImpl implements PortfolioDao {
     public Portfolio get(long portfolioID) {
         Session session = sessionFactory.openSession();
         Portfolio p = session.get(Portfolio.class, portfolioID);
+        session.close();
+        return p;
+    }
+
+    @Override
+    public Portfolio get(String playerName, long gameID) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        @SuppressWarnings("unchecked")
+        javax.persistence.Query query = session.createQuery(
+                "from PlayerInGame p " +
+                        "join fetch p.portfolio " +
+                        "where p.player.playerName = :pn " +
+                        "and p.game.gameId = :gid");
+        query.setParameter("pn", playerName);
+        query.setParameter("gid", gameID);
+
+        @SuppressWarnings("unchecked")
+        PlayerInGame pig = (PlayerInGame)query.getSingleResult();
+        Portfolio p = pig.getPortfolio();
+        tx.commit();
         session.close();
         return p;
     }
