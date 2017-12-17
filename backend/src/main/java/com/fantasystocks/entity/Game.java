@@ -32,4 +32,7 @@ public class Game {
     @OneToMany( mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PlayerInGame> players = new HashSet<>();
 
+    @Column(name = "current_week")
+    private int currentWeek;
+
 }

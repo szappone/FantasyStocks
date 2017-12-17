@@ -10,4 +10,5 @@ public interface PortfolioService {
     void add(Portfolio portfolio);
     void update(Portfolio portfolio);
     Portfolio get(long portfolioID);
+    Portfolio get(String playerName, long gameID);
 }

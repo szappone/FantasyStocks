@@ -4,8 +4,11 @@ import com.fantasystocks.controller.api.CreateSessionRequest;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.controller.api.Session;
 import com.fantasystocks.entity.Game;
+import com.fantasystocks.entity.Matchup;
 import com.fantasystocks.entity.Player;
+import com.fantasystocks.modules.RobinRound;
 import com.fantasystocks.service.model.GameService;
+import com.fantasystocks.service.model.MatchupService;
 import com.fantasystocks.service.model.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class CreateSessionController extends ControllerErrorHandler {
     private PlayerService playerService;
     @Autowired
     private GameService gameService;
+    @Autowired
+    private MatchupService matchupService;
 
     @ResponseBody
     @RequestMapping(value = "/session", method = RequestMethod.POST)
@@ -39,10 +44,15 @@ public class CreateSessionController extends ControllerErrorHandler {
         Game game = Game
                 .builder()
                 .gameName(body.getSessionName())
+                .currentWeek(1)
                 .build();
         gameService.add(game);
         // Add Players to game.
         players.forEach(player -> playerService.addToSession(player, game));
+
+        // Add Matchups to game
+        matchupService.createForSession(game, playerNames);
+
         return gameService.getSessionAPI(game.getGameId());
     }
 

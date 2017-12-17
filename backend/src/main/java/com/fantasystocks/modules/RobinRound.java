@@ -52,12 +52,13 @@ public class RobinRound {
     public static Matchup[] createMatchupIDs (String[][][] players){
         Matchup[] tournament = new Matchup[45];
         int k = 0;
-        for (int i = 0; i < 9; i ++) {
-            for (int j = 0; j < 5; j++) {
-                Matchup m = new Matchup();
-                m.setPlayer1Name(players[i][j][0]);
-                m.setPlayer2Name(players[i][j][1]);
-                m.setActiveWeek(i+1);
+        for (int i = 0; i < players.length; i ++) {
+            for (int j = 0; j < players[i].length; j++) {
+                Matchup m = Matchup.builder()
+                        .player1Name(players[i][j][0])
+                        .player2Name(players[i][j][1])
+                        .activeWeek(i+1)
+                        .build();
                 tournament[k] = m;
                 k++;
             }
