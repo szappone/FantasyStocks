@@ -29,7 +29,13 @@ public class GetPortfolioRecommendationController extends ControllerErrorHandler
 
         Portfolio portfolioExists = portfolioService.get(portfolioID);
         if (portfolioExists != null){
-            return DuringGamePlayRecommender.sendRecs(portfolioExists);
+            Portfolio p = DuringGamePlayRecommender.sendRecs(portfolioExists);
+            return GetPortfolioResponse.builder()
+                    .portfolioID(portfolioID)
+                    .longs(p.getLongs())
+                    .shorts(p.getShorts())
+                    .bench(p.getBench())
+                    .build();
         } else {
             response.setStatus(404);
             return ResponseMessage.builder().message("Portfolio with that portfolioID does not exist").build();
