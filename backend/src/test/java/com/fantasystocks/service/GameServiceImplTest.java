@@ -111,8 +111,7 @@ public class GameServiceImplTest extends EasyMockSupport {
         expect(playerInGameDao.getGamesForPlayer(playerNameTest)).andReturn(playerInGames).once();
     }
 
-    @Test
-    @Ignore
+    /*@Test
     public void test_getAllSessions() {
         setupGetAllSessions();
         setup();
@@ -128,7 +127,7 @@ public class GameServiceImplTest extends EasyMockSupport {
             assertEquals(session.getPlayers(), players);
             assertEquals(session.getSessionId(), gameIds.get(x));
         }
-    }
+    }*/
 
     private Player buildPlayer(String playerName) {
         return Player.builder()
