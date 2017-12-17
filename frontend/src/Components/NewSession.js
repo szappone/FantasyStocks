@@ -12,11 +12,14 @@ class NewSession extends FantasyStocksBaseComponent {
     super();
     this.state = {
       name: "",
-      allPlayers: [],
+      allPlayers: ["player1", "player2", "player3",
+                   "player4", "player5", "player6",
+                   "player7", "player8", "player9"],
       checkedPlayers: [],
       errorMessage: ""
     };
   }
+
 
   componentDidMount() {
     super.componentDidMount();
@@ -28,7 +31,7 @@ class NewSession extends FantasyStocksBaseComponent {
         let playerArray = jsonData.playerNames;
         // remove logged in player from playerArray
         playerArray.splice(playerArray.indexOf(service.getHandle()), 1);
-        this.setState({allPlayers: playerArray});
+        this.setState({allPlayers: playerArray}); //--> commented out for now
       });
   }
 
@@ -54,6 +57,7 @@ class NewSession extends FantasyStocksBaseComponent {
         <p className="App-intro">
           Step 1 of 2: Invite 9 friends to play
         </p>
+
         <header className="App-header">
           Session Name &nbsp;
             <input className="App-text-field-long" onChange={this.onInputChange}
@@ -62,6 +66,7 @@ class NewSession extends FantasyStocksBaseComponent {
             </input>
           <br></br><br></br><br></br>
           Select 9 friends
+
           <ul>
             {this.state.allPlayers.map((friend) => (
                 <li>

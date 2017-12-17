@@ -30,9 +30,9 @@ function getCurrentService() {
           getPortfolioById: realService.getPortfolioById,
 
           draftPortfolio: realService.draftPortfolio,
-          
-          getMatchupById: realService.getMatchupById,
-          
+
+          getMatchupById: mockService.getMatchupById,
+
           getAllStocks: realService.getAllStocks
     }
 }

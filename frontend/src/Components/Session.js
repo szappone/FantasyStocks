@@ -121,14 +121,14 @@ class Session extends FantasyStocksBaseComponent {
             <li key={player}><p>{player}</p></li>
           ))}
         </ul>
-        
-        <div id="portfolioDiv">
+
+        <div className="portfolioBox" id="portfolioDiv" >
           {
             matchupInfo
           }
         </div>
-        
-        <div id="matchupDiv">
+
+        <div className="matchupBox" id="matchupDiv">
           <h2>Matchups in this Session</h2>
           <ul id="matchupList">
             {this.state.currentSession.matchupIds.map((matchupId) => (
