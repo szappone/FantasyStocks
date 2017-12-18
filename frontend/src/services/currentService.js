@@ -32,7 +32,9 @@ function getCurrentService() {
           draftPortfolio: realService.draftPortfolio,
 
           getMatchupById: mockService.getMatchupById,
-
+          
+          updatePortfolio: realService.updatePortfolio,
+                    
           getAllStocks: realService.getAllStocks
     }
 }

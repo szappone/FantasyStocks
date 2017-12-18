@@ -1,16 +1,17 @@
-import React from 'react';
-import fsLogo from '../fsLogo.svg';
-import '../App.css';
 import FantasyStocksBaseComponent from './FantasyStocksBaseComponent';
+import React from 'react';
+import '../App.css';
+import fsLogo from '../fsLogo.svg';
 import NavBar from './NavBar';
+import Portfolio from './Portfolio';
 
 
-class NewSessionDraft extends FantasyStocksBaseComponent {
-
+class UpdatePortfolio extends FantasyStocksBaseComponent {
+  
   constructor(props) {
     super(props);
     this.state = {
-      portfolioId: -1,
+      portfolioId: parseInt(this.props.match.params.portfolioId),
       stocks: ["stock1", "stock2", "stock3","stock4", "stock5",
               "stock6","stock7", "stock8", "stock9", "stock10",
               "stock11", "stock12", "stock13"],
@@ -21,68 +22,50 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
       },
       errorMessage: "",
       errorMessageStyle: ".errorMessage"
-    };
-  }
-
-  componentWillMount(){
-    this.setPortfolioId();
-    this.setStocks();
-  }
-
-
-  componentDidMount() {
-    super.componentDidMount();
-  }
-
-  setPortfolioId = () => {
-    this.setState(
-      {portfolioId: parseInt(this.props.match.params.portfolioId)},
-      () => {
-        console.log("portfolio id: " + this.state.portfolioId);
-      });
+    }
   }
   
-  setStocks = () => {
-    this.props.globalService.getAllStocks().then(
-      (response) => {
-        return response.json();
-      }).then(
-        (json) => {
-          this.setState({stocks: json});
-      })
+  setStocksFromPortfolioObj = (portfolioObj) => {
+    let stocks = [];
+    stocks = stocks.concat(portfolioObj.longs);
+    stocks = stocks.concat(portfolioObj.shorts)
+    stocks = stocks.concat(portfolioObj.bench)
+    this.setState({stocks: stocks});
   }
 
   render() {
+    
     let navBar = "";
     if (this.props && this.props.globalService) {
       navBar = <NavBar globalService={this.props.globalService}
                        history={this.props.history}/>;
     }
     return (
-
-
       <div className="App">
         {navBar}
-
+        
         <header className="App-header">
           <img src={fsLogo} className="App-logo" alt="logo" />
             <h1 className="App-title">Draft</h1>
         </header>
 
-        <br></br><br></br><br></br><br></br>
-        <p className="App-intro">
-          Draft 9 stocks for your portfolio.
-        </p>
-
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          <div>
-           <p className="App-key" style={{display: 'flex', justifyContent: 'center'}}>
-            Play 3 stocks long: make money when their prices go up <br></br>
-            Play 3 stocks short: make money when their prices fall <br></br>
-            Put 3 stocks on your bench: play them another week
-            </p>
-          </div>
+        <br></br><br></br><br></br>
+        
+        <h2>Update your portfolio. </h2> 
+        <h4> You can only do this on weekends </h4>
+        
+        <div>
+          <h3>Current Portfolio: </h3>
+            <Portfolio
+              portfolioId={this.state.portfolioId}
+              globalService={this.props.globalService}
+              callbackParentGetStocks={this.setStocksFromPortfolioObj}
+              />
         </div>
+        
+        
+        <br/><br/>
+        <h3>New Portfolio: </h3>
         <ul className="navul">
                 {this.state.stocks.map((stock) => (
                     <li key={stock} className="navli">
@@ -103,15 +86,16 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
           <div className={this.state.errorMessageStyle}>
             {this.state.errorMessage}
           </div>
-          <button className="App-button-tall"  onClick={this.handleDraft}>
-            DRAFT
+          <button className="App-button-tall"  onClick={this.handleUpdatePortfolio}>
+            UPDATE
          </button >
-
-   </div>
-
-    );
+        
+        
+      </div>
+    )
   }
-
+  
+  
   clearStockFromArrays = (stock) => {
     for (let arrayName in this.state.stockArrays) {
       let array = this.state.stockArrays[arrayName];
@@ -136,7 +120,9 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
     return handleIt;
   }
 
-  handleDraft = () => {
+  handleUpdatePortfolio = () => {
+    
+    //check valid first
     for (let arrayName in this.state.stockArrays) {
       let array = this.state.stockArrays[arrayName];
       if (array.length !== 3) {
@@ -146,10 +132,10 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
     }
 
     let service = this.props.globalService;
-    service.draftPortfolio(this.state.portfolioId, this.state.stockArrays)
+    service.updatePortfolio(this.state.portfolioId, this.state.stockArrays)
       .then((response) => {
         if (response.ok) {
-          this.setSuccessMessage("Successfully Drafted!")
+          this.setSuccessMessage("Successfully Updated!")
         } else {
           response.json().then((json) => {
             this.setErrorMessage(json);
@@ -158,7 +144,7 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
         console.log("response:");
         console.log(response);
       }).catch((err) => {
-        this.setErrorMessage("Couldn't draft");
+        this.setErrorMessage("Couldn't update portfolio");
         console.log(err.message);
       });
   }
@@ -184,7 +170,6 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
   }
 
 
-
 }
 
-export default NewSessionDraft;
+export default UpdatePortfolio;

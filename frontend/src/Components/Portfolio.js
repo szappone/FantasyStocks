@@ -24,10 +24,15 @@ class NewSessionDraft extends Component {
         console.log("json");
         console.log(json);
         this.setState({portfolioObj: json});
+        
+        if (this.props.callbackParentGetStocks) {
+          this.props.callbackParentGetStocks(json);
+        }
       });
   }
 
   render() {
+    
     if (this.state.portfolioObj !== null) {
       return (
 
