@@ -31,11 +31,13 @@ function getCurrentService() {
 
           draftPortfolio: realService.draftPortfolio,
 
-          getMatchupById: mockService.getMatchupById,
+          getMatchupById: realService.getMatchupById,
           
           updatePortfolio: realService.updatePortfolio,
                     
-          getAllStocks: realService.getAllStocks
+          getAllStocks: realService.getAllStocks,
+          
+          getRecommendedStocksByPortfolioId: realService.getRecommendedStocksByPortfolioId
     }
 }
 

@@ -4,6 +4,7 @@ import '../App.css';
 import fsLogo from '../fsLogo.svg';
 import NavBar from './NavBar';
 import Portfolio from './Portfolio';
+import RecommendedPortfolio from './RecommendedPortfolio';
 
 
 class UpdatePortfolio extends FantasyStocksBaseComponent {
@@ -16,6 +17,11 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
               "stock6","stock7", "stock8", "stock9", "stock10",
               "stock11", "stock12", "stock13"],
       stockArrays: {
+        longs: [],
+        shorts: [],
+        bench: []
+      },
+      recommendedStockArrays: {
         longs: [],
         shorts: [],
         bench: []
@@ -46,7 +52,6 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
         
         <header className="App-header">
           <img src={fsLogo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Draft</h1>
         </header>
 
         <br></br><br></br><br></br>
@@ -55,12 +60,21 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
         <h4> You can only do this on weekends </h4>
         
         <div>
-          <h3>Current Portfolio: </h3>
+          <h2>Current Portfolio: </h2>
             <Portfolio
               portfolioId={this.state.portfolioId}
               globalService={this.props.globalService}
               callbackParentGetStocks={this.setStocksFromPortfolioObj}
               />
+              
+          <h2>Recommended Portfolio: </h2>
+            <RecommendedPortfolio
+              portfolioId={this.state.portfolioId}
+              globalService={this.props.globalService}
+              callbackParentGetStocks={this.setStocksFromPortfolioObj}
+              />
+              
+            
         </div>
         
         

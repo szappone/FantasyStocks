@@ -12,6 +12,7 @@ const GET_PORTFOLIO = API_PREFIX + "/portfolio/";
 const GET_MATCHUP = API_PREFIX + "/matchups/";
 const GET_STOCKS= API_PREFIX + "/stocks";
 const UPDATE_PORTFOLIO = API_PREFIX + "/portfolio/";
+const GET_RECOMMENDED = API_PREFIX + "/portfolio/recommended/";
 
 function getRealService() {
 
@@ -124,6 +125,10 @@ function getRealService() {
           
           getAllStocks: function() {
             return fetch(GET_STOCKS);
+          },
+          
+          getRecommendedStocksByPortfolioId: function(portfolioId) {
+            return fetch(GET_RECOMMENDED + portfolioId);
           }
 
 
