@@ -138,7 +138,7 @@ class Session extends FantasyStocksBaseComponent {
           }
         </div>
 
-        <div className="matchupBox" id="matchupDiv">
+        <div id="matchupDiv">
           <h2>Matchups in this Session</h2>
           <ul id="matchupList">
             {this.state.currentSession.matchupIds.map((matchupId) => (
