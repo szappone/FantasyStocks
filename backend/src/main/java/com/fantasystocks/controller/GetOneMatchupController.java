@@ -5,7 +5,7 @@ import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Matchup;
 import com.fantasystocks.service.model.MatchupService;
 import com.fantasystocks.service.model.PortfolioService;
-import com.fantasystocks.modules.priceCalculator;
+import com.fantasystocks.modules.PriceCalculator;
 import com.fantasystocks.service.model.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Path;
 import java.util.Map;
 
 @Controller
@@ -28,7 +27,7 @@ public class GetOneMatchupController extends ControllerErrorHandler {
     @Autowired
     private StockService stockService;
     @Autowired
-    private priceCalculator calc;
+    private PriceCalculator calc;
 
     @ResponseBody
     @RequestMapping(value = "/matchups/{matchupID}", method = RequestMethod.GET)

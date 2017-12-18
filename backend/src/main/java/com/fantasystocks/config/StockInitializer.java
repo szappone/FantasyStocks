@@ -2,14 +2,12 @@ package com.fantasystocks.config;
 
 import com.fantasystocks.entity.Stock;
 import com.fantasystocks.service.model.StockService;
-import com.fantasystocks.modules.priceCalculator;
-import com.google.common.util.concurrent.RateLimiter;
+import com.fantasystocks.modules.PriceCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.ws.rs.POST;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -86,9 +84,9 @@ public class StockInitializer {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e){
                 }
-                stock.setLastMondayPrice(priceCalculator.getCurrentDay(tickers.get(i)));
+                stock.setLastMondayPrice(PriceCalculator.getCurrentDay(tickers.get(i)));
             }
-            stock.setTodayPrice(priceCalculator.getCurrentDay(tickers.get(i)));
+            stock.setTodayPrice(PriceCalculator.getCurrentDay(tickers.get(i)));
             stockService.update(stock);
         }
 

@@ -4,22 +4,18 @@ package com.fantasystocks.modules;
 import com.fantasystocks.entity.Portfolio;
 
 import com.fantasystocks.entity.Stock;
-import com.fantasystocks.service.impl.StockServiceImpl;
 import com.fantasystocks.service.model.StockService;
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.testng.collections.Lists;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(EasyMockRunner.class)
 public class priceCalculatorTest extends EasyMockSupport {
     @TestSubject
-    private priceCalculator calc = new priceCalculator();
+    private PriceCalculator calc = new PriceCalculator();
     @Mock
     public StockService stockService;
 

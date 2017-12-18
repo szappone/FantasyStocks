@@ -1,9 +1,7 @@
 package com.fantasystocks.controller;
 
-import com.fantasystocks.controller.api.GetStockResponse;
 import com.fantasystocks.controller.api.ResponseMessage;
 import com.fantasystocks.entity.Stock;
-import com.fantasystocks.modules.priceCalculator;
 import com.fantasystocks.service.model.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

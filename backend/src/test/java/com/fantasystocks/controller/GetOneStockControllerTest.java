@@ -2,7 +2,7 @@ package com.fantasystocks.controller;
 
 import com.fantasystocks.config.TestConfig;
 import com.fantasystocks.entity.Stock;
-import com.fantasystocks.modules.priceCalculator;
+import com.fantasystocks.modules.PriceCalculator;
 import com.fantasystocks.service.model.StockService;
 import org.easymock.*;
 import org.junit.After;
@@ -27,7 +27,7 @@ public class GetOneStockControllerTest extends EasyMockSupport {
     @Mock
     private StockService stockService;
     @Mock
-    private priceCalculator priceCalculator;
+    private PriceCalculator PriceCalculator;
     @Mock
     private HttpServletRequest httpServletRequest;
     @Mock
