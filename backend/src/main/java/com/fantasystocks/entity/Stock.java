@@ -23,4 +23,8 @@ public class Stock {
     @Column(name = "company_name")
     private String companyName;
 
+    private double lastMondayPrice;
+
+    private double todayPrice;
+
 }
