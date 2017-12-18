@@ -22,6 +22,7 @@ class Login extends Component {
 
   render() {
 
+    let str = "Create your league. Draft your stocks. Play the market."
     return (
 
       <div className="App">
@@ -31,7 +32,8 @@ class Login extends Component {
           <img src={fsLogo} className="App-logo" alt="logo" />
         </header>
 
-        <h1 className="App-title">Welcome to FantasyStocks!</h1>
+        <h1>Welcome to FantasyStocks!</h1>
+        <h1 className="App-title">{str}</h1>
 
           <p className="App-intro">
           Enter Handle

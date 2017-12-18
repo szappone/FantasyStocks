@@ -7,12 +7,15 @@
 
 .portfolioBox {
   text-align: center;
-  width: Xu;
+  margin: 0 auto;
+  width: 320px;
+  padding-bottom: 3px;
+/*  width: Xu;
   height: Yu;
   top: 50%;
   left: 50%;
   margin-left: -(X/2)u;
-  margin-top: -(Y/2)u;
+  margin-top: -(Y/2)u;*/
 }
 
 .matchupBox {
@@ -59,8 +62,8 @@ a {
 
 .App-key {
   background-color: #b9c8df;
-  height: 60px;
-  width: 510px;
+  height: 82px;
+  width: 550px;
   align-items: center;
   justify-content: center;
   border-color: #3d3d3d;
