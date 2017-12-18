@@ -61,6 +61,7 @@ public class GameServiceImplTest extends EasyMockSupport {
     public void autowireMocks() {
         ReflectionTestUtils.setField(gameService, "sessionDao", sessionDao);
         ReflectionTestUtils.setField(gameService, "playerInGameDao", playerInGameDao);
+        ReflectionTestUtils.setField(gameService, "matchupDao", matchupDao);
     }
 
     @After
@@ -107,11 +108,12 @@ public class GameServiceImplTest extends EasyMockSupport {
             playerInGames.add(buildPlayerInGame(playerNameTest, gameId, gameName));
             expect(sessionDao.get(gameId)).andReturn(buildGame(gameId, gameName, playerNames));
             expect(sessionDao.getAllPlayerInGame(gameId)).andReturn(buildPlayersInGame(playerNames, gameId, gameName));
+            expect(matchupDao.listMatchupIDs(gameIds.get(x), 0L)).andReturn(new ArrayList<>()).anyTimes();
         }
         expect(playerInGameDao.getGamesForPlayer(playerNameTest)).andReturn(playerInGames).once();
     }
 
-    /*@Test
+    @Test
     public void test_getAllSessions() {
         setupGetAllSessions();
         setup();
@@ -127,7 +129,7 @@ public class GameServiceImplTest extends EasyMockSupport {
             assertEquals(session.getPlayers(), players);
             assertEquals(session.getSessionId(), gameIds.get(x));
         }
-    }*/
+    }
 
     private Player buildPlayer(String playerName) {
         return Player.builder()

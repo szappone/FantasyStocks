@@ -1,24 +1,19 @@
 package com.fantasystocks.modules;
 
-import com.fantasystocks.controller.api.GetPortfolioScoreResponse;
 import com.fantasystocks.entity.Portfolio;
 import com.fantasystocks.entity.Stock;
-import com.fantasystocks.service.impl.StockServiceImpl;
 import com.fantasystocks.service.model.StockService;
 import com.jimmoores.quandl.*;
 import com.jimmoores.quandl.classic.ClassicQuandlSession;
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 @Component
-public class priceCalculator {
+public class PriceCalculator {
     @Autowired
     private StockService stockService;
 
