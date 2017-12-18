@@ -64,24 +64,9 @@ public class StockInitializer {
                 .build());
     }
 
-    @PostConstruct
-    public void initPrices() {
-        List<String> tickers = stockService.listStockIDs();
-
-
-        for (int i = 0; i < tickers.size(); i++){
-            try {
-                TimeUnit.SECONDS.sleep(60);
-            } catch (InterruptedException e){
-            }
-            Stock stock = stockService.get(tickers.get(i));
-            stock.setLastMondayPrice(priceCalculator.getMonday(tickers.get(i)));
-            stock.setTodayPrice(priceCalculator.getCurrentDay(tickers.get(i)));
-            stockService.update(stock);
-        }
-    }
 
     @Scheduled(cron = "0 0 18 * * *")
+    @PostConstruct
     public void updatePrices(){
         LocalDate date = LocalDate.now();
         DayOfWeek day = date.getDayOfWeek();
@@ -92,13 +77,13 @@ public class StockInitializer {
 
         for (int i = 0; i < tickers.size(); i++){
             try {
-                TimeUnit.SECONDS.sleep(30);
+                TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e){
             }
             Stock stock = stockService.get(tickers.get(i));
             if (s.equals("MONDAY")) {
                 try {
-                    TimeUnit.SECONDS.sleep(30);
+                    TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e){
                 }
                 stock.setLastMondayPrice(priceCalculator.getCurrentDay(tickers.get(i)));

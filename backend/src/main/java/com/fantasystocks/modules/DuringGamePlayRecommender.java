@@ -2,10 +2,7 @@ package com.fantasystocks.modules;
 
 import com.fantasystocks.entity.Portfolio;
 import com.google.common.collect.Lists;
-import com.jimmoores.quandl.DataSetRequest;
-import com.jimmoores.quandl.Frequency;
-import com.jimmoores.quandl.Row;
-import com.jimmoores.quandl.TabularResult;
+import com.jimmoores.quandl.*;
 import com.jimmoores.quandl.classic.ClassicQuandlSession;
 
 
@@ -50,7 +47,7 @@ public class DuringGamePlayRecommender {
     }
 
     public static Double[] recommend(String ticker) {
-        ClassicQuandlSession session = ClassicQuandlSession.create();
+        ClassicQuandlSession session = ClassicQuandlSession.create(SessionOptions.Builder.withAuthToken("MscxWmUUSFZ-D_xjYiuP").build());;
         TabularResult tabularResult = session.getDataSet(
                 DataSetRequest.Builder
                         .of("WIKI/" + ticker)

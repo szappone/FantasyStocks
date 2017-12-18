@@ -18,7 +18,8 @@ import java.util.Properties;
 @ComponentScans(value = {
         @ComponentScan("com.fantasystocks.controller"),
         @ComponentScan("com.fantasystocks.dao"),
-        @ComponentScan("com.fantasystocks.service")
+        @ComponentScan("com.fantasystocks.service"),
+        @ComponentScan("com.fantasystocks.modules")
 })
 public class TestConfig {
     @Autowired
