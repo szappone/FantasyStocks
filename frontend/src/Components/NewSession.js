@@ -16,7 +16,8 @@ class NewSession extends FantasyStocksBaseComponent {
                    "player4", "player5", "player6",
                    "player7", "player8", "player9"],
       checkedPlayers: [],
-      errorMessage: ""
+      errorMessage: "",
+      errorMessageStyle: "errorMessage"
     };
   }
 
@@ -58,42 +59,42 @@ class NewSession extends FantasyStocksBaseComponent {
           Step 1 of 2: Invite 9 friends to play
         </p>
 
-        <header className="App-header">
           Session Name &nbsp;
             <input className="App-text-field-long" onChange={this.onInputChange}
                 type="name" placeholder="enter session name" name="name" height="20px">
 
             </input>
-          <br></br><br></br><br></br>
+          <br/><br/>
           Select 9 friends
-
-          <ul>
-            {this.state.allPlayers.map((friend) => (
-                <li>
-                  <p>
-                    <input type="checkbox" onClick={(cb) => {
-                      //console.log(friend);
-                      if (this.state.checkedPlayers.includes(friend)) {
-                        this.state.checkedPlayers.splice(this.state.checkedPlayers.indexOf(friend), 1);
-                      } else {
-                        this.state.checkedPlayers.push(friend);
+          <div>
+            <ul>
+              {this.state.allPlayers.map((friend) => (
+                  <li>
+                    <p>
+                      <input type="checkbox" onClick={(cb) => {
+                        this.clearMessage();
+                        if (this.state.checkedPlayers.includes(friend)) {
+                          this.state.checkedPlayers.splice(this.state.checkedPlayers.indexOf(friend), 1);
+                        } else {
+                          this.state.checkedPlayers.push(friend);
+                        }
+                        console.log(this.state.checkedPlayers);
                       }
-                      console.log(this.state.checkedPlayers);
-                    }
-                  }></input>
-                    {friend}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </header>
+                    }></input>
+                      {friend}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <br/><br/><br/><br/><br/><br/>
           <div className="App-main-login">
             <button className="App-button" onClick={this.handleCreate}>
                 Create
            </button >
-            <div id="errorMessage">{this.state.errorMessage}</div>
+           <div className={this.state.errorMessageStyle}>
+             {this.state.errorMessage}
+           </div>
           </div>
    </div>
 
@@ -103,6 +104,14 @@ class NewSession extends FantasyStocksBaseComponent {
   handleCreate = () => {
     let service = this.props.globalService;
     let invitedPlayers = this.state.checkedPlayers.slice();
+    
+    if (invitedPlayers.length != 9) {
+      this.setErrorMessage("Must select exactly 9 players to play with");
+      return;
+    } else if (this.state.name === "") {
+      this.setErrorMessage("Session must have a name");
+      return;
+    }
     //add logged in player to invited players
     invitedPlayers.push(service.getHandle());
     service.createSession(this.state.name, invitedPlayers)
@@ -124,6 +133,26 @@ class NewSession extends FantasyStocksBaseComponent {
 
   onInputChange = (newSessionInput) => {
     this.setState({name:newSessionInput.target.value});
+  }
+  
+  //set the message and class name
+  setErrorMessage = (msg) => {
+    this.setMessageState(msg);
+    this.setState({errorMessageStyle: "errorMessage"});
+  }
+  //set the message and class name
+  setSuccessMessage = (msg) => {
+    this.setMessageState(msg);
+    this.setState({errorMessageStyle: "successMessage"});
+  }
+  clearMessage = () => {
+    this.setMessageState("");
+  }
+  setMessageState = (msg) => {
+    if (typeof(msg) === 'object') {
+      msg = JSON.stringify(msg);
+    }
+    this.setState({errorMessage: msg});
   }
 
 }

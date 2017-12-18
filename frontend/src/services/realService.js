@@ -11,7 +11,7 @@ const DRAFT_PORTFOLIO = API_PREFIX + "/portfolio/";
 const GET_PORTFOLIO = API_PREFIX + "/portfolio/";
 const GET_MATCHUP = API_PREFIX + "/matchups/";
 const GET_STOCKS= API_PREFIX + "/stocks";
-
+const UPDATE_PORTFOLIO = API_PREFIX + "/portfolio/";
 
 function getRealService() {
 
@@ -101,6 +101,15 @@ function getRealService() {
             return fetch(DRAFT_PORTFOLIO + portfolioId, {
               headers: new Headers({'Content-Type': 'application/json'}),
               method: "POST",
+              body: body
+            });
+          },
+          
+          updatePortfolio: function(portfolioId, body) {
+            body = JSON.stringify(body);
+            return fetch(UPDATE_PORTFOLIO + portfolioId, {
+              headers: new Headers({'Content-Type': 'application/json'}),
+              method: "PUT",
               body: body
             });
           },

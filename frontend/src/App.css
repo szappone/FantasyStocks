@@ -7,11 +7,12 @@
 
 .portfolioBox {
   text-align: center;
-  padding-top: 1px;
-  margin: 0 auto;
-  width: 320px;
-  height: 180px;
-  background-color: #333;
+  width: Xu;
+  height: Yu;
+  top: 50%;
+  left: 50%;
+  margin-left: -(X/2)u;
+  margin-top: -(Y/2)u;
 }
 
 .matchupBox {
@@ -20,6 +21,7 @@
   width: 320px;
   padding-bottom: 3px;
   background-color: #333;
+  border: 2px solid black;
 }
 
 .errorMessage:not(:empty) {
@@ -78,6 +80,18 @@ a {
 .App-button {
   height: 40px;
   width: 140px;
+  background-color: black;
+  color: white;
+  border-style:solid;
+  border-color: #3d3d3d;
+  border-width:thick;
+  font-size: 1em;
+  margin: 2px;
+}
+
+.App-button-big {
+  height: 50px;
+  width: 300px;
   background-color: black;
   color: white;
   border-style:solid;

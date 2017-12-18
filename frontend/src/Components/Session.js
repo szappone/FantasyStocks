@@ -82,10 +82,20 @@ class Session extends FantasyStocksBaseComponent {
     let matchupInfo = "";
     if (this.state.playerPortfolio) {
       if (this.state.playerPortfolio.longs.length > 0) {
-        matchupInfo = <Portfolio
+        matchupInfo = 
+        <div>
+          <Portfolio
             portfolioId={this.state.playerPortfolioId}
             globalService={this.props.globalService}
             />
+            
+            <div>
+            <button className="App-button-big">
+              <Link to={'/updatePortfolio/' + this.state.playerPortfolioId}>Click to Change your portfolio</Link>
+            </button>
+          </div>
+            
+        </div>
       } else {
         matchupInfo = <button className="Dash-button">
           <Link to={'/draft/' + this.state.playerPortfolioId}>{"ENTER DRAFT"}</Link>
@@ -128,7 +138,7 @@ class Session extends FantasyStocksBaseComponent {
           }
         </div>
 
-        <div className="matchupBox" id="matchupDiv">
+        <div id="matchupDiv">
           <h2>Matchups in this Session</h2>
           <ul id="matchupList">
             {this.state.currentSession.matchupIds.map((matchupId) => (
