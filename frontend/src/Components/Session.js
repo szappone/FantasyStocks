@@ -86,13 +86,13 @@ class Session extends FantasyStocksBaseComponent {
       if (this.state.playerPortfolio.longs.length > 0) {
         matchupInfo =
          <div>
-          <Portfolio 
+          <Portfolio
             portfolioId={this.state.playerPortfolioId}
             globalService={this.props.globalService}
             />
             <div>
             <button className="App-button-big">
-              <Link to={'/updatePortfolio/' + this.state.playerPortfolioId}>Click to Change your portfolio</Link>
+              <Link to={'/updatePortfolio/' + this.state.playerPortfolioId}>Click to change your portfolio</Link>
             </button>
           </div>
 
@@ -114,9 +114,10 @@ class Session extends FantasyStocksBaseComponent {
     }
 
     return (
-
+    <div>
+      {navBar}
       <div className="App somePadding">
-        {navBar}
+
         <div>
         <header className="App-header">
           <img src={fsLogo} className="App-logo" alt="logo" />
@@ -125,7 +126,7 @@ class Session extends FantasyStocksBaseComponent {
         </header>
         </div>
 
-        <br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
         <div>
         <div className="App-border">
@@ -135,29 +136,34 @@ class Session extends FantasyStocksBaseComponent {
             }
         </div>
         </div>
-        
+
 
         <div id="matchupDiv">
           <h1>{"This Week's Matchups"}</h1>
+
+          Your score represents your rosters gain in the market since Monday in this weeks matchup.<br></br>
+          Remember, your roster benefits when your long stocks go up and your short stocks fall.<br></br>
+          Your effective gain = the increase in your long stocks + the decrease in your short stocks.<br></br>
+          This weeks matchup winners will be announced after market close on Friday.
+
           <ul id="matchupList">
             {this.state.currentSession.matchupIds.map((matchupId) => (
               <li key={matchupId}> <Matchup globalService={this.props.globalService} matchupId={matchupId}/> </li>
             ))}
           </ul>
         </div>
-        
+
         <div className="App-border-box">
-          <h1>Cumulative Scores for week number: {this.state.currentSession.currentWeek} </h1>
-          <h4>Represents number of matchups won</h4>
+          <h1>Leaderboard: Week {this.state.currentSession.currentWeek} of 10</h1>
+          <h4>Represents cumulative number of matchups won</h4>
           <ul>
           {this.state.currentSession.players.map((player) => (
               <li key={player}><p>{player}: 0</p></li>
             ))}
           </ul>
         </div>
-
+        </div>
       </div>
-
     );
   }
 }
