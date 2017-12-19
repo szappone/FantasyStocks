@@ -4,7 +4,7 @@ import '../App.css';
 import NavBar from './NavBar';
 
 
-class Portfolio extends Component {
+class NewSessionDraft extends Component {
 
   constructor(props) {
     super(props);
@@ -24,39 +24,32 @@ class Portfolio extends Component {
         console.log("json");
         console.log(json);
         this.setState({portfolioObj: json});
-        
-        if (this.props.callbackParentGetStocks) {
-          this.props.callbackParentGetStocks(json);
-        }
       });
   }
 
   render() {
-    
     if (this.state.portfolioObj !== null) {
       return (
 
         <div className="portfolioBox">
-        <table width="300" align="center">
-          <tbody>
+        <h2>Portfolio</h2>
+        <table width="300">
           <tr>
            <th className="App-green">
-              Longs:
+            Longs:
               <ul>
                 {this.state.portfolioObj.longs.map((stockId) => (
                   <li key={stockId}>{stockId}</li>
                 ))}
               </ul>
-          </th>
-          <th className="App-red">
+          </th><th className="App-red">
           Shorts:
             <ul>
               {this.state.portfolioObj.shorts.map((stockId) => (
                 <li key={stockId}>{stockId}</li>
               ))}
             </ul>
-          </th>
-          <th className="App-grey">
+          </th><th className="App-grey">
           Bench:
             <ul>
               {this.state.portfolioObj.bench.map((stockId) => (
@@ -65,7 +58,6 @@ class Portfolio extends Component {
             </ul>
               </th>
         </tr>
-        </tbody>
       </table>
         </div>
       );
@@ -81,4 +73,4 @@ class Portfolio extends Component {
 
 }
 
-export default Portfolio;
+export default NewSessionDraft;

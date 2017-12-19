@@ -146,6 +146,7 @@ class Session extends FantasyStocksBaseComponent {
           Your effective gain = the increase in your long stocks + the decrease in your short stocks.<br></br>
           This weeks matchup winners will be announced after market close on Friday.
 
+
           <ul id="matchupList">
             {this.state.currentSession.matchupIds.map((matchupId) => (
               <li key={matchupId}> <Matchup globalService={this.props.globalService} matchupId={matchupId}/> </li>
