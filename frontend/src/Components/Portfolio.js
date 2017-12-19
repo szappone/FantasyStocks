@@ -4,7 +4,7 @@ import '../App.css';
 import NavBar from './NavBar';
 
 
-class NewSessionDraft extends Component {
+class Portfolio extends Component {
 
   constructor(props) {
     super(props);
@@ -37,24 +37,26 @@ class NewSessionDraft extends Component {
       return (
 
         <div className="portfolioBox">
-        <h2>Portfolio</h2>
-        <table width="300">
+        <table width="300" align="center">
+          <tbody>
           <tr>
-           <th>
-            Longs:
+           <th className="App-green">
+              Longs:
               <ul>
                 {this.state.portfolioObj.longs.map((stockId) => (
                   <li key={stockId}>{stockId}</li>
                 ))}
               </ul>
-          </th><th>
+          </th>
+          <th className="App-red">
           Shorts:
             <ul>
               {this.state.portfolioObj.shorts.map((stockId) => (
                 <li key={stockId}>{stockId}</li>
               ))}
             </ul>
-          </th><th>
+          </th>
+          <th className="App-grey">
           Bench:
             <ul>
               {this.state.portfolioObj.bench.map((stockId) => (
@@ -63,6 +65,7 @@ class NewSessionDraft extends Component {
             </ul>
               </th>
         </tr>
+        </tbody>
       </table>
         </div>
       );
@@ -78,4 +81,4 @@ class NewSessionDraft extends Component {
 
 }
 
-export default NewSessionDraft;
+export default Portfolio;

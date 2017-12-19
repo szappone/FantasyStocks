@@ -132,10 +132,13 @@ class Session extends FantasyStocksBaseComponent {
           ))}
         </ul>
 
-        <div className="portfolioBox" id="portfolioDiv" >
-          {
-            matchupInfo
-          }
+        <div>
+        <div className="App-border">
+            <h2>Your Portfolio</h2>
+            {
+              matchupInfo
+            }
+        </div>
         </div>
 
         <div id="matchupDiv">
