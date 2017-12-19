@@ -5,6 +5,11 @@
   padding-bottom: 600px;
 }
 
+.App-total {
+  font-size: 22px;
+  margin: 15px;
+}
+
 .portfolioBox {
   text-align: center;
   margin: 0 auto;
@@ -155,6 +160,10 @@ height: 30px;
   padding-bottom: 0px;
 }
 
+.somePadding {
+padding: 0px 50px;
+}
+
 .App-red {
   color: red;
 }
@@ -170,6 +179,14 @@ height: 30px;
   border: 2px solid white;
   padding: 10px;
   margin: 0px;
+  display: inline-block;
+}
+
+.App-border-box {
+  margin: 20px;
+  background-color: #333;
+  border: 1px solid #999;
+  padding: 10px;
   display: inline-block;
 }
 
