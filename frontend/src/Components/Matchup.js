@@ -52,13 +52,13 @@ class Matchup extends Component {
         displayColor = "App-red";
       }
       divArray.push(
-        <div className={displayColor}> {stockId} {score} </div>
+        <div className={displayColor}> {stockId} {score}% </div>
         //<div className="App-red"> {stockId} {score} </div>
       );
     }
     return divArray;
   }
-  
+
   pushHasntDraftedIfEmpty = (array) => {
     if (array.length===0) {
       array.push(
@@ -75,7 +75,7 @@ class Matchup extends Component {
     let p1ShortArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p1Score.shorts);
     let p2LongArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p2Score.longs);
     let p2ShortArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p2Score.shorts);
-    
+
     this.pushHasntDraftedIfEmpty(p1LongArray);
     this.pushHasntDraftedIfEmpty(p1ShortArray);
     this.pushHasntDraftedIfEmpty(p2LongArray);
@@ -102,7 +102,7 @@ class Matchup extends Component {
                 ))}
               </ul>
               <br/>
-              <b className="App-total">Total: {this.state.matchupObj.p1Score.total.total}</b>
+              <b className="App-total">Total: {parseFloat(this.state.matchupObj.p1Score.total.total).toFixed(4)}%</b>
           </th>
           <th> VS </th>
           <th>
@@ -120,7 +120,7 @@ class Matchup extends Component {
               ))}
               </ul>
               <br/>
-              <b className="App-total">Total: {this.state.matchupObj.p1Score.total.total}</b> 
+              <b className="App-total">Total: {parseFloat(this.state.matchupObj.p2Score.total.total).toFixed(4)}%</b>
           </th>
         </tr>
     </table>
