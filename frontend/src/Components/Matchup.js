@@ -13,8 +13,16 @@ class Matchup extends Component {
       matchupObj: {
         player1Name: "",
         player2Name: "",
-        p1Score: {},
-        p2Score: {},
+        p1Score: {
+          longs: {},
+          shorts: {},
+          total: {total: 0}
+        },
+        p2Score: {
+          longs: {},
+          shorts: {},
+          total: {total: 0}
+        },
         activeWeek: 0,
       }
     };
@@ -50,6 +58,14 @@ class Matchup extends Component {
     }
     return divArray;
   }
+  
+  pushHasntDraftedIfEmpty = (array) => {
+    if (array.length===0) {
+      array.push(
+        <div className="App-red">{"Hasn't drafted"}</div>
+      );
+    }
+  }
 
   render() {
     let p1Name= this.state.matchupObj.player1Name;
@@ -59,6 +75,11 @@ class Matchup extends Component {
     let p1ShortArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p1Score.shorts);
     let p2LongArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p2Score.longs);
     let p2ShortArray = this.createDivArrayFromScoreObj(this.state.matchupObj.p2Score.shorts);
+    
+    this.pushHasntDraftedIfEmpty(p1LongArray);
+    this.pushHasntDraftedIfEmpty(p1ShortArray);
+    this.pushHasntDraftedIfEmpty(p2LongArray);
+    this.pushHasntDraftedIfEmpty(p2ShortArray);
 
     return (
 
@@ -80,6 +101,8 @@ class Matchup extends Component {
                   <li key={val}>{val}</li>
                 ))}
               </ul>
+              <br/>
+              <b className="App-total">Total: {this.state.matchupObj.p1Score.total.total}</b>
           </th>
           <th> VS </th>
           <th>
@@ -96,6 +119,8 @@ class Matchup extends Component {
                 <li key={val}>{val}</li>
               ))}
               </ul>
+              <br/>
+              <b className="App-total">Total: {this.state.matchupObj.p1Score.total.total}</b> 
           </th>
         </tr>
     </table>

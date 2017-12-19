@@ -13,9 +13,7 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
     super(props);
     this.state = {
       portfolioId: parseInt(this.props.match.params.portfolioId),
-      stocks: ["stock1", "stock2", "stock3","stock4", "stock5",
-              "stock6","stock7", "stock8", "stock9", "stock10",
-              "stock11", "stock12", "stock13"],
+      stocks: [],
       stockArrays: {
         longs: [],
         shorts: [],
@@ -27,7 +25,8 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
         bench: []
       },
       errorMessage: "",
-      errorMessageStyle: ".errorMessage"
+      errorMessageStyle: ".errorMessage",
+      updatedTimes: 0,
     }
   }
   
@@ -62,6 +61,7 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
         <div>
           <h2>Current Portfolio: </h2>
             <Portfolio
+              key={this.state.updatedTimes}
               portfolioId={this.state.portfolioId}
               globalService={this.props.globalService}
               callbackParentGetStocks={this.setStocksFromPortfolioObj}
@@ -122,6 +122,7 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
   //returns a function: the onclick handler of radio button of stock
   //target array is one of: long short bench
   handleRadio = (stock, targetArray) => {
+    //this.clearMessage();
     let currStock = stock;
     let currArray = targetArray;
     let handleIt = () => {
@@ -149,7 +150,8 @@ class UpdatePortfolio extends FantasyStocksBaseComponent {
     service.updatePortfolio(this.state.portfolioId, this.state.stockArrays)
       .then((response) => {
         if (response.ok) {
-          this.setSuccessMessage("Successfully Updated!")
+          this.setSuccessMessage("Successfully Updated!");
+          this.setState({updatedTimes: this.state.updatedTimes + 1});
         } else {
           response.json().then((json) => {
             this.setErrorMessage(json);

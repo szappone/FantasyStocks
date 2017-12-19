@@ -19,7 +19,9 @@ class Session extends FantasyStocksBaseComponent {
       currentSession: {
         players: [],
         sessionName: "",
-        matchupIds: []
+        matchupIds: [],
+        currentWeek: 1
+
       },
       currentSessionId: 0,
       playerPortfolio: undefined,
@@ -113,7 +115,7 @@ class Session extends FantasyStocksBaseComponent {
 
     return (
 
-      <div className="App">
+      <div className="App somePadding">
         {navBar}
         <div>
         <header className="App-header">
@@ -133,6 +135,7 @@ class Session extends FantasyStocksBaseComponent {
             }
         </div>
         </div>
+        
 
         <div id="matchupDiv">
           <h1>{"This Week's Matchups"}</h1>
@@ -142,14 +145,16 @@ class Session extends FantasyStocksBaseComponent {
             ))}
           </ul>
         </div>
-        <div><h1>{"Players in your session:"}</h1></div>
-
-        <ul>
-        {this.state.currentSession.players.map((player) => (
-            <li key={player}><p>{player}</p></li>
-          ))}
-        </ul>
-
+        
+        <div className="App-border-box">
+          <h1>Cumulative Scores for week number: {this.state.currentSession.currentWeek} </h1>
+          <h4>Represents number of matchups won</h4>
+          <ul>
+          {this.state.currentSession.players.map((player) => (
+              <li key={player}><p>{player}: 0</p></li>
+            ))}
+          </ul>
+        </div>
 
       </div>
 
