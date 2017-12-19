@@ -11,6 +11,7 @@ import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class PriceCalculator {
@@ -73,35 +74,43 @@ public class PriceCalculator {
         return value;
     }
 
-    public HashMap<String, Double> score (HashMap<String, String> input) {
-        HashMap<String, Double> scorer = new HashMap<String, Double>();
+    public Map<String, Map<String, Double>> score (Map<String, Map<String, Double>> input) {
         double sum = 0;
-        for (String key : input.keySet()){
-            Stock stock = stockService.get(key);
-            Double value = stock.getTodayPrice();
-            Double value2 = stock.getLastMondayPrice();
-            if (input.get(key).equalsIgnoreCase("Long")) {
-                sum = sum + (value/value2 - 1)*100;
-                scorer.put(key,(value/value2 - 1)*100);
+        for (String stockType : input.keySet()) {
+            Map<String, Double> type = input.get(stockType);
+            for (String key : type.keySet()) {
+                Stock stock = stockService.get(key);
+                Double value = stock.getTodayPrice();
+                Double value2 = stock.getLastMondayPrice();
+                if (stockType.equalsIgnoreCase("longs")) {
+                    sum = sum + (value / value2 - 1) * 100;
+                    type.put(key, (value / value2 - 1) * 100);
+                } else {
+                    sum = sum + (value2 / value - 1) * 100;
+                    type.put(key, (value2 / value - 1) * 100);
+                }
             }
-            else {
-                sum = sum + (value2/value - 1)*100;
-                scorer.put(key,(value2/value - 1)*100);
-            }
-            scorer.put("Total", sum/6);
-
+            input.put(stockType, type);
         }
-        return scorer;
+        Map<String, Double> total = input.get("total");
+        total.put("total", sum/6);
+        input.put("total", total);
+        return input;
     }
-    public HashMap<String, Double> PortfolioScores(Portfolio p) {
-        HashMap<String, String> x = new HashMap<String, String>();
+    public Map<String, Map<String, Double>> PortfolioScores(Portfolio p) {
+        Map<String, Map<String, Double>> x = new HashMap<String, Map<String, Double>>();
+        Map<String, Double> longs = new HashMap<>();
+        Map<String, Double> shorts = new HashMap<>();
         for (String ss : p.getShorts()) {
-            x.put(ss, "Short");
+            shorts.put(ss, 0.0);
         }
         for (String ss : p.getLongs()) {
-            x.put(ss, "Long");
+            longs.put(ss, 0.0);
         }
-        HashMap<String, Double> y = score(x);
+        x.put("shorts", shorts);
+        x.put("longs", longs);
+        x.put("total", new HashMap<>());
+        Map<String, Map<String, Double>> y = score(x);
         return y;
 
     }

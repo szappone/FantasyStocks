@@ -39,8 +39,8 @@ public class GetOneMatchupController extends ControllerErrorHandler {
         //Check to make sure that this player exists and if so return it
         Matchup checkMatchupExists = matchupService.get(matchupID);
         if (checkMatchupExists != null) {
-            Map<String, Double> p1scores = calc.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer1Name(), checkMatchupExists.getGame().getGameId()));
-            Map<String, Double> p2scores = calc.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer2Name(), checkMatchupExists.getGame().getGameId()));
+            Map<String, Map<String, Double>> p1scores = calc.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer1Name(), checkMatchupExists.getGame().getGameId()));
+            Map<String, Map<String, Double>> p2scores = calc.PortfolioScores(portfolioService.get(checkMatchupExists.getPlayer2Name(), checkMatchupExists.getGame().getGameId()));
             return GetMatchupResponse.builder()
                     .player1Name(checkMatchupExists.getPlayer1Name())
                     .player2Name(checkMatchupExists.getPlayer2Name())
