@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.ws.rs.POST;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -62,9 +63,42 @@ public class StockInitializer {
                 .build());
     }
 
+    @PostConstruct
+    public void initPrices(){
+        LocalDate date = LocalDate.now();
+        DayOfWeek day = date.getDayOfWeek();
+        String s = day.toString();
+
+        List<String> tickers = stockService.listStockIDs();
+
+        for (int i = 0; i < tickers.size(); i++){
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e){
+            }
+            Stock stock = stockService.get(tickers.get(i));
+            if (s.equals("MONDAY")) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e){
+                }
+                stock.setLastMondayPrice(PriceCalculator.getCurrentDay(tickers.get(i)));
+            } else {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e){
+                }
+                stock.setLastMondayPrice(PriceCalculator.getMonday(tickers.get(i)));
+
+            }
+            stock.setTodayPrice(PriceCalculator.getCurrentDay(tickers.get(i)));
+            stockService.update(stock);
+        }
+
+    }
+
 
     @Scheduled(cron = "0 0 18 * * *")
-    @PostConstruct
     public void updatePrices(){
         LocalDate date = LocalDate.now();
         DayOfWeek day = date.getDayOfWeek();
