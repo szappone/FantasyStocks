@@ -32,6 +32,15 @@
   border: 2px solid black;
 }
 
+.descriptionBox {
+  text-align: center;
+  font-size: 13px;
+  margin: 0 auto;
+  width: 835px;
+  padding-bottom: 20px;
+  border: 2px solid black;
+}
+
 .errorMessage:not(:empty) {
   color: #D8000C;
   background-color: #FFD2D2;
