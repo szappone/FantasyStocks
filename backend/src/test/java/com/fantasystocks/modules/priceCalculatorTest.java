@@ -18,6 +18,7 @@ import org.testng.collections.Lists;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertNotNull;
 @RunWith(EasyMockRunner.class)
@@ -108,7 +109,7 @@ public class priceCalculatorTest extends EasyMockSupport {
                 .longs(l)
                 .shorts(s)
                 .build();
-        HashMap<String,Double> h = calc.PortfolioScores(portfolios);
+        Map<String, Map<String, Double>> h = calc.PortfolioScores(portfolios);
         assertNotNull(h);
 
     }

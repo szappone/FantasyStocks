@@ -16,7 +16,7 @@ public class GetMatchupResponse {
     private long gameID;
     private String player1Name;
     private String player2Name;
-    private Map<String, Double> p1Score;
-    private Map<String, Double> p2Score;
+    private Map<String, Map<String, Double>> p1Score;
+    private Map<String, Map<String, Double>> p2Score;
     private long activeWeek;
 }
