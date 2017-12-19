@@ -49,6 +49,7 @@ class Dashboard extends FantasyStocksBaseComponent {
                        history={this.props.history}/>;
     }
 
+    let explanation = "Here you can check out your live sessions, or create a new one."
     return (
 
       <div className="App">
@@ -60,7 +61,8 @@ class Dashboard extends FantasyStocksBaseComponent {
 
         </header>
 
-        <h1 className="App-title">Welcome to the dashboard {currHandle}!</h1>
+        <h1>Welcome to your dashboard {currHandle}! </h1>
+        <h1 className="App-intro">{explanation}</h1>
 
         <h2> Your Sessions </h2>
 

@@ -41,7 +41,7 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
         console.log("portfolio id: " + this.state.portfolioId);
       });
   }
-  
+
   setStocks = () => {
     this.props.globalService.getAllStocks().then(
       (response) => {
@@ -77,9 +77,10 @@ class NewSessionDraft extends FantasyStocksBaseComponent {
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <div>
            <p className="App-key" style={{display: 'flex', justifyContent: 'center'}}>
-            Play 3 stocks long: make money when their prices go up <br></br>
-            Play 3 stocks short: make money when their prices fall <br></br>
-            Put 3 stocks on your bench: play them another week
+            Need some help with your draft? Let us help you:<br></br>
+            Choose 3 stocks to play long: youll make money when their prices go up <br></br>
+            Choose 3 stocks to play short: youll make money when their prices fall <br></br>
+            Choose 3 stocks to bench: youll play them another week
             </p>
           </div>
         </div>

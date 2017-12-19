@@ -82,23 +82,22 @@ class Session extends FantasyStocksBaseComponent {
     let matchupInfo = "";
     if (this.state.playerPortfolio) {
       if (this.state.playerPortfolio.longs.length > 0) {
-        matchupInfo = 
-        <div>
-          <Portfolio
+        matchupInfo =
+         <div>
+          <Portfolio 
             portfolioId={this.state.playerPortfolioId}
             globalService={this.props.globalService}
             />
-            
             <div>
             <button className="App-button-big">
               <Link to={'/updatePortfolio/' + this.state.playerPortfolioId}>Click to Change your portfolio</Link>
             </button>
           </div>
-            
+
         </div>
       } else {
         matchupInfo = <button className="Dash-button">
-          <Link to={'/draft/' + this.state.playerPortfolioId}>{"ENTER DRAFT"}</Link>
+          <Link to={'/draft/' + this.state.playerPortfolioId}>{"Time to draft your stocks! Enter the draft phase here."}</Link>
         </button >;
       }
     } else {
@@ -119,18 +118,12 @@ class Session extends FantasyStocksBaseComponent {
         <div>
         <header className="App-header">
           <img src={fsLogo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to Session: {this.state.currentSession.sessionName}</h1>
+            <h1>Welcome to Session: {this.state.currentSession.sessionName}</h1>
+            <h3>{"Here you can see who you are head to head with this week, and how everyone is doing in their matchups!"}</h3>
         </header>
         </div>
 
-        <br/><br/><br/><br/>
-        <div><h4> Players in this Session </h4></div>
-
-        <ul>
-        {this.state.currentSession.players.map((player) => (
-            <li key={player}><p>{player}</p></li>
-          ))}
-        </ul>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
 
         <div>
         <div className="App-border">
@@ -142,13 +135,22 @@ class Session extends FantasyStocksBaseComponent {
         </div>
 
         <div id="matchupDiv">
-          <h2>Matchups in this Session</h2>
+          <h1>{"This Week's Matchups"}</h1>
           <ul id="matchupList">
             {this.state.currentSession.matchupIds.map((matchupId) => (
               <li key={matchupId}> <Matchup globalService={this.props.globalService} matchupId={matchupId}/> </li>
             ))}
           </ul>
         </div>
+        <div><h1>{"Players in your session:"}</h1></div>
+
+        <ul>
+        {this.state.currentSession.players.map((player) => (
+            <li key={player}><p>{player}</p></li>
+          ))}
+        </ul>
+
+
       </div>
 
     );
