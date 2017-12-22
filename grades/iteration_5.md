@@ -36,5 +36,11 @@ CHANGELOG and project boards are updated
 
 ### Other Remarks
 
+**Grade update**
 
-**Grade: 84/100**
+Originally 84
+
++3 - For integrating scoring algorithm on front end
++6 - For fixing the tests
+
+**Grade: 93/100**
